@@ -27,7 +27,7 @@
 2. [APRIL: Finding the Achilles' Heel on Privacy for Vision Transformers (CVPR '22)](https://arxiv.org/abs/2112.14087)
    - 待定。
 
-虽然以上文章皆无直接公开的代码，但认真搜索一番想必不难找到一个名为 [JonasGeiping/breaching](https://github.com/JonasGeiping/breaching) 
+**【参考资料】** 虽然以上文章皆无直接公开的代码，但认真搜索一番想必不难找到一个名为 [JonasGeiping/breaching](https://github.com/JonasGeiping/breaching) 
 的 GitHub 仓库（后称为「参考仓库」），它其实已经给出两篇文章的 demo：
 
 1. [TAG - Optimization-based Attack - FL-Transformer for Causal LM.ipynb](https://github.com/JonasGeiping/breaching/blob/main/examples/TAG%20-%20Optimization-based%20Attack%20-%20FL-Transformer%20for%20Causal%20LM.ipynb)
@@ -38,13 +38,26 @@
 我最早接触他的文章是 [Inverting Gradients - How Easy Is It to Break Privacy in Federated Learning? (NeurIPS '20)](https://arxiv.org/pdf/2003.14053.pdf),
 该文章基于 DLG，使用 (i) 已知标签的条件，(ii) 新的梯度距离度量，以及 (iii) 新的迭代优化器，大大提升了 CV 领域的梯度泄露攻击效果。
 
-**【虽然但是】** 由于之前有过 CV 领域进行梯度泄露攻击的工程经验（约2023年2月到3月），
-我这次复现并不照搬参考仓库的代码。
+**【复现路线】** 由于之前有过 CV 领域进行梯度泄露攻击的工程经验（约2023年2月到3月），
+我这里的复现并不照搬参考仓库的代码。
 而是尝试先 (i) 按照自己的工程经验和论文理解搭建完整的**最小攻击框架**。
 之后再 (ii) 根据提高攻击效果的具体需要，分析与参考仓库代码的异同以找到改进现有框架的思路。
 因而本仓库不仅包含能够（基本）复现论文攻击的轻量级代码，也自然融入了复现过程的难点分析。
 相信本仓库相比参考仓库，更有助于广大初学者避开一些隐形的「坑」。
 
+**【环境配置】**
+
+要运行本仓库的代码，只需要按照下述指令配置好环境即可：
+
+```
+bash install.sh
+```
+
+然后每一次运行指令都应在`grad_attacks`的 conda 环境中操作，进入指令为
+
+```
+conda activate grad_attacks
+```
 
 ## 2 TAG 复现结果和难点讨论
 
