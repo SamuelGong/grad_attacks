@@ -1,0 +1,53 @@
+task: text-generation
+device: cuda:0
+global_seed: 42
+datasource:
+  dataset: wikitext-2
+  partition: train
+  shuffle_seed: 42
+  num_points: 1
+  max_num_tokens: 20
+tokenizer:
+  name: gpt2
+model:
+  name: gpt2
+  from_pretrained: true
+  has_finetuned: false
+train:
+  batch_size: 1
+  use_cached: false
+attack:
+  name: tag
+  specific_args:
+    scale: 0.1
+    init_type: randn-trunc  # the output embedding
+    init_seed: 42
+#    max_iterations: 10000
+    max_iterations: 1000
+    snapshot_interval: 100
+    print_interval: 10
+#    max_iterations: 100
+#    print_interval: 5
+    d_model: 768  # gpt2
+    grad_clip: 1.0
+    optimizer:
+      name: bert-adam
+      args:
+        lr: 0.05
+        betas:
+          - 0.9
+          - 0.999
+        eps: 0.000001
+        weight_decay: 0.01
+    scheduler:
+      name: linear
+      args:
+        warmup: 50
+eval:
+  metrics:
+    - accuracy
+    - bleu
+    - rouge
+debug:
+  wrong_alpha: true
+  fix_input: true
