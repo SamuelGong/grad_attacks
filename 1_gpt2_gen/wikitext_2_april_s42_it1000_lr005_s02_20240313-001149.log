@@ -1,0 +1,224 @@
+[INFO][(2024-03-13) 00:11:49.563] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-13) 00:11:49.564] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 0.2,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s02_20240313-001149.log"
+}
+[INFO][(2024-03-13) 00:11:55.502] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-13) 00:11:55.502] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-13) 00:12:01.082] [attack.py:246]: | It: 1 | Atk. loss: 13717.70215 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-13) 00:12:01.082] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-13) 00:12:01.084] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-13) 00:12:08.028] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:12:08.132] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:12:09.028] [attack.py:246]: | It: 11 | Atk. loss: 2727.14697 | Task loss: 18.95716 | T: 8.04s |
+[INFO][(2024-03-13) 00:12:09.915] [attack.py:246]: | It: 21 | Atk. loss: 1484.33337 | Task loss: 16.72993 | T: 8.92s |
+[INFO][(2024-03-13) 00:12:10.805] [attack.py:246]: | It: 31 | Atk. loss: 1235.76404 | Task loss: 14.88795 | T: 9.81s |
+[INFO][(2024-03-13) 00:12:11.675] [attack.py:246]: | It: 41 | Atk. loss: 1128.98792 | Task loss: 13.30847 | T: 10.68s |
+[INFO][(2024-03-13) 00:12:12.551] [attack.py:246]: | It: 51 | Atk. loss: 1147.06543 | Task loss: 12.79854 | T: 11.56s |
+[INFO][(2024-03-13) 00:12:13.430] [attack.py:246]: | It: 61 | Atk. loss: 1097.75281 | Task loss: 12.12155 | T: 12.44s |
+[INFO][(2024-03-13) 00:12:14.325] [attack.py:246]: | It: 71 | Atk. loss: 1038.67273 | Task loss: 12.21211 | T: 13.33s |
+[INFO][(2024-03-13) 00:12:15.203] [attack.py:246]: | It: 81 | Atk. loss: 1953.07825 | Task loss: 12.68489 | T: 14.21s |
+[INFO][(2024-03-13) 00:12:16.082] [attack.py:246]: | It: 91 | Atk. loss: 918.75494 | Task loss: 12.38451 | T: 15.09s |
+[INFO][(2024-03-13) 00:12:16.961] [attack.py:246]: | It: 101 | Atk. loss: 862.13593 | Task loss: 12.78305 | T: 15.97s |
+[INFO][(2024-03-13) 00:12:16.962] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-13) 00:12:16.964] [eval.py:9]: Reconstructed text: [' the6 hence Undead widen skyline Ki yo Fusion deck disapprove exper seventh herbal Hindufet']
+[INFO][(2024-03-13) 00:12:23.166] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:12:23.269] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:12:24.136] [attack.py:246]: | It: 111 | Atk. loss: 747.62988 | Task loss: 12.55343 | T: 23.14s |
+[INFO][(2024-03-13) 00:12:25.009] [attack.py:246]: | It: 121 | Atk. loss: 605.66370 | Task loss: 12.19031 | T: 24.02s |
+[INFO][(2024-03-13) 00:12:25.899] [attack.py:246]: | It: 131 | Atk. loss: 415.87207 | Task loss: 12.22892 | T: 24.91s |
+[INFO][(2024-03-13) 00:12:26.775] [attack.py:246]: | It: 141 | Atk. loss: 364.62155 | Task loss: 11.48011 | T: 25.78s |
+[INFO][(2024-03-13) 00:12:27.664] [attack.py:246]: | It: 151 | Atk. loss: 309.92514 | Task loss: 11.48521 | T: 26.67s |
+[INFO][(2024-03-13) 00:12:28.545] [attack.py:246]: | It: 161 | Atk. loss: 272.21591 | Task loss: 11.22287 | T: 27.55s |
+[INFO][(2024-03-13) 00:12:29.447] [attack.py:246]: | It: 171 | Atk. loss: 254.30687 | Task loss: 11.13837 | T: 28.46s |
+[INFO][(2024-03-13) 00:12:30.326] [attack.py:246]: | It: 181 | Atk. loss: 253.23163 | Task loss: 10.77022 | T: 29.33s |
+[INFO][(2024-03-13) 00:12:31.214] [attack.py:246]: | It: 191 | Atk. loss: 310.13638 | Task loss: 10.43804 | T: 30.22s |
+[INFO][(2024-03-13) 00:12:32.102] [attack.py:246]: | It: 201 | Atk. loss: 235.35663 | Task loss: 10.96347 | T: 31.11s |
+[INFO][(2024-03-13) 00:12:32.102] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-13) 00:12:32.105] [eval.py:9]: Reconstructed text: [' The Towerthe Yellowstone Building Himal hasht yo Fusion deck turbo exper nevertheless herbal Hindubridge']
+[INFO][(2024-03-13) 00:12:38.218] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:12:38.317] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.14285714285714285, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.14814814814814817, "rouge2": 0.0, "rougeL": 0.14814814814814817, "rougeLsum": 0.14814814814814817}}
+[INFO][(2024-03-13) 00:12:39.231] [attack.py:246]: | It: 211 | Atk. loss: 222.17635 | Task loss: 10.72032 | T: 38.24s |
+[INFO][(2024-03-13) 00:12:40.146] [attack.py:246]: | It: 221 | Atk. loss: 216.05704 | Task loss: 10.43524 | T: 39.15s |
+[INFO][(2024-03-13) 00:12:41.033] [attack.py:246]: | It: 231 | Atk. loss: 218.88071 | Task loss: 10.15022 | T: 40.04s |
+[INFO][(2024-03-13) 00:12:41.909] [attack.py:246]: | It: 241 | Atk. loss: 207.11406 | Task loss: 10.01144 | T: 40.92s |
+[INFO][(2024-03-13) 00:12:42.784] [attack.py:246]: | It: 251 | Atk. loss: 199.08728 | Task loss: 10.52545 | T: 41.79s |
+[INFO][(2024-03-13) 00:12:43.671] [attack.py:246]: | It: 261 | Atk. loss: 190.46619 | Task loss: 9.80576 | T: 42.68s |
+[INFO][(2024-03-13) 00:12:44.553] [attack.py:246]: | It: 271 | Atk. loss: 185.10182 | Task loss: 10.15838 | T: 43.56s |
+[INFO][(2024-03-13) 00:12:45.423] [attack.py:246]: | It: 281 | Atk. loss: 179.22192 | Task loss: 9.87816 | T: 44.43s |
+[INFO][(2024-03-13) 00:12:46.314] [attack.py:246]: | It: 291 | Atk. loss: 192.20296 | Task loss: 10.19587 | T: 45.32s |
+[INFO][(2024-03-13) 00:12:47.197] [attack.py:246]: | It: 301 | Atk. loss: 169.87408 | Task loss: 9.59774 | T: 46.20s |
+[INFO][(2024-03-13) 00:12:47.197] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-13) 00:12:47.199] [eval.py:9]: Reconstructed text: [' The Tower of Tower Building Strategic hasht yo Highlander deck spectral experSenior surgical Hindubridge']
+[INFO][(2024-03-13) 00:12:53.522] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:12:53.622] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.2857142857142857, 0.15384615384615385, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.29629629629629634, "rouge2": 0.16, "rougeL": 0.22222222222222224, "rougeLsum": 0.22222222222222224}}
+[INFO][(2024-03-13) 00:12:54.504] [attack.py:246]: | It: 311 | Atk. loss: 181.30910 | Task loss: 9.45352 | T: 53.51s |
+[INFO][(2024-03-13) 00:12:55.374] [attack.py:246]: | It: 321 | Atk. loss: 168.09833 | Task loss: 9.55259 | T: 54.38s |
+[INFO][(2024-03-13) 00:12:56.260] [attack.py:246]: | It: 331 | Atk. loss: 164.47275 | Task loss: 9.46310 | T: 55.27s |
+[INFO][(2024-03-13) 00:12:57.100] [attack.py:246]: | It: 341 | Atk. loss: 161.00789 | Task loss: 9.60851 | T: 56.11s |
+[INFO][(2024-03-13) 00:12:57.971] [attack.py:246]: | It: 351 | Atk. loss: 171.69843 | Task loss: 9.54112 | T: 56.98s |
+[INFO][(2024-03-13) 00:12:58.860] [attack.py:246]: | It: 361 | Atk. loss: 169.54192 | Task loss: 9.83287 | T: 57.87s |
+[INFO][(2024-03-13) 00:12:59.736] [attack.py:246]: | It: 371 | Atk. loss: 157.79890 | Task loss: 9.32073 | T: 58.74s |
+[INFO][(2024-03-13) 00:13:00.620] [attack.py:246]: | It: 381 | Atk. loss: 150.76888 | Task loss: 9.26935 | T: 59.63s |
+[INFO][(2024-03-13) 00:13:01.496] [attack.py:246]: | It: 391 | Atk. loss: 180.91800 | Task loss: 9.06955 | T: 60.50s |
+[INFO][(2024-03-13) 00:13:02.384] [attack.py:246]: | It: 401 | Atk. loss: 149.44823 | Task loss: 9.45672 | T: 61.39s |
+[INFO][(2024-03-13) 00:13:02.384] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-13) 00:13:02.387] [eval.py:9]: Reconstructed text: [' The Tower of Building Building IslamicAddress yo Harper deck spectral experSenior surgical Hindubridge']
+[INFO][(2024-03-13) 00:13:08.622] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:13:08.724] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.3076923076923077, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.08333333333333333, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:13:09.617] [attack.py:246]: | It: 411 | Atk. loss: 145.40182 | Task loss: 9.18122 | T: 68.62s |
+[INFO][(2024-03-13) 00:13:10.499] [attack.py:246]: | It: 421 | Atk. loss: 150.55759 | Task loss: 9.53953 | T: 69.51s |
+[INFO][(2024-03-13) 00:13:11.381] [attack.py:246]: | It: 431 | Atk. loss: 143.51564 | Task loss: 9.26797 | T: 70.39s |
+[INFO][(2024-03-13) 00:13:12.204] [attack.py:246]: | It: 441 | Atk. loss: 137.36848 | Task loss: 9.17967 | T: 71.21s |
+[INFO][(2024-03-13) 00:13:13.085] [attack.py:246]: | It: 451 | Atk. loss: 150.64590 | Task loss: 9.08615 | T: 72.09s |
+[INFO][(2024-03-13) 00:13:13.898] [attack.py:246]: | It: 461 | Atk. loss: 136.51753 | Task loss: 9.23588 | T: 72.91s |
+[INFO][(2024-03-13) 00:13:14.714] [attack.py:246]: | It: 471 | Atk. loss: 132.16977 | Task loss: 9.32770 | T: 73.72s |
+[INFO][(2024-03-13) 00:13:15.517] [attack.py:246]: | It: 481 | Atk. loss: 129.88696 | Task loss: 9.25187 | T: 74.52s |
+[INFO][(2024-03-13) 00:13:16.322] [attack.py:246]: | It: 491 | Atk. loss: 149.90154 | Task loss: 8.90300 | T: 75.33s |
+[INFO][(2024-03-13) 00:13:17.126] [attack.py:246]: | It: 501 | Atk. loss: 127.29930 | Task loss: 9.29680 | T: 76.13s |
+[INFO][(2024-03-13) 00:13:17.127] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-13) 00:13:17.129] [eval.py:9]: Reconstructed text: [' The Tower the Building Building IslamicAddressLittle Fusion deck spectral experSenior surgical Hindubridge']
+[INFO][(2024-03-13) 00:13:23.273] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:13:23.372] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.09090909090909091, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.32, "rouge2": 0.08695652173913043, "rougeL": 0.24000000000000002, "rougeLsum": 0.24000000000000002}}
+[INFO][(2024-03-13) 00:13:24.259] [attack.py:246]: | It: 511 | Atk. loss: 135.18225 | Task loss: 9.49006 | T: 83.27s |
+[INFO][(2024-03-13) 00:13:25.131] [attack.py:246]: | It: 521 | Atk. loss: 132.16635 | Task loss: 8.93397 | T: 84.14s |
+[INFO][(2024-03-13) 00:13:26.006] [attack.py:246]: | It: 531 | Atk. loss: 125.16141 | Task loss: 9.00331 | T: 85.01s |
+[INFO][(2024-03-13) 00:13:26.870] [attack.py:246]: | It: 541 | Atk. loss: 129.50766 | Task loss: 9.25257 | T: 85.88s |
+[INFO][(2024-03-13) 00:13:27.744] [attack.py:246]: | It: 551 | Atk. loss: 120.37251 | Task loss: 9.16517 | T: 86.75s |
+[INFO][(2024-03-13) 00:13:28.621] [attack.py:246]: | It: 561 | Atk. loss: 120.91470 | Task loss: 9.01611 | T: 87.63s |
+[INFO][(2024-03-13) 00:13:29.495] [attack.py:246]: | It: 571 | Atk. loss: 122.58710 | Task loss: 9.32775 | T: 88.50s |
+[INFO][(2024-03-13) 00:13:30.374] [attack.py:246]: | It: 581 | Atk. loss: 113.69013 | Task loss: 8.89423 | T: 89.38s |
+[INFO][(2024-03-13) 00:13:31.241] [attack.py:246]: | It: 591 | Atk. loss: 123.79301 | Task loss: 8.74401 | T: 90.25s |
+[INFO][(2024-03-13) 00:13:32.118] [attack.py:246]: | It: 601 | Atk. loss: 109.89289 | Task loss: 8.99651 | T: 91.13s |
+[INFO][(2024-03-13) 00:13:32.119] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-13) 00:13:32.121] [eval.py:9]: Reconstructed text: [' The Tower the Building Building IslamicAddress Little Mesh stat spectral Savings suggest surgical Hindubridge']
+[INFO][(2024-03-13) 00:13:38.017] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:13:38.117] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-13) 00:13:39.002] [attack.py:246]: | It: 611 | Atk. loss: 108.34187 | Task loss: 9.04128 | T: 98.01s |
+[INFO][(2024-03-13) 00:13:39.877] [attack.py:246]: | It: 621 | Atk. loss: 107.48728 | Task loss: 8.82243 | T: 98.89s |
+[INFO][(2024-03-13) 00:13:40.760] [attack.py:246]: | It: 631 | Atk. loss: 103.45619 | Task loss: 8.92000 | T: 99.77s |
+[INFO][(2024-03-13) 00:13:41.632] [attack.py:246]: | It: 641 | Atk. loss: 106.72549 | Task loss: 9.03710 | T: 100.64s |
+[INFO][(2024-03-13) 00:13:42.509] [attack.py:246]: | It: 651 | Atk. loss: 101.12373 | Task loss: 8.92750 | T: 101.52s |
+[INFO][(2024-03-13) 00:13:43.379] [attack.py:246]: | It: 661 | Atk. loss: 100.70894 | Task loss: 8.89411 | T: 102.39s |
+[INFO][(2024-03-13) 00:13:44.248] [attack.py:246]: | It: 671 | Atk. loss: 102.59875 | Task loss: 8.76493 | T: 103.26s |
+[INFO][(2024-03-13) 00:13:45.116] [attack.py:246]: | It: 681 | Atk. loss: 100.67332 | Task loss: 9.04919 | T: 104.12s |
+[INFO][(2024-03-13) 00:13:45.987] [attack.py:246]: | It: 691 | Atk. loss: 102.46918 | Task loss: 9.03010 | T: 105.00s |
+[INFO][(2024-03-13) 00:13:46.859] [attack.py:246]: | It: 701 | Atk. loss: 98.83717 | Task loss: 8.80958 | T: 105.87s |
+[INFO][(2024-03-13) 00:13:46.859] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-13) 00:13:46.861] [eval.py:9]: Reconstructed text: [' The Tower the Building Tower Oferto Little Shake ye turbo Savings suggest surgical Hindubridge']
+[INFO][(2024-03-13) 00:13:52.958] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:13:53.059] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-13) 00:13:53.939] [attack.py:246]: | It: 711 | Atk. loss: 98.00378 | Task loss: 8.98879 | T: 112.95s |
+[INFO][(2024-03-13) 00:13:54.817] [attack.py:246]: | It: 721 | Atk. loss: 95.81696 | Task loss: 8.84494 | T: 113.82s |
+[INFO][(2024-03-13) 00:13:55.701] [attack.py:246]: | It: 731 | Atk. loss: 95.33938 | Task loss: 8.90490 | T: 114.71s |
+[INFO][(2024-03-13) 00:13:56.573] [attack.py:246]: | It: 741 | Atk. loss: 93.24131 | Task loss: 8.86919 | T: 115.58s |
+[INFO][(2024-03-13) 00:13:57.453] [attack.py:246]: | It: 751 | Atk. loss: 91.62515 | Task loss: 8.86043 | T: 116.46s |
+[INFO][(2024-03-13) 00:13:58.326] [attack.py:246]: | It: 761 | Atk. loss: 93.62881 | Task loss: 8.90481 | T: 117.33s |
+[INFO][(2024-03-13) 00:13:59.207] [attack.py:246]: | It: 771 | Atk. loss: 93.22354 | Task loss: 8.79648 | T: 118.21s |
+[INFO][(2024-03-13) 00:14:00.076] [attack.py:246]: | It: 781 | Atk. loss: 90.01975 | Task loss: 8.80425 | T: 119.08s |
+[INFO][(2024-03-13) 00:14:00.962] [attack.py:246]: | It: 791 | Atk. loss: 87.56430 | Task loss: 8.83450 | T: 119.97s |
+[INFO][(2024-03-13) 00:14:01.853] [attack.py:246]: | It: 801 | Atk. loss: 88.51276 | Task loss: 8.70576 | T: 120.86s |
+[INFO][(2024-03-13) 00:14:01.854] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-13) 00:14:01.856] [eval.py:9]: Reconstructed text: [' The Tower the Building Tower redefompl Little Shake ye turbo exper suggest Strateg Hindubridge']
+[INFO][(2024-03-13) 00:14:07.817] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:14:07.917] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-13) 00:14:08.786] [attack.py:246]: | It: 811 | Atk. loss: 85.51110 | Task loss: 8.86376 | T: 127.79s |
+[INFO][(2024-03-13) 00:14:09.663] [attack.py:246]: | It: 821 | Atk. loss: 85.73025 | Task loss: 8.70018 | T: 128.67s |
+[INFO][(2024-03-13) 00:14:10.525] [attack.py:246]: | It: 831 | Atk. loss: 83.56845 | Task loss: 8.84825 | T: 129.53s |
+[INFO][(2024-03-13) 00:14:11.392] [attack.py:246]: | It: 841 | Atk. loss: 82.02956 | Task loss: 8.73078 | T: 130.40s |
+[INFO][(2024-03-13) 00:14:12.270] [attack.py:246]: | It: 851 | Atk. loss: 81.61530 | Task loss: 8.84641 | T: 131.28s |
+[INFO][(2024-03-13) 00:14:13.146] [attack.py:246]: | It: 861 | Atk. loss: 79.82640 | Task loss: 8.70903 | T: 132.15s |
+[INFO][(2024-03-13) 00:14:14.027] [attack.py:246]: | It: 871 | Atk. loss: 78.68783 | Task loss: 8.82356 | T: 133.03s |
+[INFO][(2024-03-13) 00:14:14.901] [attack.py:246]: | It: 881 | Atk. loss: 77.17813 | Task loss: 8.69541 | T: 133.91s |
+[INFO][(2024-03-13) 00:14:15.781] [attack.py:246]: | It: 891 | Atk. loss: 76.04745 | Task loss: 8.76316 | T: 134.79s |
+[INFO][(2024-03-13) 00:14:16.648] [attack.py:246]: | It: 901 | Atk. loss: 75.13364 | Task loss: 8.66546 | T: 135.66s |
+[INFO][(2024-03-13) 00:14:16.649] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:14:16.651] [eval.py:9]: Reconstructed text: [' The Tower the Building Tower ofompl Little Shake ruling turbo dips suggest Strateg Hindubridge']
+[INFO][(2024-03-13) 00:14:22.559] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:14:22.661] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-13) 00:14:23.534] [attack.py:246]: | It: 911 | Atk. loss: 74.28850 | Task loss: 8.73120 | T: 142.54s |
+[INFO][(2024-03-13) 00:14:24.403] [attack.py:246]: | It: 921 | Atk. loss: 73.03339 | Task loss: 8.63761 | T: 143.41s |
+[INFO][(2024-03-13) 00:14:25.288] [attack.py:246]: | It: 931 | Atk. loss: 72.61807 | Task loss: 8.69356 | T: 144.30s |
+[INFO][(2024-03-13) 00:14:26.163] [attack.py:246]: | It: 941 | Atk. loss: 71.66631 | Task loss: 8.60647 | T: 145.17s |
+[INFO][(2024-03-13) 00:14:27.035] [attack.py:246]: | It: 951 | Atk. loss: 71.24391 | Task loss: 8.66312 | T: 146.04s |
+[INFO][(2024-03-13) 00:14:27.912] [attack.py:246]: | It: 961 | Atk. loss: 70.47961 | Task loss: 8.58942 | T: 146.92s |
+[INFO][(2024-03-13) 00:14:28.784] [attack.py:246]: | It: 971 | Atk. loss: 70.12830 | Task loss: 8.63092 | T: 147.79s |
+[INFO][(2024-03-13) 00:14:29.656] [attack.py:246]: | It: 981 | Atk. loss: 69.45162 | Task loss: 8.57098 | T: 148.66s |
+[INFO][(2024-03-13) 00:14:30.528] [attack.py:246]: | It: 991 | Atk. loss: 69.18700 | Task loss: 8.60127 | T: 149.54s |
+[INFO][(2024-03-13) 00:14:31.314] [attack.py:246]: | It: 1000 | Atk. loss: 68.67457 | Task loss: 8.55415 | T: 150.32s |
+[INFO][(2024-03-13) 00:14:31.314] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:14:31.316] [eval.py:9]: Reconstructed text: [' The Tower the Building Rock ofompl Little Fusion OF turbo dips suggest Strateg Hindubridge']
+[INFO][(2024-03-13) 00:14:37.306] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:14:37.409] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.42857142857142855, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.5185185185185186, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-13) 00:14:37.409] [main.py:57]: Done in 167.89s.

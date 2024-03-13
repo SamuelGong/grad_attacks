@@ -1,0 +1,224 @@
+[INFO][(2024-03-13) 00:23:15.189] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-13) 00:23:15.189] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 50.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s50_20240313-002315.log"
+}
+[INFO][(2024-03-13) 00:23:20.669] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-13) 00:23:20.669] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-13) 00:23:25.529] [attack.py:246]: | It: 1 | Atk. loss: 17679.85742 | Task loss: 20.70686 | T: 0.10s |
+[INFO][(2024-03-13) 00:23:25.529] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-13) 00:23:25.531] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-13) 00:23:31.979] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:23:32.084] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:23:32.956] [attack.py:246]: | It: 11 | Atk. loss: 3649.95312 | Task loss: 19.32794 | T: 7.53s |
+[INFO][(2024-03-13) 00:23:33.822] [attack.py:246]: | It: 21 | Atk. loss: 2530.68408 | Task loss: 17.42010 | T: 8.39s |
+[INFO][(2024-03-13) 00:23:34.694] [attack.py:246]: | It: 31 | Atk. loss: 1769.74609 | Task loss: 16.32551 | T: 9.26s |
+[INFO][(2024-03-13) 00:23:35.555] [attack.py:246]: | It: 41 | Atk. loss: 1660.15552 | Task loss: 14.98427 | T: 10.13s |
+[INFO][(2024-03-13) 00:23:36.424] [attack.py:246]: | It: 51 | Atk. loss: 1620.22778 | Task loss: 14.11237 | T: 10.99s |
+[INFO][(2024-03-13) 00:23:37.286] [attack.py:246]: | It: 61 | Atk. loss: 1521.29224 | Task loss: 14.30821 | T: 11.86s |
+[INFO][(2024-03-13) 00:23:38.139] [attack.py:246]: | It: 71 | Atk. loss: 1424.35767 | Task loss: 13.86582 | T: 12.71s |
+[INFO][(2024-03-13) 00:23:38.999] [attack.py:246]: | It: 81 | Atk. loss: 1300.60413 | Task loss: 13.08069 | T: 13.57s |
+[INFO][(2024-03-13) 00:23:39.865] [attack.py:246]: | It: 91 | Atk. loss: 1324.10571 | Task loss: 13.36435 | T: 14.43s |
+[INFO][(2024-03-13) 00:23:40.679] [attack.py:246]: | It: 101 | Atk. loss: 1337.44165 | Task loss: 12.30935 | T: 15.25s |
+[INFO][(2024-03-13) 00:23:40.680] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-13) 00:23:40.682] [eval.py:9]: Reconstructed text: [' Theeez >> sameors Gravity Tues ste -> gifts perpetuate Residential equitable gratitude\x15fet']
+[INFO][(2024-03-13) 00:23:46.491] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:23:46.592] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:23:47.470] [attack.py:246]: | It: 111 | Atk. loss: 1227.07129 | Task loss: 12.96081 | T: 22.04s |
+[INFO][(2024-03-13) 00:23:48.339] [attack.py:246]: | It: 121 | Atk. loss: 1071.16797 | Task loss: 12.63203 | T: 22.91s |
+[INFO][(2024-03-13) 00:23:49.198] [attack.py:246]: | It: 131 | Atk. loss: 1119.67261 | Task loss: 13.61486 | T: 23.77s |
+[INFO][(2024-03-13) 00:23:50.071] [attack.py:246]: | It: 141 | Atk. loss: 820.71667 | Task loss: 12.94143 | T: 24.64s |
+[INFO][(2024-03-13) 00:23:50.927] [attack.py:246]: | It: 151 | Atk. loss: 643.92816 | Task loss: 11.61459 | T: 25.50s |
+[INFO][(2024-03-13) 00:23:51.799] [attack.py:246]: | It: 161 | Atk. loss: 601.26099 | Task loss: 11.98487 | T: 26.37s |
+[INFO][(2024-03-13) 00:23:52.660] [attack.py:246]: | It: 171 | Atk. loss: 510.94098 | Task loss: 11.35029 | T: 27.23s |
+[INFO][(2024-03-13) 00:23:53.520] [attack.py:246]: | It: 181 | Atk. loss: 487.17731 | Task loss: 11.34829 | T: 28.09s |
+[INFO][(2024-03-13) 00:23:54.390] [attack.py:246]: | It: 191 | Atk. loss: 443.18900 | Task loss: 10.73822 | T: 28.96s |
+[INFO][(2024-03-13) 00:23:55.251] [attack.py:246]: | It: 201 | Atk. loss: 426.62164 | Task loss: 10.76780 | T: 29.82s |
+[INFO][(2024-03-13) 00:23:55.252] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-13) 00:23:55.254] [eval.py:9]: Reconstructed text: [' The prosperous Building of Atlanta dexter Misty submarines Jun securely eluc multiplayer till impover SetTextColor arms']
+[INFO][(2024-03-13) 00:24:01.110] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:24:01.213] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.1875, 0.06666666666666667, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.20689655172413793, "rouge2": 0.07407407407407407, "rougeL": 0.20689655172413793, "rougeLsum": 0.20689655172413793}}
+[INFO][(2024-03-13) 00:24:02.103] [attack.py:246]: | It: 211 | Atk. loss: 630.09454 | Task loss: 10.35398 | T: 36.67s |
+[INFO][(2024-03-13) 00:24:02.975] [attack.py:246]: | It: 221 | Atk. loss: 506.99393 | Task loss: 10.49572 | T: 37.54s |
+[INFO][(2024-03-13) 00:24:03.829] [attack.py:246]: | It: 231 | Atk. loss: 522.03271 | Task loss: 10.94157 | T: 38.40s |
+[INFO][(2024-03-13) 00:24:04.649] [attack.py:246]: | It: 241 | Atk. loss: 484.84149 | Task loss: 10.90481 | T: 39.22s |
+[INFO][(2024-03-13) 00:24:05.492] [attack.py:246]: | It: 251 | Atk. loss: 471.82556 | Task loss: 10.57682 | T: 40.06s |
+[INFO][(2024-03-13) 00:24:06.362] [attack.py:246]: | It: 261 | Atk. loss: 466.40765 | Task loss: 10.12185 | T: 40.93s |
+[INFO][(2024-03-13) 00:24:07.228] [attack.py:246]: | It: 271 | Atk. loss: 414.20325 | Task loss: 10.27393 | T: 41.80s |
+[INFO][(2024-03-13) 00:24:08.083] [attack.py:246]: | It: 281 | Atk. loss: 401.52835 | Task loss: 10.46204 | T: 42.65s |
+[INFO][(2024-03-13) 00:24:08.946] [attack.py:246]: | It: 291 | Atk. loss: 379.58698 | Task loss: 10.03406 | T: 43.52s |
+[INFO][(2024-03-13) 00:24:09.823] [attack.py:246]: | It: 301 | Atk. loss: 369.58075 | Task loss: 10.42635 | T: 44.39s |
+[INFO][(2024-03-13) 00:24:09.824] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-13) 00:24:09.826] [eval.py:9]: Reconstructed text: [' TheRocket Building of the dexter Misty Israelis Jun dads eluc swinging tillrises=$ arms']
+[INFO][(2024-03-13) 00:24:15.773] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:24:15.877] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.2, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.16666666666666666, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:24:16.759] [attack.py:246]: | It: 311 | Atk. loss: 405.94290 | Task loss: 10.40231 | T: 51.33s |
+[INFO][(2024-03-13) 00:24:17.640] [attack.py:246]: | It: 321 | Atk. loss: 427.26868 | Task loss: 10.97109 | T: 52.21s |
+[INFO][(2024-03-13) 00:24:18.506] [attack.py:246]: | It: 331 | Atk. loss: 387.78406 | Task loss: 9.65273 | T: 53.08s |
+[INFO][(2024-03-13) 00:24:19.362] [attack.py:246]: | It: 341 | Atk. loss: 341.06723 | Task loss: 10.23287 | T: 53.93s |
+[INFO][(2024-03-13) 00:24:20.218] [attack.py:246]: | It: 351 | Atk. loss: 341.80548 | Task loss: 10.23373 | T: 54.79s |
+[INFO][(2024-03-13) 00:24:21.079] [attack.py:246]: | It: 361 | Atk. loss: 408.02600 | Task loss: 9.46132 | T: 55.65s |
+[INFO][(2024-03-13) 00:24:21.955] [attack.py:246]: | It: 371 | Atk. loss: 485.58386 | Task loss: 10.26303 | T: 56.52s |
+[INFO][(2024-03-13) 00:24:22.816] [attack.py:246]: | It: 381 | Atk. loss: 375.49335 | Task loss: 10.34386 | T: 57.39s |
+[INFO][(2024-03-13) 00:24:23.666] [attack.py:246]: | It: 391 | Atk. loss: 345.10638 | Task loss: 10.25622 | T: 58.24s |
+[INFO][(2024-03-13) 00:24:24.462] [attack.py:246]: | It: 401 | Atk. loss: 333.12958 | Task loss: 9.50416 | T: 59.03s |
+[INFO][(2024-03-13) 00:24:24.462] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-13) 00:24:24.464] [eval.py:9]: Reconstructed text: [' TheRocket Building of the dexter Misty convenience Jun dads eluc swinging Tillriseshousing arms']
+[INFO][(2024-03-13) 00:24:30.621] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:24:30.722] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.23076923076923078, 0.16666666666666666, 0.09090909090909091, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.16666666666666666, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:24:31.587] [attack.py:246]: | It: 411 | Atk. loss: 324.92450 | Task loss: 9.57981 | T: 66.16s |
+[INFO][(2024-03-13) 00:24:32.455] [attack.py:246]: | It: 421 | Atk. loss: 323.26468 | Task loss: 9.94436 | T: 67.02s |
+[INFO][(2024-03-13) 00:24:33.300] [attack.py:246]: | It: 431 | Atk. loss: 326.85999 | Task loss: 9.80269 | T: 67.87s |
+[INFO][(2024-03-13) 00:24:34.134] [attack.py:246]: | It: 441 | Atk. loss: 315.79822 | Task loss: 10.23666 | T: 68.70s |
+[INFO][(2024-03-13) 00:24:35.000] [attack.py:246]: | It: 451 | Atk. loss: 438.38687 | Task loss: 10.71066 | T: 69.57s |
+[INFO][(2024-03-13) 00:24:35.874] [attack.py:246]: | It: 461 | Atk. loss: 394.73413 | Task loss: 10.21312 | T: 70.44s |
+[INFO][(2024-03-13) 00:24:36.740] [attack.py:246]: | It: 471 | Atk. loss: 320.49359 | Task loss: 9.40151 | T: 71.31s |
+[INFO][(2024-03-13) 00:24:37.605] [attack.py:246]: | It: 481 | Atk. loss: 285.52396 | Task loss: 9.73430 | T: 72.17s |
+[INFO][(2024-03-13) 00:24:38.470] [attack.py:246]: | It: 491 | Atk. loss: 291.11942 | Task loss: 10.01976 | T: 73.04s |
+[INFO][(2024-03-13) 00:24:39.345] [attack.py:246]: | It: 501 | Atk. loss: 416.37589 | Task loss: 8.94709 | T: 73.91s |
+[INFO][(2024-03-13) 00:24:39.345] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-13) 00:24:39.347] [eval.py:9]: Reconstructed text: [' TheLondon Building of the dexterategory suitcase Jun dads eluc swinging Till Provideshousing arms']
+[INFO][(2024-03-13) 00:24:45.238] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:24:45.340] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.23076923076923078, 0.16666666666666666, 0.09090909090909091, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.16666666666666666, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:24:46.219] [attack.py:246]: | It: 511 | Atk. loss: 305.11777 | Task loss: 10.31700 | T: 80.79s |
+[INFO][(2024-03-13) 00:24:47.091] [attack.py:246]: | It: 521 | Atk. loss: 334.53766 | Task loss: 9.56731 | T: 81.66s |
+[INFO][(2024-03-13) 00:24:47.968] [attack.py:246]: | It: 531 | Atk. loss: 288.08472 | Task loss: 9.96626 | T: 82.54s |
+[INFO][(2024-03-13) 00:24:48.838] [attack.py:246]: | It: 541 | Atk. loss: 265.73575 | Task loss: 9.56029 | T: 83.41s |
+[INFO][(2024-03-13) 00:24:49.702] [attack.py:246]: | It: 551 | Atk. loss: 250.11061 | Task loss: 9.51882 | T: 84.27s |
+[INFO][(2024-03-13) 00:24:50.566] [attack.py:246]: | It: 561 | Atk. loss: 243.75471 | Task loss: 9.34309 | T: 85.14s |
+[INFO][(2024-03-13) 00:24:51.426] [attack.py:246]: | It: 571 | Atk. loss: 237.52116 | Task loss: 9.56722 | T: 86.00s |
+[INFO][(2024-03-13) 00:24:52.287] [attack.py:246]: | It: 581 | Atk. loss: 234.18665 | Task loss: 9.40479 | T: 86.86s |
+[INFO][(2024-03-13) 00:24:53.152] [attack.py:246]: | It: 591 | Atk. loss: 247.28194 | Task loss: 9.22711 | T: 87.72s |
+[INFO][(2024-03-13) 00:24:54.022] [attack.py:246]: | It: 601 | Atk. loss: 229.50406 | Task loss: 9.52778 | T: 88.59s |
+[INFO][(2024-03-13) 00:24:54.022] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-13) 00:24:54.024] [eval.py:9]: Reconstructed text: [' The Tower Building of theracialategory accompanying : winds slur near Till Provides enrolledfet']
+[INFO][(2024-03-13) 00:24:59.909] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:25:00.013] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.15353298232904125, "precisions": [0.3076923076923077, 0.25, 0.18181818181818182, 0.1], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.32, "rouge2": 0.2608695652173913, "rougeL": 0.32, "rougeLsum": 0.32}}
+[INFO][(2024-03-13) 00:25:00.886] [attack.py:246]: | It: 611 | Atk. loss: 222.94286 | Task loss: 9.51586 | T: 95.46s |
+[INFO][(2024-03-13) 00:25:01.743] [attack.py:246]: | It: 621 | Atk. loss: 218.80722 | Task loss: 9.35860 | T: 96.31s |
+[INFO][(2024-03-13) 00:25:02.606] [attack.py:246]: | It: 631 | Atk. loss: 230.99493 | Task loss: 9.39080 | T: 97.18s |
+[INFO][(2024-03-13) 00:25:03.464] [attack.py:246]: | It: 641 | Atk. loss: 221.10066 | Task loss: 9.17085 | T: 98.03s |
+[INFO][(2024-03-13) 00:25:04.330] [attack.py:246]: | It: 651 | Atk. loss: 219.12212 | Task loss: 9.32859 | T: 98.90s |
+[INFO][(2024-03-13) 00:25:05.192] [attack.py:246]: | It: 661 | Atk. loss: 212.87024 | Task loss: 9.18122 | T: 99.76s |
+[INFO][(2024-03-13) 00:25:06.054] [attack.py:246]: | It: 671 | Atk. loss: 212.46965 | Task loss: 9.11801 | T: 100.62s |
+[INFO][(2024-03-13) 00:25:06.910] [attack.py:246]: | It: 681 | Atk. loss: 204.35210 | Task loss: 9.19584 | T: 101.48s |
+[INFO][(2024-03-13) 00:25:07.764] [attack.py:246]: | It: 691 | Atk. loss: 210.67691 | Task loss: 9.37438 | T: 102.33s |
+[INFO][(2024-03-13) 00:25:08.623] [attack.py:246]: | It: 701 | Atk. loss: 234.83214 | Task loss: 9.31195 | T: 103.19s |
+[INFO][(2024-03-13) 00:25:08.623] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-13) 00:25:08.626] [eval.py:9]: Reconstructed text: [' The Tower Building of the legalized swing accompanying : witness slur swinging Till Provides enrolledfet']
+[INFO][(2024-03-13) 00:25:14.858] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:25:14.962] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.23014755887081, "precisions": [0.3333333333333333, 0.2857142857142857, 0.23076923076923078, 0.16666666666666666], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.32, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-13) 00:25:15.834] [attack.py:246]: | It: 711 | Atk. loss: 213.15115 | Task loss: 9.15945 | T: 110.40s |
+[INFO][(2024-03-13) 00:25:16.699] [attack.py:246]: | It: 721 | Atk. loss: 211.01549 | Task loss: 9.17671 | T: 111.27s |
+[INFO][(2024-03-13) 00:25:17.563] [attack.py:246]: | It: 731 | Atk. loss: 224.55707 | Task loss: 9.49510 | T: 112.13s |
+[INFO][(2024-03-13) 00:25:18.431] [attack.py:246]: | It: 741 | Atk. loss: 262.58517 | Task loss: 8.82369 | T: 113.00s |
+[INFO][(2024-03-13) 00:25:19.292] [attack.py:246]: | It: 751 | Atk. loss: 207.68365 | Task loss: 9.42407 | T: 113.86s |
+[INFO][(2024-03-13) 00:25:20.154] [attack.py:246]: | It: 761 | Atk. loss: 207.30748 | Task loss: 9.55262 | T: 114.72s |
+[INFO][(2024-03-13) 00:25:21.022] [attack.py:246]: | It: 771 | Atk. loss: 204.75273 | Task loss: 9.45505 | T: 115.59s |
+[INFO][(2024-03-13) 00:25:21.887] [attack.py:246]: | It: 781 | Atk. loss: 196.87003 | Task loss: 9.04133 | T: 116.46s |
+[INFO][(2024-03-13) 00:25:22.756] [attack.py:246]: | It: 791 | Atk. loss: 192.35469 | Task loss: 9.33253 | T: 117.33s |
+[INFO][(2024-03-13) 00:25:23.623] [attack.py:246]: | It: 801 | Atk. loss: 189.35025 | Task loss: 9.23892 | T: 118.19s |
+[INFO][(2024-03-13) 00:25:23.623] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-13) 00:25:23.626] [eval.py:9]: Reconstructed text: [' The Tower Building of the legalized swing accompanying : witnessAlong swinging Every Provides enrolledfet']
+[INFO][(2024-03-13) 00:25:29.571] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:25:29.673] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.23045806594604673, "precisions": [0.35714285714285715, 0.3076923076923077, 0.25, 0.18181818181818182], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.38461538461538464, "rouge2": 0.3333333333333333, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-13) 00:25:30.536] [attack.py:246]: | It: 811 | Atk. loss: 186.47357 | Task loss: 9.08647 | T: 125.11s |
+[INFO][(2024-03-13) 00:25:31.343] [attack.py:246]: | It: 821 | Atk. loss: 189.29822 | Task loss: 9.10331 | T: 125.91s |
+[INFO][(2024-03-13) 00:25:32.185] [attack.py:246]: | It: 831 | Atk. loss: 183.66219 | Task loss: 9.08689 | T: 126.75s |
+[INFO][(2024-03-13) 00:25:33.003] [attack.py:246]: | It: 841 | Atk. loss: 182.09491 | Task loss: 9.08646 | T: 127.57s |
+[INFO][(2024-03-13) 00:25:33.799] [attack.py:246]: | It: 851 | Atk. loss: 181.79865 | Task loss: 9.09459 | T: 128.37s |
+[INFO][(2024-03-13) 00:25:34.593] [attack.py:246]: | It: 861 | Atk. loss: 181.52882 | Task loss: 9.20401 | T: 129.16s |
+[INFO][(2024-03-13) 00:25:35.388] [attack.py:246]: | It: 871 | Atk. loss: 181.26871 | Task loss: 8.97332 | T: 129.96s |
+[INFO][(2024-03-13) 00:25:36.189] [attack.py:246]: | It: 881 | Atk. loss: 179.24165 | Task loss: 8.98550 | T: 130.76s |
+[INFO][(2024-03-13) 00:25:36.989] [attack.py:246]: | It: 891 | Atk. loss: 176.06775 | Task loss: 9.00402 | T: 131.56s |
+[INFO][(2024-03-13) 00:25:37.838] [attack.py:246]: | It: 901 | Atk. loss: 174.88879 | Task loss: 9.11908 | T: 132.41s |
+[INFO][(2024-03-13) 00:25:37.839] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:25:37.841] [eval.py:9]: Reconstructed text: [' The Tower Building of theracial swing accompanying :pole ensuring swinging Every Of enrolledfet']
+[INFO][(2024-03-13) 00:25:44.145] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:25:44.245] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.15411659730503563, "precisions": [0.2857142857142857, 0.23076923076923078, 0.16666666666666666, 0.09090909090909091], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.25, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-13) 00:25:45.123] [attack.py:246]: | It: 911 | Atk. loss: 173.48070 | Task loss: 9.04144 | T: 139.69s |
+[INFO][(2024-03-13) 00:25:45.998] [attack.py:246]: | It: 921 | Atk. loss: 174.53712 | Task loss: 9.05011 | T: 140.57s |
+[INFO][(2024-03-13) 00:25:46.863] [attack.py:246]: | It: 931 | Atk. loss: 171.02707 | Task loss: 9.03240 | T: 141.43s |
+[INFO][(2024-03-13) 00:25:47.665] [attack.py:246]: | It: 941 | Atk. loss: 171.48294 | Task loss: 9.04034 | T: 142.23s |
+[INFO][(2024-03-13) 00:25:48.474] [attack.py:246]: | It: 951 | Atk. loss: 170.39282 | Task loss: 8.98753 | T: 143.04s |
+[INFO][(2024-03-13) 00:25:49.338] [attack.py:246]: | It: 961 | Atk. loss: 168.68011 | Task loss: 9.00148 | T: 143.91s |
+[INFO][(2024-03-13) 00:25:50.204] [attack.py:246]: | It: 971 | Atk. loss: 168.13907 | Task loss: 9.00810 | T: 144.77s |
+[INFO][(2024-03-13) 00:25:51.066] [attack.py:246]: | It: 981 | Atk. loss: 167.42213 | Task loss: 8.97973 | T: 145.64s |
+[INFO][(2024-03-13) 00:25:51.935] [attack.py:246]: | It: 991 | Atk. loss: 167.66727 | Task loss: 8.99305 | T: 146.50s |
+[INFO][(2024-03-13) 00:25:52.715] [attack.py:246]: | It: 1000 | Atk. loss: 166.30931 | Task loss: 8.98126 | T: 147.28s |
+[INFO][(2024-03-13) 00:25:52.716] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:25:52.718] [eval.py:9]: Reconstructed text: [' The Tower Building of theracial swing convenience :pole ensuring swinging Every of enrolledfet']
+[INFO][(2024-03-13) 00:25:58.686] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:25:58.788] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.15411659730503563, "precisions": [0.2857142857142857, 0.23076923076923078, 0.16666666666666666, 0.09090909090909091], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.25, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-13) 00:25:58.788] [main.py:57]: Done in 163.65s.

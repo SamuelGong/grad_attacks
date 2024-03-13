@@ -1,0 +1,224 @@
+[INFO][(2024-03-13) 00:20:27.061] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-13) 00:20:27.062] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 20.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s20_20240313-002027.log"
+}
+[INFO][(2024-03-13) 00:20:33.002] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-13) 00:20:33.002] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-13) 00:20:37.801] [attack.py:246]: | It: 1 | Atk. loss: 15293.01758 | Task loss: 20.70686 | T: 0.10s |
+[INFO][(2024-03-13) 00:20:37.802] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-13) 00:20:37.804] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-13) 00:20:44.031] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:20:44.135] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:20:45.004] [attack.py:246]: | It: 11 | Atk. loss: 3096.83545 | Task loss: 19.15007 | T: 7.30s |
+[INFO][(2024-03-13) 00:20:45.863] [attack.py:246]: | It: 21 | Atk. loss: 1690.84338 | Task loss: 16.85341 | T: 8.16s |
+[INFO][(2024-03-13) 00:20:46.731] [attack.py:246]: | It: 31 | Atk. loss: 1509.63782 | Task loss: 15.11069 | T: 9.03s |
+[INFO][(2024-03-13) 00:20:47.601] [attack.py:246]: | It: 41 | Atk. loss: 1337.31665 | Task loss: 13.95852 | T: 9.90s |
+[INFO][(2024-03-13) 00:20:48.471] [attack.py:246]: | It: 51 | Atk. loss: 1274.55054 | Task loss: 12.90170 | T: 10.77s |
+[INFO][(2024-03-13) 00:20:49.346] [attack.py:246]: | It: 61 | Atk. loss: 1228.67261 | Task loss: 12.34435 | T: 11.64s |
+[INFO][(2024-03-13) 00:20:50.221] [attack.py:246]: | It: 71 | Atk. loss: 1197.31274 | Task loss: 12.13273 | T: 12.52s |
+[INFO][(2024-03-13) 00:20:51.049] [attack.py:246]: | It: 81 | Atk. loss: 1160.53540 | Task loss: 12.34111 | T: 13.34s |
+[INFO][(2024-03-13) 00:20:51.856] [attack.py:246]: | It: 91 | Atk. loss: 1157.29626 | Task loss: 11.93240 | T: 14.15s |
+[INFO][(2024-03-13) 00:20:52.718] [attack.py:246]: | It: 101 | Atk. loss: 1149.20972 | Task loss: 12.12043 | T: 15.01s |
+[INFO][(2024-03-13) 00:20:52.719] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-13) 00:20:52.721] [eval.py:9]: Reconstructed text: [' The mighty keyword ());ling bases Savage bud colorful Lightning liquidity marital Jerusalem disapprovalARAfet']
+[INFO][(2024-03-13) 00:20:58.650] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:20:58.753] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.058823529411764705, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0625, "translation_length": 17, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-13) 00:20:59.611] [attack.py:246]: | It: 111 | Atk. loss: 1044.22522 | Task loss: 11.72752 | T: 21.91s |
+[INFO][(2024-03-13) 00:21:00.470] [attack.py:246]: | It: 121 | Atk. loss: 830.71057 | Task loss: 11.84650 | T: 22.77s |
+[INFO][(2024-03-13) 00:21:01.326] [attack.py:246]: | It: 131 | Atk. loss: 595.48669 | Task loss: 11.59616 | T: 23.62s |
+[INFO][(2024-03-13) 00:21:02.194] [attack.py:246]: | It: 141 | Atk. loss: 469.28568 | Task loss: 12.01389 | T: 24.49s |
+[INFO][(2024-03-13) 00:21:03.056] [attack.py:246]: | It: 151 | Atk. loss: 483.30426 | Task loss: 10.39242 | T: 25.35s |
+[INFO][(2024-03-13) 00:21:03.926] [attack.py:246]: | It: 161 | Atk. loss: 423.05386 | Task loss: 11.63695 | T: 26.22s |
+[INFO][(2024-03-13) 00:21:04.787] [attack.py:246]: | It: 171 | Atk. loss: 366.74893 | Task loss: 10.33131 | T: 27.08s |
+[INFO][(2024-03-13) 00:21:05.647] [attack.py:246]: | It: 181 | Atk. loss: 390.40109 | Task loss: 11.26495 | T: 27.94s |
+[INFO][(2024-03-13) 00:21:06.505] [attack.py:246]: | It: 191 | Atk. loss: 344.39496 | Task loss: 9.94730 | T: 28.80s |
+[INFO][(2024-03-13) 00:21:07.371] [attack.py:246]: | It: 201 | Atk. loss: 320.51489 | Task loss: 10.39044 | T: 29.67s |
+[INFO][(2024-03-13) 00:21:07.372] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-13) 00:21:07.374] [eval.py:9]: Reconstructed text: [' The troutTheof Colonial buildingrocket tool BluefoundWASHINGTON religious unhappy helps positionalfet']
+[INFO][(2024-03-13) 00:21:13.505] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:21:13.611] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.1, 0.0, 0.0, 0.0], "brevity_penalty": 0.5488116360940264, "length_ratio": 0.625, "translation_length": 10, "reference_length": 16}, "rouge": {"rouge1": 0.08695652173913043, "rouge2": 0.0, "rougeL": 0.08695652173913043, "rougeLsum": 0.08695652173913043}}
+[INFO][(2024-03-13) 00:21:14.422] [attack.py:246]: | It: 211 | Atk. loss: 285.00253 | Task loss: 10.13270 | T: 36.72s |
+[INFO][(2024-03-13) 00:21:15.289] [attack.py:246]: | It: 221 | Atk. loss: 266.92194 | Task loss: 10.15573 | T: 37.59s |
+[INFO][(2024-03-13) 00:21:16.156] [attack.py:246]: | It: 231 | Atk. loss: 287.97195 | Task loss: 10.08599 | T: 38.45s |
+[INFO][(2024-03-13) 00:21:17.021] [attack.py:246]: | It: 241 | Atk. loss: 290.99612 | Task loss: 9.69670 | T: 39.32s |
+[INFO][(2024-03-13) 00:21:17.848] [attack.py:246]: | It: 251 | Atk. loss: 270.76514 | Task loss: 10.44590 | T: 40.14s |
+[INFO][(2024-03-13) 00:21:18.724] [attack.py:246]: | It: 261 | Atk. loss: 255.39163 | Task loss: 9.76927 | T: 41.02s |
+[INFO][(2024-03-13) 00:21:19.594] [attack.py:246]: | It: 271 | Atk. loss: 251.11430 | Task loss: 10.09011 | T: 41.89s |
+[INFO][(2024-03-13) 00:21:20.474] [attack.py:246]: | It: 281 | Atk. loss: 235.02391 | Task loss: 9.61055 | T: 42.77s |
+[INFO][(2024-03-13) 00:21:21.346] [attack.py:246]: | It: 291 | Atk. loss: 233.99068 | Task loss: 9.75638 | T: 43.64s |
+[INFO][(2024-03-13) 00:21:22.219] [attack.py:246]: | It: 301 | Atk. loss: 223.81380 | Task loss: 9.58873 | T: 44.51s |
+[INFO][(2024-03-13) 00:21:22.220] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-13) 00:21:22.222] [eval.py:9]: Reconstructed text: [' The Tower Buildingof An building Hotel waiver differentfound London Deputy unhappy Reporting spatialfet']
+[INFO][(2024-03-13) 00:21:28.348] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:21:28.450] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.15384615384615385, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.08333333333333333, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:21:29.335] [attack.py:246]: | It: 311 | Atk. loss: 223.65332 | Task loss: 9.62946 | T: 51.63s |
+[INFO][(2024-03-13) 00:21:30.208] [attack.py:246]: | It: 321 | Atk. loss: 215.89023 | Task loss: 9.27668 | T: 52.50s |
+[INFO][(2024-03-13) 00:21:31.079] [attack.py:246]: | It: 331 | Atk. loss: 209.77992 | Task loss: 9.40173 | T: 53.37s |
+[INFO][(2024-03-13) 00:21:31.884] [attack.py:246]: | It: 341 | Atk. loss: 211.86446 | Task loss: 9.49481 | T: 54.18s |
+[INFO][(2024-03-13) 00:21:32.690] [attack.py:246]: | It: 351 | Atk. loss: 199.02316 | Task loss: 9.01798 | T: 54.99s |
+[INFO][(2024-03-13) 00:21:33.497] [attack.py:246]: | It: 361 | Atk. loss: 197.12140 | Task loss: 9.18970 | T: 55.79s |
+[INFO][(2024-03-13) 00:21:34.306] [attack.py:246]: | It: 371 | Atk. loss: 218.59718 | Task loss: 8.64962 | T: 56.60s |
+[INFO][(2024-03-13) 00:21:35.107] [attack.py:246]: | It: 381 | Atk. loss: 210.60573 | Task loss: 9.40281 | T: 57.40s |
+[INFO][(2024-03-13) 00:21:35.909] [attack.py:246]: | It: 391 | Atk. loss: 198.34189 | Task loss: 8.68196 | T: 58.20s |
+[INFO][(2024-03-13) 00:21:36.713] [attack.py:246]: | It: 401 | Atk. loss: 192.27823 | Task loss: 9.21044 | T: 59.01s |
+[INFO][(2024-03-13) 00:21:36.714] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-13) 00:21:36.716] [eval.py:9]: Reconstructed text: [' The Tower Building of the Tower Hotel structure differentregister London Deputy Genius Reporting spatialfet']
+[INFO][(2024-03-13) 00:21:42.481] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:21:42.583] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.23045806594604673, "precisions": [0.35714285714285715, 0.3076923076923077, 0.25, 0.18181818181818182], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.32, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-13) 00:21:43.409] [attack.py:246]: | It: 411 | Atk. loss: 183.86510 | Task loss: 8.98258 | T: 65.71s |
+[INFO][(2024-03-13) 00:21:44.228] [attack.py:246]: | It: 421 | Atk. loss: 189.87674 | Task loss: 8.55387 | T: 66.52s |
+[INFO][(2024-03-13) 00:21:45.090] [attack.py:246]: | It: 431 | Atk. loss: 176.39018 | Task loss: 8.92171 | T: 67.39s |
+[INFO][(2024-03-13) 00:21:45.963] [attack.py:246]: | It: 441 | Atk. loss: 194.12633 | Task loss: 9.20592 | T: 68.26s |
+[INFO][(2024-03-13) 00:21:46.822] [attack.py:246]: | It: 451 | Atk. loss: 182.83504 | Task loss: 8.71659 | T: 69.12s |
+[INFO][(2024-03-13) 00:21:47.684] [attack.py:246]: | It: 461 | Atk. loss: 172.37273 | Task loss: 8.85633 | T: 69.98s |
+[INFO][(2024-03-13) 00:21:48.546] [attack.py:246]: | It: 471 | Atk. loss: 171.01155 | Task loss: 8.80686 | T: 70.84s |
+[INFO][(2024-03-13) 00:21:49.415] [attack.py:246]: | It: 481 | Atk. loss: 173.91225 | Task loss: 8.90190 | T: 71.71s |
+[INFO][(2024-03-13) 00:21:50.282] [attack.py:246]: | It: 491 | Atk. loss: 171.84688 | Task loss: 8.47985 | T: 72.58s |
+[INFO][(2024-03-13) 00:21:51.143] [attack.py:246]: | It: 501 | Atk. loss: 173.03238 | Task loss: 8.77309 | T: 73.44s |
+[INFO][(2024-03-13) 00:21:51.144] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-13) 00:21:51.146] [eval.py:9]: Reconstructed text: [' The Tower Building of the Tower Hotel structure Blueregister investigated infiltration Genius Pledge positionalfet']
+[INFO][(2024-03-13) 00:21:57.634] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:21:57.738] [eval.py:31]: Metric report: {"accuracy": 0.3125, "bleu": {"bleu": 0.23045806594604673, "precisions": [0.35714285714285715, 0.3076923076923077, 0.25, 0.18181818181818182], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.32, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-13) 00:21:58.603] [attack.py:246]: | It: 511 | Atk. loss: 168.07097 | Task loss: 8.81571 | T: 80.90s |
+[INFO][(2024-03-13) 00:21:59.429] [attack.py:246]: | It: 521 | Atk. loss: 180.44397 | Task loss: 8.94668 | T: 81.72s |
+[INFO][(2024-03-13) 00:22:00.240] [attack.py:246]: | It: 531 | Atk. loss: 172.95119 | Task loss: 8.49379 | T: 82.54s |
+[INFO][(2024-03-13) 00:22:01.103] [attack.py:246]: | It: 541 | Atk. loss: 174.87402 | Task loss: 8.94308 | T: 83.40s |
+[INFO][(2024-03-13) 00:22:01.971] [attack.py:246]: | It: 551 | Atk. loss: 165.09923 | Task loss: 8.68967 | T: 84.27s |
+[INFO][(2024-03-13) 00:22:02.831] [attack.py:246]: | It: 561 | Atk. loss: 186.55525 | Task loss: 8.19814 | T: 85.13s |
+[INFO][(2024-03-13) 00:22:03.696] [attack.py:246]: | It: 571 | Atk. loss: 170.02031 | Task loss: 8.82925 | T: 85.99s |
+[INFO][(2024-03-13) 00:22:04.574] [attack.py:246]: | It: 581 | Atk. loss: 168.70399 | Task loss: 8.24647 | T: 86.87s |
+[INFO][(2024-03-13) 00:22:05.436] [attack.py:246]: | It: 591 | Atk. loss: 159.25092 | Task loss: 8.59547 | T: 87.73s |
+[INFO][(2024-03-13) 00:22:06.308] [attack.py:246]: | It: 601 | Atk. loss: 159.68161 | Task loss: 8.39055 | T: 88.60s |
+[INFO][(2024-03-13) 00:22:06.309] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-13) 00:22:06.311] [eval.py:9]: Reconstructed text: [' The Tower Little of the Tower Hotel structure Blue Empires investigated infiltration darkened Pledge positionalfet']
+[INFO][(2024-03-13) 00:22:12.482] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:22:12.583] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.14285714285714285, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.15384615384615383, "rougeL": 0.28571428571428575, "rougeLsum": 0.28571428571428575}}
+[INFO][(2024-03-13) 00:22:13.453] [attack.py:246]: | It: 611 | Atk. loss: 156.14835 | Task loss: 8.45267 | T: 95.75s |
+[INFO][(2024-03-13) 00:22:14.310] [attack.py:246]: | It: 621 | Atk. loss: 181.27570 | Task loss: 8.18281 | T: 96.61s |
+[INFO][(2024-03-13) 00:22:15.175] [attack.py:246]: | It: 631 | Atk. loss: 173.84827 | Task loss: 8.14738 | T: 97.47s |
+[INFO][(2024-03-13) 00:22:16.033] [attack.py:246]: | It: 641 | Atk. loss: 162.24208 | Task loss: 8.73792 | T: 98.33s |
+[INFO][(2024-03-13) 00:22:16.891] [attack.py:246]: | It: 651 | Atk. loss: 179.49582 | Task loss: 9.05145 | T: 99.19s |
+[INFO][(2024-03-13) 00:22:17.745] [attack.py:246]: | It: 661 | Atk. loss: 155.93945 | Task loss: 8.56916 | T: 100.04s |
+[INFO][(2024-03-13) 00:22:18.599] [attack.py:246]: | It: 671 | Atk. loss: 155.02808 | Task loss: 8.27185 | T: 100.90s |
+[INFO][(2024-03-13) 00:22:19.418] [attack.py:246]: | It: 681 | Atk. loss: 151.29259 | Task loss: 8.51642 | T: 101.71s |
+[INFO][(2024-03-13) 00:22:20.213] [attack.py:246]: | It: 691 | Atk. loss: 149.53030 | Task loss: 8.58136 | T: 102.51s |
+[INFO][(2024-03-13) 00:22:21.013] [attack.py:246]: | It: 701 | Atk. loss: 145.78049 | Task loss: 8.49944 | T: 103.31s |
+[INFO][(2024-03-13) 00:22:21.014] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-13) 00:22:21.016] [eval.py:9]: Reconstructed text: [' The Tower Little of the Tower Hotel structure Red Empires investigated infiltration darkened Pledge positionalfet']
+[INFO][(2024-03-13) 00:22:26.820] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:22:26.924] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.14285714285714285, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.15384615384615383, "rougeL": 0.28571428571428575, "rougeLsum": 0.28571428571428575}}
+[INFO][(2024-03-13) 00:22:27.796] [attack.py:246]: | It: 711 | Atk. loss: 145.89670 | Task loss: 8.40776 | T: 110.09s |
+[INFO][(2024-03-13) 00:22:28.664] [attack.py:246]: | It: 721 | Atk. loss: 146.39030 | Task loss: 8.24337 | T: 110.96s |
+[INFO][(2024-03-13) 00:22:29.534] [attack.py:246]: | It: 731 | Atk. loss: 143.24088 | Task loss: 8.42182 | T: 111.83s |
+[INFO][(2024-03-13) 00:22:30.391] [attack.py:246]: | It: 741 | Atk. loss: 144.37807 | Task loss: 8.28611 | T: 112.69s |
+[INFO][(2024-03-13) 00:22:31.257] [attack.py:246]: | It: 751 | Atk. loss: 148.23080 | Task loss: 8.34312 | T: 113.55s |
+[INFO][(2024-03-13) 00:22:32.122] [attack.py:246]: | It: 761 | Atk. loss: 147.59279 | Task loss: 8.35801 | T: 114.42s |
+[INFO][(2024-03-13) 00:22:32.987] [attack.py:246]: | It: 771 | Atk. loss: 140.63405 | Task loss: 8.33376 | T: 115.28s |
+[INFO][(2024-03-13) 00:22:33.854] [attack.py:246]: | It: 781 | Atk. loss: 140.48433 | Task loss: 8.39862 | T: 116.15s |
+[INFO][(2024-03-13) 00:22:34.710] [attack.py:246]: | It: 791 | Atk. loss: 139.62239 | Task loss: 8.25282 | T: 117.01s |
+[INFO][(2024-03-13) 00:22:35.566] [attack.py:246]: | It: 801 | Atk. loss: 142.29982 | Task loss: 8.45998 | T: 117.86s |
+[INFO][(2024-03-13) 00:22:35.567] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-13) 00:22:35.569] [eval.py:9]: Reconstructed text: [' The Tower Little of the Tower Little structure Red ecosystemerous Rockmus Pledge positionalfet']
+[INFO][(2024-03-13) 00:22:41.770] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:22:41.875] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.38461538461538464, 0.16666666666666666, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.38461538461538464, "rouge2": 0.16666666666666666, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-13) 00:22:42.744] [attack.py:246]: | It: 811 | Atk. loss: 139.11362 | Task loss: 8.18679 | T: 125.04s |
+[INFO][(2024-03-13) 00:22:43.599] [attack.py:246]: | It: 821 | Atk. loss: 136.19093 | Task loss: 8.22477 | T: 125.90s |
+[INFO][(2024-03-13) 00:22:44.459] [attack.py:246]: | It: 831 | Atk. loss: 135.13142 | Task loss: 8.28658 | T: 126.76s |
+[INFO][(2024-03-13) 00:22:45.319] [attack.py:246]: | It: 841 | Atk. loss: 134.07495 | Task loss: 8.22241 | T: 127.61s |
+[INFO][(2024-03-13) 00:22:46.174] [attack.py:246]: | It: 851 | Atk. loss: 134.83228 | Task loss: 8.12618 | T: 128.47s |
+[INFO][(2024-03-13) 00:22:47.030] [attack.py:246]: | It: 861 | Atk. loss: 135.41342 | Task loss: 8.33581 | T: 129.33s |
+[INFO][(2024-03-13) 00:22:47.886] [attack.py:246]: | It: 871 | Atk. loss: 135.12666 | Task loss: 8.10689 | T: 130.18s |
+[INFO][(2024-03-13) 00:22:48.731] [attack.py:246]: | It: 881 | Atk. loss: 133.47694 | Task loss: 8.26735 | T: 131.03s |
+[INFO][(2024-03-13) 00:22:49.588] [attack.py:246]: | It: 891 | Atk. loss: 131.19853 | Task loss: 8.17173 | T: 131.88s |
+[INFO][(2024-03-13) 00:22:50.443] [attack.py:246]: | It: 901 | Atk. loss: 131.22661 | Task loss: 8.11503 | T: 132.74s |
+[INFO][(2024-03-13) 00:22:50.444] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:22:50.446] [eval.py:9]: Reconstructed text: [' The Tower Little of the Tower Little which Red ecosystemerous Rockmus Pledge positionalfet']
+[INFO][(2024-03-13) 00:22:56.577] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:22:56.679] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.38461538461538464, 0.16666666666666666, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.38461538461538464, "rouge2": 0.16666666666666666, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-13) 00:22:57.559] [attack.py:246]: | It: 911 | Atk. loss: 131.35179 | Task loss: 8.23809 | T: 139.85s |
+[INFO][(2024-03-13) 00:22:58.458] [attack.py:246]: | It: 921 | Atk. loss: 128.88278 | Task loss: 8.14373 | T: 140.75s |
+[INFO][(2024-03-13) 00:22:59.343] [attack.py:246]: | It: 931 | Atk. loss: 130.33362 | Task loss: 8.21548 | T: 141.64s |
+[INFO][(2024-03-13) 00:23:00.210] [attack.py:246]: | It: 941 | Atk. loss: 129.42459 | Task loss: 8.06884 | T: 142.51s |
+[INFO][(2024-03-13) 00:23:01.080] [attack.py:246]: | It: 951 | Atk. loss: 127.84283 | Task loss: 8.13448 | T: 143.38s |
+[INFO][(2024-03-13) 00:23:01.952] [attack.py:246]: | It: 961 | Atk. loss: 127.88283 | Task loss: 8.07380 | T: 144.25s |
+[INFO][(2024-03-13) 00:23:02.818] [attack.py:246]: | It: 971 | Atk. loss: 127.23536 | Task loss: 8.14982 | T: 145.11s |
+[INFO][(2024-03-13) 00:23:03.679] [attack.py:246]: | It: 981 | Atk. loss: 126.83558 | Task loss: 8.06804 | T: 145.97s |
+[INFO][(2024-03-13) 00:23:04.554] [attack.py:246]: | It: 991 | Atk. loss: 126.41071 | Task loss: 8.11253 | T: 146.85s |
+[INFO][(2024-03-13) 00:23:05.334] [attack.py:246]: | It: 1000 | Atk. loss: 126.23329 | Task loss: 8.05932 | T: 147.63s |
+[INFO][(2024-03-13) 00:23:05.334] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:23:05.336] [eval.py:9]: Reconstructed text: [' The Tower Little of the Tower Little which Red ecosystemerous Rockmus Pledge positionalfet']
+[INFO][(2024-03-13) 00:23:11.566] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:23:11.670] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.38461538461538464, 0.16666666666666666, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.38461538461538464, "rouge2": 0.16666666666666666, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-13) 00:23:11.670] [main.py:57]: Done in 164.66s.

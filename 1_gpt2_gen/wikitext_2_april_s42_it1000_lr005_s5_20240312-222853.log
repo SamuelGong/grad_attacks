@@ -1,0 +1,224 @@
+[INFO][(2024-03-12) 22:28:53.082] [main.py:25]: Git branch: main, Git commit: 61af44c
+[INFO][(2024-03-12) 22:28:53.083] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 5.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s5_20240312-222853.log"
+}
+[INFO][(2024-03-12) 22:28:58.840] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-12) 22:28:58.840] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-12) 22:29:03.602] [attack.py:246]: | It: 1 | Atk. loss: 14099.59668 | Task loss: 20.70686 | T: 0.10s |
+[INFO][(2024-03-12) 22:29:03.602] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-12) 22:29:03.604] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-12) 22:29:11.511] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:29:11.617] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 22:29:12.496] [attack.py:246]: | It: 11 | Atk. loss: 3368.65820 | Task loss: 19.14091 | T: 8.99s |
+[INFO][(2024-03-12) 22:29:13.374] [attack.py:246]: | It: 21 | Atk. loss: 1834.02917 | Task loss: 17.46139 | T: 9.87s |
+[INFO][(2024-03-12) 22:29:14.256] [attack.py:246]: | It: 31 | Atk. loss: 1689.07312 | Task loss: 15.41438 | T: 10.75s |
+[INFO][(2024-03-12) 22:29:15.131] [attack.py:246]: | It: 41 | Atk. loss: 1189.28406 | Task loss: 13.40820 | T: 11.63s |
+[INFO][(2024-03-12) 22:29:16.010] [attack.py:246]: | It: 51 | Atk. loss: 1162.17334 | Task loss: 12.53211 | T: 12.51s |
+[INFO][(2024-03-12) 22:29:16.888] [attack.py:246]: | It: 61 | Atk. loss: 1128.68872 | Task loss: 12.25434 | T: 13.38s |
+[INFO][(2024-03-12) 22:29:17.766] [attack.py:246]: | It: 71 | Atk. loss: 1116.48499 | Task loss: 12.13477 | T: 14.26s |
+[INFO][(2024-03-12) 22:29:18.636] [attack.py:246]: | It: 81 | Atk. loss: 1100.79834 | Task loss: 12.26255 | T: 15.13s |
+[INFO][(2024-03-12) 22:29:19.517] [attack.py:246]: | It: 91 | Atk. loss: 1062.86572 | Task loss: 12.27553 | T: 16.01s |
+[INFO][(2024-03-12) 22:29:20.400] [attack.py:246]: | It: 101 | Atk. loss: 1016.19818 | Task loss: 11.81577 | T: 16.89s |
+[INFO][(2024-03-12) 22:29:20.400] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-12) 22:29:20.402] [eval.py:9]: Reconstructed text: [' Theaut my api suppressing Allied Rudolph navig Jonas swing disapprove nutritional turnaround drying wovenfet']
+[INFO][(2024-03-12) 22:29:26.812] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:29:26.914] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 22:29:27.804] [attack.py:246]: | It: 111 | Atk. loss: 927.62933 | Task loss: 12.31899 | T: 24.30s |
+[INFO][(2024-03-12) 22:29:28.672] [attack.py:246]: | It: 121 | Atk. loss: 699.31927 | Task loss: 11.77959 | T: 25.17s |
+[INFO][(2024-03-12) 22:29:29.540] [attack.py:246]: | It: 131 | Atk. loss: 437.60187 | Task loss: 11.64879 | T: 26.03s |
+[INFO][(2024-03-12) 22:29:30.415] [attack.py:246]: | It: 141 | Atk. loss: 358.36255 | Task loss: 11.07860 | T: 26.91s |
+[INFO][(2024-03-12) 22:29:31.252] [attack.py:246]: | It: 151 | Atk. loss: 377.40344 | Task loss: 10.84986 | T: 27.75s |
+[INFO][(2024-03-12) 22:29:32.093] [attack.py:246]: | It: 161 | Atk. loss: 327.91632 | Task loss: 10.47631 | T: 28.59s |
+[INFO][(2024-03-12) 22:29:32.956] [attack.py:246]: | It: 171 | Atk. loss: 316.66333 | Task loss: 10.44992 | T: 29.45s |
+[INFO][(2024-03-12) 22:29:33.828] [attack.py:246]: | It: 181 | Atk. loss: 293.96399 | Task loss: 10.08476 | T: 30.32s |
+[INFO][(2024-03-12) 22:29:34.694] [attack.py:246]: | It: 191 | Atk. loss: 274.39899 | Task loss: 10.08447 | T: 31.19s |
+[INFO][(2024-03-12) 22:29:35.568] [attack.py:246]: | It: 201 | Atk. loss: 275.13251 | Task loss: 9.82710 | T: 32.06s |
+[INFO][(2024-03-12) 22:29:35.569] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-12) 22:29:35.571] [eval.py:9]: Reconstructed text: [' The Legthebuiltscenes Tower Tower evac DO racingARY socioeconomicoyer participates748bridge']
+[INFO][(2024-03-12) 22:29:41.806] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:29:41.912] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.2222222222222222, 0.0, 0.0, 0.0], "brevity_penalty": 0.45942582403592663, "length_ratio": 0.5625, "translation_length": 9, "reference_length": 16}, "rouge": {"rouge1": 0.18181818181818185, "rouge2": 0.0, "rougeL": 0.18181818181818185, "rougeLsum": 0.18181818181818185}}
+[INFO][(2024-03-12) 22:29:42.787] [attack.py:246]: | It: 211 | Atk. loss: 256.03580 | Task loss: 9.70623 | T: 39.28s |
+[INFO][(2024-03-12) 22:29:43.669] [attack.py:246]: | It: 221 | Atk. loss: 252.58246 | Task loss: 9.95923 | T: 40.16s |
+[INFO][(2024-03-12) 22:29:44.535] [attack.py:246]: | It: 231 | Atk. loss: 231.89590 | Task loss: 9.36984 | T: 41.03s |
+[INFO][(2024-03-12) 22:29:45.409] [attack.py:246]: | It: 241 | Atk. loss: 228.95258 | Task loss: 9.53497 | T: 41.90s |
+[INFO][(2024-03-12) 22:29:46.287] [attack.py:246]: | It: 251 | Atk. loss: 213.00185 | Task loss: 9.15438 | T: 42.78s |
+[INFO][(2024-03-12) 22:29:47.146] [attack.py:246]: | It: 261 | Atk. loss: 217.92490 | Task loss: 9.23348 | T: 43.64s |
+[INFO][(2024-03-12) 22:29:48.015] [attack.py:246]: | It: 271 | Atk. loss: 222.50221 | Task loss: 9.20885 | T: 44.51s |
+[INFO][(2024-03-12) 22:29:48.898] [attack.py:246]: | It: 281 | Atk. loss: 213.53595 | Task loss: 8.86130 | T: 45.39s |
+[INFO][(2024-03-12) 22:29:49.767] [attack.py:246]: | It: 291 | Atk. loss: 206.42970 | Task loss: 9.00489 | T: 46.26s |
+[INFO][(2024-03-12) 22:29:50.635] [attack.py:246]: | It: 301 | Atk. loss: 310.08044 | Task loss: 8.94604 | T: 47.13s |
+[INFO][(2024-03-12) 22:29:50.636] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-12) 22:29:50.638] [eval.py:9]: Reconstructed text: [' The Tower building(), suppressing Tower Tower Brighton Link manufacturingWhile socioeconomicxton hars748fet']
+[INFO][(2024-03-12) 22:29:57.324] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:29:57.428] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.21428571428571427, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.24999999999999994, "rouge2": 0.1818181818181818, "rougeL": 0.24999999999999994, "rougeLsum": 0.24999999999999994}}
+[INFO][(2024-03-12) 22:29:58.298] [attack.py:246]: | It: 311 | Atk. loss: 233.78120 | Task loss: 9.42719 | T: 54.79s |
+[INFO][(2024-03-12) 22:29:59.148] [attack.py:246]: | It: 321 | Atk. loss: 210.95312 | Task loss: 9.16831 | T: 55.64s |
+[INFO][(2024-03-12) 22:30:00.008] [attack.py:246]: | It: 331 | Atk. loss: 203.49594 | Task loss: 8.58321 | T: 56.50s |
+[INFO][(2024-03-12) 22:30:00.871] [attack.py:246]: | It: 341 | Atk. loss: 194.27333 | Task loss: 8.62306 | T: 57.37s |
+[INFO][(2024-03-12) 22:30:01.744] [attack.py:246]: | It: 351 | Atk. loss: 194.30373 | Task loss: 8.82685 | T: 58.24s |
+[INFO][(2024-03-12) 22:30:02.618] [attack.py:246]: | It: 361 | Atk. loss: 187.12366 | Task loss: 8.96934 | T: 59.11s |
+[INFO][(2024-03-12) 22:30:03.486] [attack.py:246]: | It: 371 | Atk. loss: 183.83464 | Task loss: 8.69141 | T: 59.98s |
+[INFO][(2024-03-12) 22:30:04.362] [attack.py:246]: | It: 381 | Atk. loss: 172.97331 | Task loss: 8.64473 | T: 60.86s |
+[INFO][(2024-03-12) 22:30:05.230] [attack.py:246]: | It: 391 | Atk. loss: 167.18741 | Task loss: 8.33198 | T: 61.73s |
+[INFO][(2024-03-12) 22:30:06.083] [attack.py:246]: | It: 401 | Atk. loss: 164.67731 | Task loss: 8.07242 | T: 62.58s |
+[INFO][(2024-03-12) 22:30:06.084] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-12) 22:30:06.086] [eval.py:9]: Reconstructed text: [' The Tower Building Building hold Tower Tower Planet Building manufacturing Outdoor restaurant oflatest inhumanbridge']
+[INFO][(2024-03-12) 22:30:12.690] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:30:12.792] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.21428571428571427, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.22222222222222224, "rouge2": 0.16, "rougeL": 0.22222222222222224, "rougeLsum": 0.22222222222222224}}
+[INFO][(2024-03-12) 22:30:13.673] [attack.py:246]: | It: 411 | Atk. loss: 187.39438 | Task loss: 7.99373 | T: 70.17s |
+[INFO][(2024-03-12) 22:30:14.557] [attack.py:246]: | It: 421 | Atk. loss: 273.09033 | Task loss: 9.27429 | T: 71.05s |
+[INFO][(2024-03-12) 22:30:15.435] [attack.py:246]: | It: 431 | Atk. loss: 170.41690 | Task loss: 8.47557 | T: 71.93s |
+[INFO][(2024-03-12) 22:30:16.313] [attack.py:246]: | It: 441 | Atk. loss: 159.27463 | Task loss: 7.88434 | T: 72.81s |
+[INFO][(2024-03-12) 22:30:17.194] [attack.py:246]: | It: 451 | Atk. loss: 160.15921 | Task loss: 7.98420 | T: 73.69s |
+[INFO][(2024-03-12) 22:30:18.083] [attack.py:246]: | It: 461 | Atk. loss: 139.82123 | Task loss: 7.95791 | T: 74.58s |
+[INFO][(2024-03-12) 22:30:18.972] [attack.py:246]: | It: 471 | Atk. loss: 138.12454 | Task loss: 7.92786 | T: 75.47s |
+[INFO][(2024-03-12) 22:30:19.864] [attack.py:246]: | It: 481 | Atk. loss: 137.71967 | Task loss: 7.88136 | T: 76.36s |
+[INFO][(2024-03-12) 22:30:20.743] [attack.py:246]: | It: 491 | Atk. loss: 152.72572 | Task loss: 7.54213 | T: 77.24s |
+[INFO][(2024-03-12) 22:30:21.611] [attack.py:246]: | It: 501 | Atk. loss: 140.57555 | Task loss: 7.56070 | T: 78.11s |
+[INFO][(2024-03-12) 22:30:21.611] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-12) 22:30:21.613] [eval.py:9]: Reconstructed text: [' The Tower the Building Building Little Tower Zeit Building buildingWhile Building oflatestSpanishbridge']
+[INFO][(2024-03-12) 22:30:27.998] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:30:28.104] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.4166666666666667, 0.09090909090909091, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.4, "rouge2": 0.08695652173913043, "rougeL": 0.32, "rougeLsum": 0.32}}
+[INFO][(2024-03-12) 22:30:28.970] [attack.py:246]: | It: 511 | Atk. loss: 133.25551 | Task loss: 8.02090 | T: 85.46s |
+[INFO][(2024-03-12) 22:30:29.830] [attack.py:246]: | It: 521 | Atk. loss: 134.33235 | Task loss: 7.46591 | T: 86.32s |
+[INFO][(2024-03-12) 22:30:30.695] [attack.py:246]: | It: 531 | Atk. loss: 129.93655 | Task loss: 7.84071 | T: 87.19s |
+[INFO][(2024-03-12) 22:30:31.568] [attack.py:246]: | It: 541 | Atk. loss: 151.22302 | Task loss: 8.21366 | T: 88.06s |
+[INFO][(2024-03-12) 22:30:32.438] [attack.py:246]: | It: 551 | Atk. loss: 123.23521 | Task loss: 7.56535 | T: 88.93s |
+[INFO][(2024-03-12) 22:30:33.315] [attack.py:246]: | It: 561 | Atk. loss: 121.98687 | Task loss: 7.44061 | T: 89.81s |
+[INFO][(2024-03-12) 22:30:34.190] [attack.py:246]: | It: 571 | Atk. loss: 127.37898 | Task loss: 8.11081 | T: 90.68s |
+[INFO][(2024-03-12) 22:30:35.071] [attack.py:246]: | It: 581 | Atk. loss: 118.31577 | Task loss: 7.93740 | T: 91.57s |
+[INFO][(2024-03-12) 22:30:35.935] [attack.py:246]: | It: 591 | Atk. loss: 120.25285 | Task loss: 7.31757 | T: 92.43s |
+[INFO][(2024-03-12) 22:30:36.812] [attack.py:246]: | It: 601 | Atk. loss: 114.90589 | Task loss: 7.90884 | T: 93.31s |
+[INFO][(2024-03-12) 22:30:36.813] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-12) 22:30:36.815] [eval.py:9]: Reconstructed text: [' The Tower the in building Little Tower futuristic Building buildingWhile Building oflatestSpanishbridge']
+[INFO][(2024-03-12) 22:30:43.510] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:30:43.614] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.4166666666666667, 0.09090909090909091, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.4, "rouge2": 0.08695652173913043, "rougeL": 0.32, "rougeLsum": 0.32}}
+[INFO][(2024-03-12) 22:30:44.486] [attack.py:246]: | It: 611 | Atk. loss: 112.49190 | Task loss: 7.34601 | T: 100.98s |
+[INFO][(2024-03-12) 22:30:45.356] [attack.py:246]: | It: 621 | Atk. loss: 101.17179 | Task loss: 7.55739 | T: 101.85s |
+[INFO][(2024-03-12) 22:30:46.227] [attack.py:246]: | It: 631 | Atk. loss: 97.42474 | Task loss: 7.44920 | T: 102.72s |
+[INFO][(2024-03-12) 22:30:47.100] [attack.py:246]: | It: 641 | Atk. loss: 94.09814 | Task loss: 7.32254 | T: 103.60s |
+[INFO][(2024-03-12) 22:30:47.976] [attack.py:246]: | It: 651 | Atk. loss: 92.95412 | Task loss: 7.26481 | T: 104.47s |
+[INFO][(2024-03-12) 22:30:48.842] [attack.py:246]: | It: 661 | Atk. loss: 91.42840 | Task loss: 7.50063 | T: 105.34s |
+[INFO][(2024-03-12) 22:30:49.717] [attack.py:246]: | It: 671 | Atk. loss: 88.82195 | Task loss: 7.34340 | T: 106.21s |
+[INFO][(2024-03-12) 22:30:50.581] [attack.py:246]: | It: 681 | Atk. loss: 113.32386 | Task loss: 7.89515 | T: 107.08s |
+[INFO][(2024-03-12) 22:30:51.458] [attack.py:246]: | It: 691 | Atk. loss: 103.46143 | Task loss: 7.07256 | T: 107.95s |
+[INFO][(2024-03-12) 22:30:52.314] [attack.py:246]: | It: 701 | Atk. loss: 93.23923 | Task loss: 7.64147 | T: 108.81s |
+[INFO][(2024-03-12) 22:30:52.314] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-12) 22:30:52.316] [eval.py:9]: Reconstructed text: [' The Tower the of Building Little Tower meteor Rock buildingWhile Building oflatestSpanishbridge']
+[INFO][(2024-03-12) 22:30:58.767] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:30:58.872] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.5833333333333334, 0.09090909090909091, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.5599999999999999, "rouge2": 0.08695652173913043, "rougeL": 0.4, "rougeLsum": 0.4}}
+[INFO][(2024-03-12) 22:30:59.758] [attack.py:246]: | It: 711 | Atk. loss: 85.02744 | Task loss: 7.31227 | T: 116.25s |
+[INFO][(2024-03-12) 22:31:00.640] [attack.py:246]: | It: 721 | Atk. loss: 83.72763 | Task loss: 7.21028 | T: 117.13s |
+[INFO][(2024-03-12) 22:31:01.519] [attack.py:246]: | It: 731 | Atk. loss: 102.99736 | Task loss: 7.00252 | T: 118.01s |
+[INFO][(2024-03-12) 22:31:02.392] [attack.py:246]: | It: 741 | Atk. loss: 86.68414 | Task loss: 7.51236 | T: 118.89s |
+[INFO][(2024-03-12) 22:31:03.280] [attack.py:246]: | It: 751 | Atk. loss: 79.97369 | Task loss: 7.16359 | T: 119.77s |
+[INFO][(2024-03-12) 22:31:04.177] [attack.py:246]: | It: 761 | Atk. loss: 78.53204 | Task loss: 7.21730 | T: 120.67s |
+[INFO][(2024-03-12) 22:31:05.056] [attack.py:246]: | It: 771 | Atk. loss: 77.97589 | Task loss: 7.33025 | T: 121.55s |
+[INFO][(2024-03-12) 22:31:05.861] [attack.py:246]: | It: 781 | Atk. loss: 75.94261 | Task loss: 7.30956 | T: 122.36s |
+[INFO][(2024-03-12) 22:31:06.670] [attack.py:246]: | It: 791 | Atk. loss: 76.17287 | Task loss: 7.17017 | T: 123.17s |
+[INFO][(2024-03-12) 22:31:07.496] [attack.py:246]: | It: 801 | Atk. loss: 106.86622 | Task loss: 6.90619 | T: 123.99s |
+[INFO][(2024-03-12) 22:31:07.497] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-12) 22:31:07.499] [eval.py:9]: Reconstructed text: [' The Tower the of Building Little Tower meteor Rock building Warfare Building oflatestSpanishfet']
+[INFO][(2024-03-12) 22:31:14.485] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:31:14.590] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.5384615384615384, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.5384615384615384, "rouge2": 0.08333333333333333, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-12) 22:31:15.492] [attack.py:246]: | It: 811 | Atk. loss: 78.75442 | Task loss: 7.26109 | T: 131.99s |
+[INFO][(2024-03-12) 22:31:16.363] [attack.py:246]: | It: 821 | Atk. loss: 74.83008 | Task loss: 7.15432 | T: 132.86s |
+[INFO][(2024-03-12) 22:31:17.243] [attack.py:246]: | It: 831 | Atk. loss: 74.66751 | Task loss: 7.24641 | T: 133.74s |
+[INFO][(2024-03-12) 22:31:18.118] [attack.py:246]: | It: 841 | Atk. loss: 77.64674 | Task loss: 7.34089 | T: 134.61s |
+[INFO][(2024-03-12) 22:31:18.996] [attack.py:246]: | It: 851 | Atk. loss: 76.77847 | Task loss: 7.08034 | T: 135.49s |
+[INFO][(2024-03-12) 22:31:19.894] [attack.py:246]: | It: 861 | Atk. loss: 75.98724 | Task loss: 6.98850 | T: 136.39s |
+[INFO][(2024-03-12) 22:31:20.771] [attack.py:246]: | It: 871 | Atk. loss: 75.83178 | Task loss: 7.35854 | T: 137.27s |
+[INFO][(2024-03-12) 22:31:21.594] [attack.py:246]: | It: 881 | Atk. loss: 72.36884 | Task loss: 7.03905 | T: 138.09s |
+[INFO][(2024-03-12) 22:31:22.456] [attack.py:246]: | It: 891 | Atk. loss: 72.31007 | Task loss: 7.02180 | T: 138.95s |
+[INFO][(2024-03-12) 22:31:23.343] [attack.py:246]: | It: 901 | Atk. loss: 72.90290 | Task loss: 7.30599 | T: 139.84s |
+[INFO][(2024-03-12) 22:31:23.343] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-12) 22:31:23.346] [eval.py:9]: Reconstructed text: [' The Tower the of Building Little Tower meteor Rock building Warfare Building oflatestSpanishfet']
+[INFO][(2024-03-12) 22:31:30.001] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:31:30.106] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.5384615384615384, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.5384615384615384, "rouge2": 0.08333333333333333, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-12) 22:31:31.009] [attack.py:246]: | It: 911 | Atk. loss: 70.32869 | Task loss: 7.06760 | T: 147.50s |
+[INFO][(2024-03-12) 22:31:31.898] [attack.py:246]: | It: 921 | Atk. loss: 70.42861 | Task loss: 7.04805 | T: 148.39s |
+[INFO][(2024-03-12) 22:31:32.802] [attack.py:246]: | It: 931 | Atk. loss: 71.42500 | Task loss: 7.27747 | T: 149.30s |
+[INFO][(2024-03-12) 22:31:33.689] [attack.py:246]: | It: 941 | Atk. loss: 69.17455 | Task loss: 7.07086 | T: 150.18s |
+[INFO][(2024-03-12) 22:31:34.586] [attack.py:246]: | It: 951 | Atk. loss: 69.10995 | Task loss: 7.06034 | T: 151.08s |
+[INFO][(2024-03-12) 22:31:35.467] [attack.py:246]: | It: 961 | Atk. loss: 69.80843 | Task loss: 7.23370 | T: 151.96s |
+[INFO][(2024-03-12) 22:31:36.350] [attack.py:246]: | It: 971 | Atk. loss: 68.15179 | Task loss: 7.07606 | T: 152.84s |
+[INFO][(2024-03-12) 22:31:37.239] [attack.py:246]: | It: 981 | Atk. loss: 68.02562 | Task loss: 7.06828 | T: 153.73s |
+[INFO][(2024-03-12) 22:31:38.138] [attack.py:246]: | It: 991 | Atk. loss: 68.30135 | Task loss: 7.18460 | T: 154.63s |
+[INFO][(2024-03-12) 22:31:38.938] [attack.py:246]: | It: 1000 | Atk. loss: 67.77623 | Task loss: 7.05342 | T: 155.43s |
+[INFO][(2024-03-12) 22:31:38.939] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-12) 22:31:38.941] [eval.py:9]: Reconstructed text: [' The Tower the of Building Little Tower meteor Rock building Warfare Building oflatestSpanishfet']
+[INFO][(2024-03-12) 22:31:45.709] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:31:45.811] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.5384615384615384, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.5384615384615384, "rouge2": 0.08333333333333333, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-12) 22:31:45.811] [main.py:57]: Done in 172.78s.

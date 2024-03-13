@@ -1,0 +1,224 @@
+[INFO][(2024-03-13) 00:17:27.858] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-13) 00:17:27.859] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 10.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s10_20240313-001727.log"
+}
+[INFO][(2024-03-13) 00:17:33.865] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-13) 00:17:33.865] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-13) 00:17:38.678] [attack.py:246]: | It: 1 | Atk. loss: 14497.40332 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-13) 00:17:38.678] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-13) 00:17:38.680] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-13) 00:17:44.930] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:17:45.035] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:17:45.912] [attack.py:246]: | It: 11 | Atk. loss: 4694.92920 | Task loss: 19.25825 | T: 7.33s |
+[INFO][(2024-03-13) 00:17:46.777] [attack.py:246]: | It: 21 | Atk. loss: 6018.02148 | Task loss: 18.48450 | T: 8.19s |
+[INFO][(2024-03-13) 00:17:47.652] [attack.py:246]: | It: 31 | Atk. loss: 1416.86328 | Task loss: 15.45829 | T: 9.07s |
+[INFO][(2024-03-13) 00:17:48.515] [attack.py:246]: | It: 41 | Atk. loss: 1264.01416 | Task loss: 14.40179 | T: 9.93s |
+[INFO][(2024-03-13) 00:17:49.379] [attack.py:246]: | It: 51 | Atk. loss: 1204.67480 | Task loss: 12.87925 | T: 10.79s |
+[INFO][(2024-03-13) 00:17:50.231] [attack.py:246]: | It: 61 | Atk. loss: 1153.94873 | Task loss: 12.47909 | T: 11.65s |
+[INFO][(2024-03-13) 00:17:51.090] [attack.py:246]: | It: 71 | Atk. loss: 1106.30872 | Task loss: 12.56300 | T: 12.50s |
+[INFO][(2024-03-13) 00:17:51.960] [attack.py:246]: | It: 81 | Atk. loss: 1096.82776 | Task loss: 12.46477 | T: 13.37s |
+[INFO][(2024-03-13) 00:17:52.833] [attack.py:246]: | It: 91 | Atk. loss: 1052.70557 | Task loss: 12.46141 | T: 14.25s |
+[INFO][(2024-03-13) 00:17:53.698] [attack.py:246]: | It: 101 | Atk. loss: 997.27606 | Task loss: 12.11812 | T: 15.11s |
+[INFO][(2024-03-13) 00:17:53.699] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-13) 00:17:53.701] [eval.py:9]: Reconstructed text: [' The militant widening________ Sakura Kirst PCI x K Alicia lofty surfacedSep precedence statisticalbridge']
+[INFO][(2024-03-13) 00:18:00.370] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:18:00.476] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.047619047619047616, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.3125, "translation_length": 21, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-13) 00:18:01.346] [attack.py:246]: | It: 111 | Atk. loss: 1018.34052 | Task loss: 12.15647 | T: 22.76s |
+[INFO][(2024-03-13) 00:18:02.225] [attack.py:246]: | It: 121 | Atk. loss: 781.64423 | Task loss: 12.51562 | T: 23.64s |
+[INFO][(2024-03-13) 00:18:03.086] [attack.py:246]: | It: 131 | Atk. loss: 573.24402 | Task loss: 12.01789 | T: 24.50s |
+[INFO][(2024-03-13) 00:18:03.948] [attack.py:246]: | It: 141 | Atk. loss: 402.46350 | Task loss: 11.96974 | T: 25.36s |
+[INFO][(2024-03-13) 00:18:04.814] [attack.py:246]: | It: 151 | Atk. loss: 420.22278 | Task loss: 11.52882 | T: 26.23s |
+[INFO][(2024-03-13) 00:18:05.688] [attack.py:246]: | It: 161 | Atk. loss: 357.52057 | Task loss: 11.66090 | T: 27.10s |
+[INFO][(2024-03-13) 00:18:06.552] [attack.py:246]: | It: 171 | Atk. loss: 335.13983 | Task loss: 11.48724 | T: 27.97s |
+[INFO][(2024-03-13) 00:18:07.412] [attack.py:246]: | It: 181 | Atk. loss: 310.18118 | Task loss: 11.45592 | T: 28.83s |
+[INFO][(2024-03-13) 00:18:08.275] [attack.py:246]: | It: 191 | Atk. loss: 297.58856 | Task loss: 11.03391 | T: 29.69s |
+[INFO][(2024-03-13) 00:18:09.152] [attack.py:246]: | It: 201 | Atk. loss: 326.10770 | Task loss: 11.78223 | T: 30.57s |
+[INFO][(2024-03-13) 00:18:09.153] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-13) 00:18:09.155] [eval.py:9]: Reconstructed text: [' The Tower our________ Ladies Lumia ChavezWare x moderators submarine crystallit Basil Vasbridge']
+[INFO][(2024-03-13) 00:18:15.218] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:18:15.323] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.1, 0.05263157894736842, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.25, "translation_length": 20, "reference_length": 16}, "rouge": {"rouge1": 0.16, "rouge2": 0.08695652173913043, "rougeL": 0.16, "rougeLsum": 0.16}}
+[INFO][(2024-03-13) 00:18:16.211] [attack.py:246]: | It: 211 | Atk. loss: 266.90845 | Task loss: 10.86790 | T: 37.63s |
+[INFO][(2024-03-13) 00:18:17.077] [attack.py:246]: | It: 221 | Atk. loss: 270.88431 | Task loss: 10.62873 | T: 38.49s |
+[INFO][(2024-03-13) 00:18:17.937] [attack.py:246]: | It: 231 | Atk. loss: 290.16174 | Task loss: 10.52531 | T: 39.35s |
+[INFO][(2024-03-13) 00:18:18.811] [attack.py:246]: | It: 241 | Atk. loss: 253.30612 | Task loss: 10.60566 | T: 40.23s |
+[INFO][(2024-03-13) 00:18:19.698] [attack.py:246]: | It: 251 | Atk. loss: 268.26697 | Task loss: 10.13784 | T: 41.11s |
+[INFO][(2024-03-13) 00:18:20.580] [attack.py:246]: | It: 261 | Atk. loss: 272.82770 | Task loss: 10.18793 | T: 41.99s |
+[INFO][(2024-03-13) 00:18:21.451] [attack.py:246]: | It: 271 | Atk. loss: 273.97424 | Task loss: 11.16767 | T: 42.87s |
+[INFO][(2024-03-13) 00:18:22.320] [attack.py:246]: | It: 281 | Atk. loss: 234.51456 | Task loss: 10.38553 | T: 43.73s |
+[INFO][(2024-03-13) 00:18:23.175] [attack.py:246]: | It: 291 | Atk. loss: 231.88588 | Task loss: 10.10137 | T: 44.59s |
+[INFO][(2024-03-13) 00:18:24.044] [attack.py:246]: | It: 301 | Atk. loss: 251.75288 | Task loss: 9.79854 | T: 45.46s |
+[INFO][(2024-03-13) 00:18:24.045] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-13) 00:18:24.047] [eval.py:9]: Reconstructed text: [' The Tower Building Tower Moonlight redevelopment ChavezWare x Someone lofty reaffit Basil Vas shift']
+[INFO][(2024-03-13) 00:18:30.475] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:18:30.578] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.21428571428571427, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.22222222222222224, "rouge2": 0.16, "rougeL": 0.22222222222222224, "rougeLsum": 0.22222222222222224}}
+[INFO][(2024-03-13) 00:18:31.460] [attack.py:246]: | It: 311 | Atk. loss: 216.00674 | Task loss: 10.22899 | T: 52.87s |
+[INFO][(2024-03-13) 00:18:32.342] [attack.py:246]: | It: 321 | Atk. loss: 203.85266 | Task loss: 10.18881 | T: 53.76s |
+[INFO][(2024-03-13) 00:18:33.211] [attack.py:246]: | It: 331 | Atk. loss: 218.64288 | Task loss: 9.91069 | T: 54.63s |
+[INFO][(2024-03-13) 00:18:34.078] [attack.py:246]: | It: 341 | Atk. loss: 198.88220 | Task loss: 9.89538 | T: 55.49s |
+[INFO][(2024-03-13) 00:18:34.955] [attack.py:246]: | It: 351 | Atk. loss: 196.07263 | Task loss: 9.96108 | T: 56.37s |
+[INFO][(2024-03-13) 00:18:35.818] [attack.py:246]: | It: 361 | Atk. loss: 232.85928 | Task loss: 10.33115 | T: 57.23s |
+[INFO][(2024-03-13) 00:18:36.671] [attack.py:246]: | It: 371 | Atk. loss: 204.32689 | Task loss: 9.49055 | T: 58.09s |
+[INFO][(2024-03-13) 00:18:37.542] [attack.py:246]: | It: 381 | Atk. loss: 209.32364 | Task loss: 9.83699 | T: 58.96s |
+[INFO][(2024-03-13) 00:18:38.418] [attack.py:246]: | It: 391 | Atk. loss: 189.65706 | Task loss: 9.91083 | T: 59.83s |
+[INFO][(2024-03-13) 00:18:39.297] [attack.py:246]: | It: 401 | Atk. loss: 180.35858 | Task loss: 9.89376 | T: 60.71s |
+[INFO][(2024-03-13) 00:18:39.297] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-13) 00:18:39.299] [eval.py:9]: Reconstructed text: [' The Tower Building Tower Diamond Lumia miraculous polic $ Topics lofty reaffit Basil Vasbridge']
+[INFO][(2024-03-13) 00:18:45.118] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:18:45.220] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.21428571428571427, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.16666666666666666, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-13) 00:18:46.095] [attack.py:246]: | It: 411 | Atk. loss: 170.58740 | Task loss: 9.44737 | T: 67.51s |
+[INFO][(2024-03-13) 00:18:46.967] [attack.py:246]: | It: 421 | Atk. loss: 164.80255 | Task loss: 9.62477 | T: 68.38s |
+[INFO][(2024-03-13) 00:18:47.839] [attack.py:246]: | It: 431 | Atk. loss: 178.93430 | Task loss: 9.55304 | T: 69.25s |
+[INFO][(2024-03-13) 00:18:48.723] [attack.py:246]: | It: 441 | Atk. loss: 207.20122 | Task loss: 10.20314 | T: 70.14s |
+[INFO][(2024-03-13) 00:18:49.599] [attack.py:246]: | It: 451 | Atk. loss: 163.79082 | Task loss: 9.45220 | T: 71.01s |
+[INFO][(2024-03-13) 00:18:50.471] [attack.py:246]: | It: 461 | Atk. loss: 165.70273 | Task loss: 9.81959 | T: 71.89s |
+[INFO][(2024-03-13) 00:18:51.335] [attack.py:246]: | It: 471 | Atk. loss: 173.20047 | Task loss: 9.41851 | T: 72.75s |
+[INFO][(2024-03-13) 00:18:52.204] [attack.py:246]: | It: 481 | Atk. loss: 170.94942 | Task loss: 9.13508 | T: 73.62s |
+[INFO][(2024-03-13) 00:18:53.067] [attack.py:246]: | It: 491 | Atk. loss: 151.58237 | Task loss: 9.52041 | T: 74.48s |
+[INFO][(2024-03-13) 00:18:53.933] [attack.py:246]: | It: 501 | Atk. loss: 159.87027 | Task loss: 9.27472 | T: 75.35s |
+[INFO][(2024-03-13) 00:18:53.934] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-13) 00:18:53.936] [eval.py:9]: Reconstructed text: [' The Tower the Tower rock Lumia miraculous polic after"], lofty grippedit Basil Vasbridge']
+[INFO][(2024-03-13) 00:18:59.762] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:18:59.871] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.25, 0.06666666666666667, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.08333333333333333, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-13) 00:19:00.754] [attack.py:246]: | It: 511 | Atk. loss: 178.83891 | Task loss: 9.09809 | T: 82.17s |
+[INFO][(2024-03-13) 00:19:01.639] [attack.py:246]: | It: 521 | Atk. loss: 156.44698 | Task loss: 9.32794 | T: 83.05s |
+[INFO][(2024-03-13) 00:19:02.528] [attack.py:246]: | It: 531 | Atk. loss: 150.84216 | Task loss: 9.09842 | T: 83.94s |
+[INFO][(2024-03-13) 00:19:03.414] [attack.py:246]: | It: 541 | Atk. loss: 143.57571 | Task loss: 9.38632 | T: 84.83s |
+[INFO][(2024-03-13) 00:19:04.294] [attack.py:246]: | It: 551 | Atk. loss: 139.81735 | Task loss: 9.33605 | T: 85.71s |
+[INFO][(2024-03-13) 00:19:05.172] [attack.py:246]: | It: 561 | Atk. loss: 142.20135 | Task loss: 9.16570 | T: 86.59s |
+[INFO][(2024-03-13) 00:19:06.052] [attack.py:246]: | It: 571 | Atk. loss: 138.45621 | Task loss: 9.44067 | T: 87.47s |
+[INFO][(2024-03-13) 00:19:06.937] [attack.py:246]: | It: 581 | Atk. loss: 166.41406 | Task loss: 9.60961 | T: 88.35s |
+[INFO][(2024-03-13) 00:19:07.831] [attack.py:246]: | It: 591 | Atk. loss: 176.95987 | Task loss: 8.96451 | T: 89.25s |
+[INFO][(2024-03-13) 00:19:08.715] [attack.py:246]: | It: 601 | Atk. loss: 143.66019 | Task loss: 9.36545 | T: 90.13s |
+[INFO][(2024-03-13) 00:19:08.716] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-13) 00:19:08.718] [eval.py:9]: Reconstructed text: [' The Tower the Tower Rock Lumia miraculous polic after"], lofty grippedit Basil Vasbridge']
+[INFO][(2024-03-13) 00:19:14.713] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:19:14.815] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.3125, 0.06666666666666667, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.08333333333333333, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-13) 00:19:15.716] [attack.py:246]: | It: 611 | Atk. loss: 153.80002 | Task loss: 9.23272 | T: 97.13s |
+[INFO][(2024-03-13) 00:19:16.610] [attack.py:246]: | It: 621 | Atk. loss: 134.94328 | Task loss: 9.32250 | T: 98.02s |
+[INFO][(2024-03-13) 00:19:17.484] [attack.py:246]: | It: 631 | Atk. loss: 137.58611 | Task loss: 9.40178 | T: 98.90s |
+[INFO][(2024-03-13) 00:19:18.360] [attack.py:246]: | It: 641 | Atk. loss: 131.79239 | Task loss: 9.24536 | T: 99.77s |
+[INFO][(2024-03-13) 00:19:19.227] [attack.py:246]: | It: 651 | Atk. loss: 130.36105 | Task loss: 9.20376 | T: 100.64s |
+[INFO][(2024-03-13) 00:19:20.100] [attack.py:246]: | It: 661 | Atk. loss: 137.06471 | Task loss: 8.95122 | T: 101.51s |
+[INFO][(2024-03-13) 00:19:20.974] [attack.py:246]: | It: 671 | Atk. loss: 132.63985 | Task loss: 9.22931 | T: 102.39s |
+[INFO][(2024-03-13) 00:19:21.841] [attack.py:246]: | It: 681 | Atk. loss: 129.36902 | Task loss: 9.00675 | T: 103.26s |
+[INFO][(2024-03-13) 00:19:22.711] [attack.py:246]: | It: 691 | Atk. loss: 129.64931 | Task loss: 9.30962 | T: 104.12s |
+[INFO][(2024-03-13) 00:19:23.578] [attack.py:246]: | It: 701 | Atk. loss: 126.12724 | Task loss: 9.15803 | T: 104.99s |
+[INFO][(2024-03-13) 00:19:23.578] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-13) 00:19:23.580] [eval.py:9]: Reconstructed text: [' The Tower the Tower Rock Lumia miraculous Guarant afteringers lofty grippedit specialization Vasbridge']
+[INFO][(2024-03-13) 00:19:29.562] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:19:29.667] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.3076923076923077, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.08333333333333333, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-13) 00:19:30.534] [attack.py:246]: | It: 711 | Atk. loss: 123.56345 | Task loss: 8.98549 | T: 111.95s |
+[INFO][(2024-03-13) 00:19:31.407] [attack.py:246]: | It: 721 | Atk. loss: 124.76523 | Task loss: 9.15615 | T: 112.82s |
+[INFO][(2024-03-13) 00:19:32.288] [attack.py:246]: | It: 731 | Atk. loss: 124.96591 | Task loss: 8.99929 | T: 113.70s |
+[INFO][(2024-03-13) 00:19:33.174] [attack.py:246]: | It: 741 | Atk. loss: 122.60849 | Task loss: 9.09561 | T: 114.59s |
+[INFO][(2024-03-13) 00:19:34.059] [attack.py:246]: | It: 751 | Atk. loss: 123.39931 | Task loss: 9.04643 | T: 115.47s |
+[INFO][(2024-03-13) 00:19:34.939] [attack.py:246]: | It: 761 | Atk. loss: 124.79903 | Task loss: 8.85308 | T: 116.35s |
+[INFO][(2024-03-13) 00:19:35.812] [attack.py:246]: | It: 771 | Atk. loss: 127.28718 | Task loss: 9.25596 | T: 117.23s |
+[INFO][(2024-03-13) 00:19:36.619] [attack.py:246]: | It: 781 | Atk. loss: 120.67433 | Task loss: 9.06756 | T: 118.03s |
+[INFO][(2024-03-13) 00:19:37.438] [attack.py:246]: | It: 791 | Atk. loss: 118.46048 | Task loss: 8.94359 | T: 118.85s |
+[INFO][(2024-03-13) 00:19:38.238] [attack.py:246]: | It: 801 | Atk. loss: 117.61583 | Task loss: 8.92590 | T: 119.65s |
+[INFO][(2024-03-13) 00:19:38.238] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-13) 00:19:38.240] [eval.py:9]: Reconstructed text: [' The Tower the Tower Rock Lumia miraculous polic afteringers sexuality gripped then specialization Vas shift']
+[INFO][(2024-03-13) 00:19:44.308] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:19:44.412] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.26666666666666666, 0.07142857142857142, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.28571428571428575, "rouge2": 0.07692307692307691, "rougeL": 0.28571428571428575, "rougeLsum": 0.28571428571428575}}
+[INFO][(2024-03-13) 00:19:45.218] [attack.py:246]: | It: 811 | Atk. loss: 118.26788 | Task loss: 8.96219 | T: 126.63s |
+[INFO][(2024-03-13) 00:19:46.018] [attack.py:246]: | It: 821 | Atk. loss: 117.12672 | Task loss: 8.84164 | T: 127.43s |
+[INFO][(2024-03-13) 00:19:46.818] [attack.py:246]: | It: 831 | Atk. loss: 116.47620 | Task loss: 8.83788 | T: 128.23s |
+[INFO][(2024-03-13) 00:19:47.620] [attack.py:246]: | It: 841 | Atk. loss: 117.55955 | Task loss: 8.76564 | T: 129.03s |
+[INFO][(2024-03-13) 00:19:48.498] [attack.py:246]: | It: 851 | Atk. loss: 115.32758 | Task loss: 8.82143 | T: 129.91s |
+[INFO][(2024-03-13) 00:19:49.357] [attack.py:246]: | It: 861 | Atk. loss: 114.48338 | Task loss: 8.75237 | T: 130.77s |
+[INFO][(2024-03-13) 00:19:50.223] [attack.py:246]: | It: 871 | Atk. loss: 114.46738 | Task loss: 8.92025 | T: 131.64s |
+[INFO][(2024-03-13) 00:19:51.084] [attack.py:246]: | It: 881 | Atk. loss: 116.57774 | Task loss: 8.87874 | T: 132.50s |
+[INFO][(2024-03-13) 00:19:51.946] [attack.py:246]: | It: 891 | Atk. loss: 113.49048 | Task loss: 8.78295 | T: 133.36s |
+[INFO][(2024-03-13) 00:19:52.798] [attack.py:246]: | It: 901 | Atk. loss: 112.63702 | Task loss: 8.80487 | T: 134.21s |
+[INFO][(2024-03-13) 00:19:52.799] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:19:52.801] [eval.py:9]: Reconstructed text: [' The Tower the Tower Rock Lumia miraculous Arsenal ofingers sexuality gripped then specialization Vas shift']
+[INFO][(2024-03-13) 00:20:08.778] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:20:08.880] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.07142857142857142, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.07692307692307691, "rougeL": 0.3571428571428571, "rougeLsum": 0.3571428571428571}}
+[INFO][(2024-03-13) 00:20:09.759] [attack.py:246]: | It: 911 | Atk. loss: 113.25957 | Task loss: 8.81463 | T: 151.17s |
+[INFO][(2024-03-13) 00:20:10.617] [attack.py:246]: | It: 921 | Atk. loss: 111.57230 | Task loss: 8.75633 | T: 152.03s |
+[INFO][(2024-03-13) 00:20:11.479] [attack.py:246]: | It: 931 | Atk. loss: 111.48232 | Task loss: 8.81133 | T: 152.89s |
+[INFO][(2024-03-13) 00:20:12.338] [attack.py:246]: | It: 941 | Atk. loss: 110.87413 | Task loss: 8.74593 | T: 153.75s |
+[INFO][(2024-03-13) 00:20:13.206] [attack.py:246]: | It: 951 | Atk. loss: 110.11158 | Task loss: 8.78377 | T: 154.62s |
+[INFO][(2024-03-13) 00:20:14.079] [attack.py:246]: | It: 961 | Atk. loss: 109.57378 | Task loss: 8.75946 | T: 155.49s |
+[INFO][(2024-03-13) 00:20:14.944] [attack.py:246]: | It: 971 | Atk. loss: 109.48618 | Task loss: 8.70358 | T: 156.36s |
+[INFO][(2024-03-13) 00:20:15.809] [attack.py:246]: | It: 981 | Atk. loss: 109.07631 | Task loss: 8.73591 | T: 157.22s |
+[INFO][(2024-03-13) 00:20:16.669] [attack.py:246]: | It: 991 | Atk. loss: 108.85983 | Task loss: 8.70394 | T: 158.08s |
+[INFO][(2024-03-13) 00:20:17.458] [attack.py:246]: | It: 1000 | Atk. loss: 108.58535 | Task loss: 8.68443 | T: 158.87s |
+[INFO][(2024-03-13) 00:20:17.459] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:20:17.461] [eval.py:9]: Reconstructed text: [' The Tower Building Tower Rock Lumia miraculous Arsenal of ALSO sexuality gripped then Lancaster Vas shift']
+[INFO][(2024-03-13) 00:20:23.425] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:20:23.530] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.4827586206896552, "rouge2": 0.14814814814814814, "rougeL": 0.41379310344827586, "rougeLsum": 0.41379310344827586}}
+[INFO][(2024-03-13) 00:20:23.530] [main.py:57]: Done in 175.72s.

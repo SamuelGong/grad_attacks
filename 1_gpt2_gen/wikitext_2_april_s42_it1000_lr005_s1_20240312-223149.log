@@ -1,0 +1,224 @@
+[INFO][(2024-03-12) 22:31:49.363] [main.py:25]: Git branch: main, Git commit: 61af44c
+[INFO][(2024-03-12) 22:31:49.364] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 1.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s1_20240312-223149.log"
+}
+[INFO][(2024-03-12) 22:31:54.868] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-12) 22:31:54.868] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-12) 22:31:59.639] [attack.py:246]: | It: 1 | Atk. loss: 13781.35156 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-12) 22:31:59.639] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-12) 22:31:59.641] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-12) 22:32:06.271] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:32:06.376] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 22:32:07.268] [attack.py:246]: | It: 11 | Atk. loss: 2807.91675 | Task loss: 19.01470 | T: 7.72s |
+[INFO][(2024-03-12) 22:32:08.138] [attack.py:246]: | It: 21 | Atk. loss: 1539.73267 | Task loss: 16.93498 | T: 8.59s |
+[INFO][(2024-03-12) 22:32:09.007] [attack.py:246]: | It: 31 | Atk. loss: 1250.88733 | Task loss: 15.23157 | T: 9.46s |
+[INFO][(2024-03-12) 22:32:09.867] [attack.py:246]: | It: 41 | Atk. loss: 1124.07715 | Task loss: 14.66345 | T: 10.32s |
+[INFO][(2024-03-12) 22:32:10.742] [attack.py:246]: | It: 51 | Atk. loss: 1105.51562 | Task loss: 14.12847 | T: 11.20s |
+[INFO][(2024-03-12) 22:32:11.615] [attack.py:246]: | It: 61 | Atk. loss: 1191.37451 | Task loss: 13.55206 | T: 12.07s |
+[INFO][(2024-03-12) 22:32:12.482] [attack.py:246]: | It: 71 | Atk. loss: 970.20898 | Task loss: 12.83621 | T: 12.94s |
+[INFO][(2024-03-12) 22:32:13.347] [attack.py:246]: | It: 81 | Atk. loss: 872.04572 | Task loss: 12.76227 | T: 13.80s |
+[INFO][(2024-03-12) 22:32:14.226] [attack.py:246]: | It: 91 | Atk. loss: 830.53802 | Task loss: 12.37740 | T: 14.68s |
+[INFO][(2024-03-12) 22:32:15.082] [attack.py:246]: | It: 101 | Atk. loss: 780.76685 | Task loss: 12.50972 | T: 15.54s |
+[INFO][(2024-03-12) 22:32:15.083] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-12) 22:32:15.085] [eval.py:9]: Reconstructed text: [' The deftthe truce camping skysc Defenders speakers == buckle": Vaugharth sc Vas Holden']
+[INFO][(2024-03-12) 22:32:21.509] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:32:21.614] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.0625, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.08, "rouge2": 0.0, "rougeL": 0.08, "rougeLsum": 0.08}}
+[INFO][(2024-03-12) 22:32:22.491] [attack.py:246]: | It: 111 | Atk. loss: 706.32416 | Task loss: 12.28349 | T: 22.95s |
+[INFO][(2024-03-12) 22:32:23.374] [attack.py:246]: | It: 121 | Atk. loss: 661.74518 | Task loss: 12.79484 | T: 23.83s |
+[INFO][(2024-03-12) 22:32:24.241] [attack.py:246]: | It: 131 | Atk. loss: 389.14389 | Task loss: 12.43113 | T: 24.70s |
+[INFO][(2024-03-12) 22:32:25.112] [attack.py:246]: | It: 141 | Atk. loss: 303.66245 | Task loss: 11.72468 | T: 25.57s |
+[INFO][(2024-03-12) 22:32:25.985] [attack.py:246]: | It: 151 | Atk. loss: 306.35986 | Task loss: 12.00261 | T: 26.44s |
+[INFO][(2024-03-12) 22:32:26.864] [attack.py:246]: | It: 161 | Atk. loss: 281.00305 | Task loss: 11.24163 | T: 27.32s |
+[INFO][(2024-03-12) 22:32:27.731] [attack.py:246]: | It: 171 | Atk. loss: 257.53406 | Task loss: 11.47947 | T: 28.19s |
+[INFO][(2024-03-12) 22:32:28.606] [attack.py:246]: | It: 181 | Atk. loss: 237.86342 | Task loss: 10.96493 | T: 29.06s |
+[INFO][(2024-03-12) 22:32:29.511] [attack.py:246]: | It: 191 | Atk. loss: 231.12128 | Task loss: 11.15816 | T: 29.97s |
+[INFO][(2024-03-12) 22:32:30.388] [attack.py:246]: | It: 201 | Atk. loss: 218.82951 | Task loss: 10.66453 | T: 30.84s |
+[INFO][(2024-03-12) 22:32:30.388] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-12) 22:32:30.390] [eval.py:9]: Reconstructed text: [' The Towerthe homelessness walk building Reincarnated Tower strengthening buckle coupon prefersarth sc Vasfet']
+[INFO][(2024-03-12) 22:32:37.133] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:32:37.235] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.15384615384615385, 0.0, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.0, "rougeL": 0.15384615384615385, "rougeLsum": 0.15384615384615385}}
+[INFO][(2024-03-12) 22:32:38.121] [attack.py:246]: | It: 211 | Atk. loss: 212.17393 | Task loss: 11.04115 | T: 38.58s |
+[INFO][(2024-03-12) 22:32:38.975] [attack.py:246]: | It: 221 | Atk. loss: 206.41998 | Task loss: 10.82469 | T: 39.43s |
+[INFO][(2024-03-12) 22:32:39.856] [attack.py:246]: | It: 231 | Atk. loss: 196.69139 | Task loss: 10.64103 | T: 40.31s |
+[INFO][(2024-03-12) 22:32:40.731] [attack.py:246]: | It: 241 | Atk. loss: 184.50554 | Task loss: 10.41055 | T: 41.19s |
+[INFO][(2024-03-12) 22:32:41.561] [attack.py:246]: | It: 251 | Atk. loss: 190.61842 | Task loss: 10.50774 | T: 42.02s |
+[INFO][(2024-03-12) 22:32:42.375] [attack.py:246]: | It: 261 | Atk. loss: 193.04366 | Task loss: 10.74155 | T: 42.83s |
+[INFO][(2024-03-12) 22:32:43.188] [attack.py:246]: | It: 271 | Atk. loss: 187.38034 | Task loss: 10.00944 | T: 43.64s |
+[INFO][(2024-03-12) 22:32:44.052] [attack.py:246]: | It: 281 | Atk. loss: 175.98488 | Task loss: 10.34412 | T: 44.51s |
+[INFO][(2024-03-12) 22:32:44.938] [attack.py:246]: | It: 291 | Atk. loss: 189.98979 | Task loss: 10.62639 | T: 45.39s |
+[INFO][(2024-03-12) 22:32:45.825] [attack.py:246]: | It: 301 | Atk. loss: 193.00356 | Task loss: 10.36919 | T: 46.28s |
+[INFO][(2024-03-12) 22:32:45.826] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-12) 22:32:45.828] [eval.py:9]: Reconstructed text: [' The Tower building Emergency of Building Little Tower Shal ransom coupon hoppedarth chrom Vasfet']
+[INFO][(2024-03-12) 22:32:52.738] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:32:52.840] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-12) 22:32:53.739] [attack.py:246]: | It: 311 | Atk. loss: 202.69054 | Task loss: 9.75633 | T: 54.19s |
+[INFO][(2024-03-12) 22:32:54.595] [attack.py:246]: | It: 321 | Atk. loss: 168.40460 | Task loss: 10.01618 | T: 55.05s |
+[INFO][(2024-03-12) 22:32:55.462] [attack.py:246]: | It: 331 | Atk. loss: 166.02722 | Task loss: 9.78817 | T: 55.92s |
+[INFO][(2024-03-12) 22:32:56.330] [attack.py:246]: | It: 341 | Atk. loss: 161.36789 | Task loss: 9.79787 | T: 56.79s |
+[INFO][(2024-03-12) 22:32:57.187] [attack.py:246]: | It: 351 | Atk. loss: 162.46310 | Task loss: 9.56036 | T: 57.64s |
+[INFO][(2024-03-12) 22:32:58.062] [attack.py:246]: | It: 361 | Atk. loss: 152.70143 | Task loss: 9.98233 | T: 58.52s |
+[INFO][(2024-03-12) 22:32:58.931] [attack.py:246]: | It: 371 | Atk. loss: 142.62791 | Task loss: 9.82024 | T: 59.39s |
+[INFO][(2024-03-12) 22:32:59.806] [attack.py:246]: | It: 381 | Atk. loss: 146.30515 | Task loss: 9.93555 | T: 60.26s |
+[INFO][(2024-03-12) 22:33:00.674] [attack.py:246]: | It: 391 | Atk. loss: 127.54861 | Task loss: 9.45164 | T: 61.13s |
+[INFO][(2024-03-12) 22:33:01.550] [attack.py:246]: | It: 401 | Atk. loss: 125.55058 | Task loss: 9.36892 | T: 62.01s |
+[INFO][(2024-03-12) 22:33:01.550] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-12) 22:33:01.552] [eval.py:9]: Reconstructed text: [' The Tower building Building of Tower Little Tower strengthening ransom reinforces hoppedarth Uzbek Vasbridge']
+[INFO][(2024-03-12) 22:33:08.099] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:33:08.202] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.15384615384615385, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.24000000000000002, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-12) 22:33:09.095] [attack.py:246]: | It: 411 | Atk. loss: 122.04408 | Task loss: 9.32591 | T: 69.55s |
+[INFO][(2024-03-12) 22:33:09.902] [attack.py:246]: | It: 421 | Atk. loss: 124.41790 | Task loss: 9.67566 | T: 70.36s |
+[INFO][(2024-03-12) 22:33:10.706] [attack.py:246]: | It: 431 | Atk. loss: 115.73023 | Task loss: 9.13511 | T: 71.16s |
+[INFO][(2024-03-12) 22:33:11.548] [attack.py:246]: | It: 441 | Atk. loss: 166.15878 | Task loss: 8.99984 | T: 72.00s |
+[INFO][(2024-03-12) 22:33:12.427] [attack.py:246]: | It: 451 | Atk. loss: 120.73341 | Task loss: 9.55329 | T: 72.88s |
+[INFO][(2024-03-12) 22:33:13.296] [attack.py:246]: | It: 461 | Atk. loss: 111.44286 | Task loss: 9.03177 | T: 73.75s |
+[INFO][(2024-03-12) 22:33:14.163] [attack.py:246]: | It: 471 | Atk. loss: 107.03646 | Task loss: 9.15358 | T: 74.62s |
+[INFO][(2024-03-12) 22:33:15.004] [attack.py:246]: | It: 481 | Atk. loss: 108.38305 | Task loss: 8.81763 | T: 75.46s |
+[INFO][(2024-03-12) 22:33:15.810] [attack.py:246]: | It: 491 | Atk. loss: 111.62001 | Task loss: 9.26811 | T: 76.27s |
+[INFO][(2024-03-12) 22:33:16.606] [attack.py:246]: | It: 501 | Atk. loss: 105.74252 | Task loss: 9.24376 | T: 77.06s |
+[INFO][(2024-03-12) 22:33:16.606] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-12) 22:33:16.608] [eval.py:9]: Reconstructed text: [' The Tower Building Building of Tower Littlepod Shal ransom*, hopped joint Uzbek Vasbridge']
+[INFO][(2024-03-12) 22:33:23.562] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:33:23.664] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.21428571428571427, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.25, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-12) 22:33:24.546] [attack.py:246]: | It: 511 | Atk. loss: 107.57498 | Task loss: 8.81551 | T: 85.00s |
+[INFO][(2024-03-12) 22:33:25.416] [attack.py:246]: | It: 521 | Atk. loss: 96.59499 | Task loss: 9.11495 | T: 85.87s |
+[INFO][(2024-03-12) 22:33:26.291] [attack.py:246]: | It: 531 | Atk. loss: 98.31985 | Task loss: 8.81613 | T: 86.75s |
+[INFO][(2024-03-12) 22:33:27.157] [attack.py:246]: | It: 541 | Atk. loss: 98.93920 | Task loss: 9.01249 | T: 87.61s |
+[INFO][(2024-03-12) 22:33:28.016] [attack.py:246]: | It: 551 | Atk. loss: 98.20251 | Task loss: 8.61996 | T: 88.47s |
+[INFO][(2024-03-12) 22:33:28.894] [attack.py:246]: | It: 561 | Atk. loss: 94.42928 | Task loss: 9.01594 | T: 89.35s |
+[INFO][(2024-03-12) 22:33:29.767] [attack.py:246]: | It: 571 | Atk. loss: 91.75375 | Task loss: 8.88009 | T: 90.22s |
+[INFO][(2024-03-12) 22:33:30.665] [attack.py:246]: | It: 581 | Atk. loss: 90.99763 | Task loss: 8.61039 | T: 91.12s |
+[INFO][(2024-03-12) 22:33:31.536] [attack.py:246]: | It: 591 | Atk. loss: 85.99075 | Task loss: 8.81823 | T: 91.99s |
+[INFO][(2024-03-12) 22:33:32.422] [attack.py:246]: | It: 601 | Atk. loss: 81.67997 | Task loss: 8.58526 | T: 92.88s |
+[INFO][(2024-03-12) 22:33:32.423] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-12) 22:33:32.425] [eval.py:9]: Reconstructed text: [' The Tower Building Building of Tower Littleacked Shal ransom*, hopped joint Uzbek Vasbridge']
+[INFO][(2024-03-12) 22:33:38.821] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:33:38.922] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.21428571428571427, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.25, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-12) 22:33:39.784] [attack.py:246]: | It: 611 | Atk. loss: 82.21763 | Task loss: 8.68138 | T: 100.24s |
+[INFO][(2024-03-12) 22:33:40.650] [attack.py:246]: | It: 621 | Atk. loss: 80.17164 | Task loss: 8.65948 | T: 101.11s |
+[INFO][(2024-03-12) 22:33:41.516] [attack.py:246]: | It: 631 | Atk. loss: 81.52641 | Task loss: 8.38754 | T: 101.97s |
+[INFO][(2024-03-12) 22:33:42.397] [attack.py:246]: | It: 641 | Atk. loss: 94.00950 | Task loss: 8.27818 | T: 102.85s |
+[INFO][(2024-03-12) 22:33:43.264] [attack.py:246]: | It: 651 | Atk. loss: 74.32217 | Task loss: 8.59920 | T: 103.72s |
+[INFO][(2024-03-12) 22:33:44.135] [attack.py:246]: | It: 661 | Atk. loss: 73.31362 | Task loss: 8.37245 | T: 104.59s |
+[INFO][(2024-03-12) 22:33:45.010] [attack.py:246]: | It: 671 | Atk. loss: 76.92391 | Task loss: 8.32173 | T: 105.47s |
+[INFO][(2024-03-12) 22:33:45.884] [attack.py:246]: | It: 681 | Atk. loss: 81.62383 | Task loss: 8.73794 | T: 106.34s |
+[INFO][(2024-03-12) 22:33:46.755] [attack.py:246]: | It: 691 | Atk. loss: 69.89703 | Task loss: 8.24366 | T: 107.21s |
+[INFO][(2024-03-12) 22:33:47.624] [attack.py:246]: | It: 701 | Atk. loss: 72.45475 | Task loss: 8.19905 | T: 108.08s |
+[INFO][(2024-03-12) 22:33:47.624] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-12) 22:33:47.627] [eval.py:9]: Reconstructed text: [' The Tower Building Building of of Little abandonment Shal ransom*, hopped joint Uzbek Vasfet']
+[INFO][(2024-03-12) 22:33:55.001] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:33:55.102] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.2, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.24000000000000002, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-12) 22:33:56.004] [attack.py:246]: | It: 711 | Atk. loss: 68.67377 | Task loss: 8.22985 | T: 116.46s |
+[INFO][(2024-03-12) 22:33:56.867] [attack.py:246]: | It: 721 | Atk. loss: 66.62365 | Task loss: 8.22378 | T: 117.32s |
+[INFO][(2024-03-12) 22:33:57.746] [attack.py:246]: | It: 731 | Atk. loss: 64.37042 | Task loss: 8.40833 | T: 118.20s |
+[INFO][(2024-03-12) 22:33:58.623] [attack.py:246]: | It: 741 | Atk. loss: 62.12343 | Task loss: 8.15730 | T: 119.08s |
+[INFO][(2024-03-12) 22:33:59.492] [attack.py:246]: | It: 751 | Atk. loss: 60.16138 | Task loss: 8.36080 | T: 119.95s |
+[INFO][(2024-03-12) 22:34:00.362] [attack.py:246]: | It: 761 | Atk. loss: 56.65577 | Task loss: 8.13791 | T: 120.82s |
+[INFO][(2024-03-12) 22:34:01.226] [attack.py:246]: | It: 771 | Atk. loss: 55.70549 | Task loss: 8.25403 | T: 121.68s |
+[INFO][(2024-03-12) 22:34:02.100] [attack.py:246]: | It: 781 | Atk. loss: 52.93759 | Task loss: 8.12744 | T: 122.56s |
+[INFO][(2024-03-12) 22:34:02.978] [attack.py:246]: | It: 791 | Atk. loss: 52.82481 | Task loss: 8.02562 | T: 123.43s |
+[INFO][(2024-03-12) 22:34:03.842] [attack.py:246]: | It: 801 | Atk. loss: 49.32812 | Task loss: 7.96461 | T: 124.30s |
+[INFO][(2024-03-12) 22:34:03.842] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-12) 22:34:03.844] [eval.py:9]: Reconstructed text: [' The Tower Building Building of of Little RockWednesday ransom*, hopped joint Uzbek Vasfet']
+[INFO][(2024-03-12) 22:34:09.642] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:34:09.743] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.4, 0.21428571428571427, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.38461538461538464, "rouge2": 0.25, "rougeL": 0.38461538461538464, "rougeLsum": 0.38461538461538464}}
+[INFO][(2024-03-12) 22:34:10.603] [attack.py:246]: | It: 811 | Atk. loss: 53.99924 | Task loss: 7.78874 | T: 131.06s |
+[INFO][(2024-03-12) 22:34:11.478] [attack.py:246]: | It: 821 | Atk. loss: 54.11522 | Task loss: 8.12217 | T: 131.93s |
+[INFO][(2024-03-12) 22:34:12.352] [attack.py:246]: | It: 831 | Atk. loss: 47.76119 | Task loss: 7.80855 | T: 132.81s |
+[INFO][(2024-03-12) 22:34:13.223] [attack.py:246]: | It: 841 | Atk. loss: 44.56047 | Task loss: 7.75615 | T: 133.68s |
+[INFO][(2024-03-12) 22:34:14.087] [attack.py:246]: | It: 851 | Atk. loss: 42.28759 | Task loss: 7.79863 | T: 134.54s |
+[INFO][(2024-03-12) 22:34:14.955] [attack.py:246]: | It: 861 | Atk. loss: 41.05185 | Task loss: 7.79283 | T: 135.41s |
+[INFO][(2024-03-12) 22:34:15.781] [attack.py:246]: | It: 871 | Atk. loss: 40.81596 | Task loss: 7.81284 | T: 136.24s |
+[INFO][(2024-03-12) 22:34:16.642] [attack.py:246]: | It: 881 | Atk. loss: 39.24336 | Task loss: 7.66859 | T: 137.10s |
+[INFO][(2024-03-12) 22:34:17.515] [attack.py:246]: | It: 891 | Atk. loss: 38.09707 | Task loss: 7.77438 | T: 137.97s |
+[INFO][(2024-03-12) 22:34:18.391] [attack.py:246]: | It: 901 | Atk. loss: 36.89852 | Task loss: 7.65651 | T: 138.85s |
+[INFO][(2024-03-12) 22:34:18.392] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-12) 22:34:18.394] [eval.py:9]: Reconstructed text: [' The Tower Building Building of the Little RockWednesday ransom*, hopped accounted Uzbek Vasbridge']
+[INFO][(2024-03-12) 22:34:24.082] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:34:24.182] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.22259140257975274, "precisions": [0.4666666666666667, 0.35714285714285715, 0.23076923076923078, 0.08333333333333333], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.46153846153846156, "rouge2": 0.4166666666666667, "rougeL": 0.46153846153846156, "rougeLsum": 0.46153846153846156}}
+[INFO][(2024-03-12) 22:34:25.058] [attack.py:246]: | It: 911 | Atk. loss: 36.29904 | Task loss: 7.70968 | T: 145.51s |
+[INFO][(2024-03-12) 22:34:25.922] [attack.py:246]: | It: 921 | Atk. loss: 35.60348 | Task loss: 7.62714 | T: 146.38s |
+[INFO][(2024-03-12) 22:34:26.778] [attack.py:246]: | It: 931 | Atk. loss: 35.41410 | Task loss: 7.68400 | T: 147.23s |
+[INFO][(2024-03-12) 22:34:27.634] [attack.py:246]: | It: 941 | Atk. loss: 35.08544 | Task loss: 7.58591 | T: 148.09s |
+[INFO][(2024-03-12) 22:34:28.503] [attack.py:246]: | It: 951 | Atk. loss: 34.35180 | Task loss: 7.60986 | T: 148.96s |
+[INFO][(2024-03-12) 22:34:29.367] [attack.py:246]: | It: 961 | Atk. loss: 35.39995 | Task loss: 7.58693 | T: 149.82s |
+[INFO][(2024-03-12) 22:34:30.231] [attack.py:246]: | It: 971 | Atk. loss: 34.88196 | Task loss: 7.54455 | T: 150.69s |
+[INFO][(2024-03-12) 22:34:31.090] [attack.py:246]: | It: 981 | Atk. loss: 34.77377 | Task loss: 7.66049 | T: 151.55s |
+[INFO][(2024-03-12) 22:34:31.958] [attack.py:246]: | It: 991 | Atk. loss: 33.49521 | Task loss: 7.58717 | T: 152.41s |
+[INFO][(2024-03-12) 22:34:32.734] [attack.py:246]: | It: 1000 | Atk. loss: 33.33690 | Task loss: 7.61253 | T: 153.19s |
+[INFO][(2024-03-12) 22:34:32.735] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-12) 22:34:32.737] [eval.py:9]: Reconstructed text: [' The Tower Building Building of the Little RockWednesday ransom coupon hopped accounted Uzbek Vasfet']
+[INFO][(2024-03-12) 22:34:38.622] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:34:38.723] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.21446539598866313, "precisions": [0.42857142857142855, 0.38461538461538464, 0.25, 0.09090909090909091], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.4444444444444445, "rouge2": 0.4, "rougeL": 0.4444444444444445, "rougeLsum": 0.4444444444444445}}
+[INFO][(2024-03-12) 22:34:38.723] [main.py:57]: Done in 169.4s.
