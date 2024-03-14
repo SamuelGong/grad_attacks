@@ -1,0 +1,224 @@
+[INFO][(2024-03-12) 23:57:38.984] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-12) 23:57:38.985] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 0.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s0_20240312-235738.log"
+}
+[INFO][(2024-03-12) 23:57:44.340] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-12) 23:57:44.340] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-12) 23:57:49.090] [attack.py:246]: | It: 1 | Atk. loss: 13701.79004 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-12) 23:57:49.090] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-12) 23:57:49.092] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-12) 23:57:55.537] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:57:55.638] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 23:57:56.518] [attack.py:246]: | It: 11 | Atk. loss: 2682.61670 | Task loss: 19.00753 | T: 7.52s |
+[INFO][(2024-03-12) 23:57:57.378] [attack.py:246]: | It: 21 | Atk. loss: 1543.55762 | Task loss: 16.93094 | T: 8.38s |
+[INFO][(2024-03-12) 23:57:58.238] [attack.py:246]: | It: 31 | Atk. loss: 1258.92737 | Task loss: 15.57030 | T: 9.24s |
+[INFO][(2024-03-12) 23:57:59.100] [attack.py:246]: | It: 41 | Atk. loss: 1180.74561 | Task loss: 14.67155 | T: 10.10s |
+[INFO][(2024-03-12) 23:57:59.962] [attack.py:246]: | It: 51 | Atk. loss: 1152.88965 | Task loss: 13.94586 | T: 10.96s |
+[INFO][(2024-03-12) 23:58:00.826] [attack.py:246]: | It: 61 | Atk. loss: 972.74951 | Task loss: 13.15306 | T: 11.83s |
+[INFO][(2024-03-12) 23:58:01.683] [attack.py:246]: | It: 71 | Atk. loss: 900.08722 | Task loss: 12.69635 | T: 12.68s |
+[INFO][(2024-03-12) 23:58:02.550] [attack.py:246]: | It: 81 | Atk. loss: 861.67383 | Task loss: 12.52229 | T: 13.55s |
+[INFO][(2024-03-12) 23:58:03.419] [attack.py:246]: | It: 91 | Atk. loss: 841.36102 | Task loss: 12.49605 | T: 14.42s |
+[INFO][(2024-03-12) 23:58:04.279] [attack.py:246]: | It: 101 | Atk. loss: 744.84924 | Task loss: 12.47991 | T: 15.28s |
+[INFO][(2024-03-12) 23:58:04.279] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-12) 23:58:04.282] [eval.py:9]: Reconstructed text: [' Theshe kill ly perjury geometric Rat KT Mushervilleparalleled unorthodox suburban concoct Vasfet']
+[INFO][(2024-03-12) 23:58:10.154] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:58:10.257] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 23:58:11.146] [attack.py:246]: | It: 111 | Atk. loss: 685.99268 | Task loss: 12.30483 | T: 22.15s |
+[INFO][(2024-03-12) 23:58:12.047] [attack.py:246]: | It: 121 | Atk. loss: 536.40637 | Task loss: 12.22813 | T: 23.05s |
+[INFO][(2024-03-12) 23:58:12.931] [attack.py:246]: | It: 131 | Atk. loss: 381.54324 | Task loss: 12.25987 | T: 23.93s |
+[INFO][(2024-03-12) 23:58:13.832] [attack.py:246]: | It: 141 | Atk. loss: 311.76389 | Task loss: 12.11887 | T: 24.83s |
+[INFO][(2024-03-12) 23:58:14.737] [attack.py:246]: | It: 151 | Atk. loss: 297.23633 | Task loss: 11.30740 | T: 25.74s |
+[INFO][(2024-03-12) 23:58:15.619] [attack.py:246]: | It: 161 | Atk. loss: 327.42813 | Task loss: 10.97219 | T: 26.62s |
+[INFO][(2024-03-12) 23:58:16.513] [attack.py:246]: | It: 171 | Atk. loss: 263.71759 | Task loss: 10.96162 | T: 27.51s |
+[INFO][(2024-03-12) 23:58:17.385] [attack.py:246]: | It: 181 | Atk. loss: 286.38123 | Task loss: 10.61166 | T: 28.39s |
+[INFO][(2024-03-12) 23:58:18.271] [attack.py:246]: | It: 191 | Atk. loss: 242.61487 | Task loss: 11.14971 | T: 29.27s |
+[INFO][(2024-03-12) 23:58:19.163] [attack.py:246]: | It: 201 | Atk. loss: 220.85516 | Task loss: 10.59871 | T: 30.16s |
+[INFO][(2024-03-12) 23:58:19.163] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-12) 23:58:19.165] [eval.py:9]: Reconstructed text: [' Thestarted murdering Tower perjury Building Yateschu flashinguh ferocious explored suburban exagger Vasfet']
+[INFO][(2024-03-12) 23:58:25.318] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:58:25.420] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.16666666666666666, 0.0, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.16, "rouge2": 0.0, "rougeL": 0.16, "rougeLsum": 0.16}}
+[INFO][(2024-03-12) 23:58:26.339] [attack.py:246]: | It: 211 | Atk. loss: 378.60629 | Task loss: 10.42217 | T: 37.34s |
+[INFO][(2024-03-12) 23:58:27.207] [attack.py:246]: | It: 221 | Atk. loss: 405.82169 | Task loss: 10.59460 | T: 38.21s |
+[INFO][(2024-03-12) 23:58:28.076] [attack.py:246]: | It: 231 | Atk. loss: 363.84671 | Task loss: 10.40128 | T: 39.08s |
+[INFO][(2024-03-12) 23:58:28.950] [attack.py:246]: | It: 241 | Atk. loss: 306.32819 | Task loss: 9.85130 | T: 39.95s |
+[INFO][(2024-03-12) 23:58:29.816] [attack.py:246]: | It: 251 | Atk. loss: 305.54929 | Task loss: 10.06961 | T: 40.82s |
+[INFO][(2024-03-12) 23:58:30.694] [attack.py:246]: | It: 261 | Atk. loss: 234.81589 | Task loss: 9.88355 | T: 41.69s |
+[INFO][(2024-03-12) 23:58:31.570] [attack.py:246]: | It: 271 | Atk. loss: 212.71243 | Task loss: 9.61453 | T: 42.57s |
+[INFO][(2024-03-12) 23:58:32.439] [attack.py:246]: | It: 281 | Atk. loss: 221.72853 | Task loss: 9.25355 | T: 43.44s |
+[INFO][(2024-03-12) 23:58:33.312] [attack.py:246]: | It: 291 | Atk. loss: 197.07869 | Task loss: 9.39672 | T: 44.31s |
+[INFO][(2024-03-12) 23:58:34.183] [attack.py:246]: | It: 301 | Atk. loss: 201.79828 | Task loss: 9.20223 | T: 45.18s |
+[INFO][(2024-03-12) 23:58:34.184] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-12) 23:58:34.186] [eval.py:9]: Reconstructed text: [' The Tower Building Tower tablets Building Knoxchu ICCuh Basin paranoidJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:58:40.362] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:58:40.462] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.25, 0.18181818181818182, 0.1, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.24000000000000002, "rouge2": 0.17391304347826086, "rougeL": 0.24000000000000002, "rougeLsum": 0.24000000000000002}}
+[INFO][(2024-03-12) 23:58:41.349] [attack.py:246]: | It: 311 | Atk. loss: 190.65245 | Task loss: 9.04290 | T: 52.35s |
+[INFO][(2024-03-12) 23:58:42.225] [attack.py:246]: | It: 321 | Atk. loss: 213.46219 | Task loss: 9.57980 | T: 53.23s |
+[INFO][(2024-03-12) 23:58:43.091] [attack.py:246]: | It: 331 | Atk. loss: 191.87019 | Task loss: 9.04037 | T: 54.09s |
+[INFO][(2024-03-12) 23:58:43.970] [attack.py:246]: | It: 341 | Atk. loss: 217.17682 | Task loss: 9.21709 | T: 54.97s |
+[INFO][(2024-03-12) 23:58:44.844] [attack.py:246]: | It: 351 | Atk. loss: 207.96272 | Task loss: 9.02394 | T: 55.85s |
+[INFO][(2024-03-12) 23:58:45.719] [attack.py:246]: | It: 361 | Atk. loss: 195.32477 | Task loss: 9.00272 | T: 56.72s |
+[INFO][(2024-03-12) 23:58:46.598] [attack.py:246]: | It: 371 | Atk. loss: 201.28450 | Task loss: 9.18235 | T: 57.60s |
+[INFO][(2024-03-12) 23:58:47.472] [attack.py:246]: | It: 381 | Atk. loss: 193.07358 | Task loss: 8.96479 | T: 58.47s |
+[INFO][(2024-03-12) 23:58:48.348] [attack.py:246]: | It: 391 | Atk. loss: 188.12108 | Task loss: 8.98375 | T: 59.35s |
+[INFO][(2024-03-12) 23:58:49.228] [attack.py:246]: | It: 401 | Atk. loss: 191.10886 | Task loss: 8.68846 | T: 60.23s |
+[INFO][(2024-03-12) 23:58:49.229] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-12) 23:58:49.231] [eval.py:9]: Reconstructed text: [' The Tower Building Tower tablets Building Towerchu ICC alum downstream INVJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:58:56.134] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:58:56.236] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.23076923076923078, 0.16666666666666666, 0.09090909090909091, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.23076923076923078, "rouge2": 0.16666666666666666, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-12) 23:58:57.113] [attack.py:246]: | It: 411 | Atk. loss: 199.79677 | Task loss: 8.60608 | T: 68.11s |
+[INFO][(2024-03-12) 23:58:57.990] [attack.py:246]: | It: 421 | Atk. loss: 194.11026 | Task loss: 9.29144 | T: 68.99s |
+[INFO][(2024-03-12) 23:58:58.866] [attack.py:246]: | It: 431 | Atk. loss: 178.10742 | Task loss: 8.96904 | T: 69.87s |
+[INFO][(2024-03-12) 23:58:59.731] [attack.py:246]: | It: 441 | Atk. loss: 180.49709 | Task loss: 9.04665 | T: 70.73s |
+[INFO][(2024-03-12) 23:59:00.602] [attack.py:246]: | It: 451 | Atk. loss: 177.44754 | Task loss: 8.78899 | T: 71.60s |
+[INFO][(2024-03-12) 23:59:01.480] [attack.py:246]: | It: 461 | Atk. loss: 177.06447 | Task loss: 9.00554 | T: 72.48s |
+[INFO][(2024-03-12) 23:59:02.349] [attack.py:246]: | It: 471 | Atk. loss: 172.97675 | Task loss: 8.81473 | T: 73.35s |
+[INFO][(2024-03-12) 23:59:03.214] [attack.py:246]: | It: 481 | Atk. loss: 177.43080 | Task loss: 8.97635 | T: 74.22s |
+[INFO][(2024-03-12) 23:59:04.070] [attack.py:246]: | It: 491 | Atk. loss: 175.67499 | Task loss: 8.57132 | T: 75.07s |
+[INFO][(2024-03-12) 23:59:04.939] [attack.py:246]: | It: 501 | Atk. loss: 175.29016 | Task loss: 8.94036 | T: 75.94s |
+[INFO][(2024-03-12) 23:59:04.939] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-12) 23:59:04.941] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Towerchu flames alum downstream INVJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:59:10.879] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:59:10.982] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.3076923076923077, 0.16666666666666666, 0.09090909090909091, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.16666666666666666, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-12) 23:59:11.883] [attack.py:246]: | It: 511 | Atk. loss: 166.24234 | Task loss: 8.71968 | T: 82.88s |
+[INFO][(2024-03-12) 23:59:12.768] [attack.py:246]: | It: 521 | Atk. loss: 167.06122 | Task loss: 8.81077 | T: 83.77s |
+[INFO][(2024-03-12) 23:59:13.636] [attack.py:246]: | It: 531 | Atk. loss: 167.72913 | Task loss: 8.76617 | T: 84.64s |
+[INFO][(2024-03-12) 23:59:14.511] [attack.py:246]: | It: 541 | Atk. loss: 165.38057 | Task loss: 8.61421 | T: 85.51s |
+[INFO][(2024-03-12) 23:59:15.395] [attack.py:246]: | It: 551 | Atk. loss: 162.92813 | Task loss: 8.76281 | T: 86.40s |
+[INFO][(2024-03-12) 23:59:16.283] [attack.py:246]: | It: 561 | Atk. loss: 171.11934 | Task loss: 8.48767 | T: 87.28s |
+[INFO][(2024-03-12) 23:59:17.155] [attack.py:246]: | It: 571 | Atk. loss: 162.46840 | Task loss: 8.77162 | T: 88.16s |
+[INFO][(2024-03-12) 23:59:17.965] [attack.py:246]: | It: 581 | Atk. loss: 160.79715 | Task loss: 8.67120 | T: 88.97s |
+[INFO][(2024-03-12) 23:59:18.777] [attack.py:246]: | It: 591 | Atk. loss: 177.14166 | Task loss: 8.94443 | T: 89.78s |
+[INFO][(2024-03-12) 23:59:19.586] [attack.py:246]: | It: 601 | Atk. loss: 160.90140 | Task loss: 8.63768 | T: 90.59s |
+[INFO][(2024-03-12) 23:59:19.586] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-12) 23:59:19.588] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Towerchu flames alum downstream INVJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:59:25.521] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:59:25.620] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.3076923076923077, 0.16666666666666666, 0.09090909090909091, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.16666666666666666, "rougeL": 0.3076923076923077, "rougeLsum": 0.3076923076923077}}
+[INFO][(2024-03-12) 23:59:26.455] [attack.py:246]: | It: 611 | Atk. loss: 156.59430 | Task loss: 8.70209 | T: 97.46s |
+[INFO][(2024-03-12) 23:59:27.276] [attack.py:246]: | It: 621 | Atk. loss: 158.28825 | Task loss: 8.52446 | T: 98.28s |
+[INFO][(2024-03-12) 23:59:28.155] [attack.py:246]: | It: 631 | Atk. loss: 156.11636 | Task loss: 8.75886 | T: 99.16s |
+[INFO][(2024-03-12) 23:59:29.037] [attack.py:246]: | It: 641 | Atk. loss: 156.34644 | Task loss: 8.51343 | T: 100.04s |
+[INFO][(2024-03-12) 23:59:29.841] [attack.py:246]: | It: 651 | Atk. loss: 155.17384 | Task loss: 8.60014 | T: 100.84s |
+[INFO][(2024-03-12) 23:59:30.637] [attack.py:246]: | It: 661 | Atk. loss: 162.02234 | Task loss: 8.80802 | T: 101.64s |
+[INFO][(2024-03-12) 23:59:31.511] [attack.py:246]: | It: 671 | Atk. loss: 167.81790 | Task loss: 8.35907 | T: 102.51s |
+[INFO][(2024-03-12) 23:59:32.375] [attack.py:246]: | It: 681 | Atk. loss: 151.31299 | Task loss: 8.63599 | T: 103.38s |
+[INFO][(2024-03-12) 23:59:33.247] [attack.py:246]: | It: 691 | Atk. loss: 148.47627 | Task loss: 8.57910 | T: 104.25s |
+[INFO][(2024-03-12) 23:59:34.122] [attack.py:246]: | It: 701 | Atk. loss: 148.88684 | Task loss: 8.65326 | T: 105.12s |
+[INFO][(2024-03-12) 23:59:34.122] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-12) 23:59:34.124] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Tower liv flames alum downstream calculatedJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:59:40.166] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:59:40.265] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.2857142857142857, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.29629629629629634, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 23:59:41.143] [attack.py:246]: | It: 711 | Atk. loss: 145.84904 | Task loss: 8.57200 | T: 112.14s |
+[INFO][(2024-03-12) 23:59:42.026] [attack.py:246]: | It: 721 | Atk. loss: 148.17165 | Task loss: 8.42302 | T: 113.03s |
+[INFO][(2024-03-12) 23:59:42.892] [attack.py:246]: | It: 731 | Atk. loss: 144.79472 | Task loss: 8.59009 | T: 113.89s |
+[INFO][(2024-03-12) 23:59:43.759] [attack.py:246]: | It: 741 | Atk. loss: 140.97160 | Task loss: 8.44093 | T: 114.76s |
+[INFO][(2024-03-12) 23:59:44.630] [attack.py:246]: | It: 751 | Atk. loss: 140.25601 | Task loss: 8.42510 | T: 115.63s |
+[INFO][(2024-03-12) 23:59:45.526] [attack.py:246]: | It: 761 | Atk. loss: 140.45224 | Task loss: 8.47867 | T: 116.53s |
+[INFO][(2024-03-12) 23:59:46.403] [attack.py:246]: | It: 771 | Atk. loss: 137.51932 | Task loss: 8.41853 | T: 117.40s |
+[INFO][(2024-03-12) 23:59:47.270] [attack.py:246]: | It: 781 | Atk. loss: 134.15622 | Task loss: 8.40848 | T: 118.27s |
+[INFO][(2024-03-12) 23:59:48.140] [attack.py:246]: | It: 791 | Atk. loss: 135.04463 | Task loss: 8.35245 | T: 119.14s |
+[INFO][(2024-03-12) 23:59:48.999] [attack.py:246]: | It: 801 | Atk. loss: 133.59154 | Task loss: 8.41743 | T: 120.00s |
+[INFO][(2024-03-12) 23:59:49.000] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-12) 23:59:49.002] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Tower liv flames alum downstream calculatedJason Tanzania Vasfet']
+[INFO][(2024-03-12) 23:59:55.014] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 23:59:55.114] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.2857142857142857, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.29629629629629634, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 23:59:55.986] [attack.py:246]: | It: 811 | Atk. loss: 130.84802 | Task loss: 8.37280 | T: 126.99s |
+[INFO][(2024-03-12) 23:59:56.853] [attack.py:246]: | It: 821 | Atk. loss: 133.09058 | Task loss: 8.35352 | T: 127.85s |
+[INFO][(2024-03-12) 23:59:57.724] [attack.py:246]: | It: 831 | Atk. loss: 129.52998 | Task loss: 8.32357 | T: 128.73s |
+[INFO][(2024-03-12) 23:59:58.597] [attack.py:246]: | It: 841 | Atk. loss: 131.30798 | Task loss: 8.32476 | T: 129.60s |
+[INFO][(2024-03-12) 23:59:59.456] [attack.py:246]: | It: 851 | Atk. loss: 128.33713 | Task loss: 8.28254 | T: 130.46s |
+[INFO][(2024-03-13) 00:00:00.318] [attack.py:246]: | It: 861 | Atk. loss: 125.76641 | Task loss: 8.31962 | T: 131.32s |
+[INFO][(2024-03-13) 00:00:01.179] [attack.py:246]: | It: 871 | Atk. loss: 127.16344 | Task loss: 8.21247 | T: 132.18s |
+[INFO][(2024-03-13) 00:00:02.045] [attack.py:246]: | It: 881 | Atk. loss: 123.80666 | Task loss: 8.31010 | T: 133.05s |
+[INFO][(2024-03-13) 00:00:02.912] [attack.py:246]: | It: 891 | Atk. loss: 123.69861 | Task loss: 8.31924 | T: 133.91s |
+[INFO][(2024-03-13) 00:00:03.779] [attack.py:246]: | It: 901 | Atk. loss: 121.71471 | Task loss: 8.24500 | T: 134.78s |
+[INFO][(2024-03-13) 00:00:03.780] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:00:03.782] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Tower Rock flames alum downstream calculatedJason Tanzania Vasfet']
+[INFO][(2024-03-13) 00:00:10.374] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:00:10.473] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-13) 00:00:11.347] [attack.py:246]: | It: 911 | Atk. loss: 120.91284 | Task loss: 8.22741 | T: 142.35s |
+[INFO][(2024-03-13) 00:00:12.210] [attack.py:246]: | It: 921 | Atk. loss: 120.75432 | Task loss: 8.29711 | T: 143.21s |
+[INFO][(2024-03-13) 00:00:13.066] [attack.py:246]: | It: 931 | Atk. loss: 119.65632 | Task loss: 8.20455 | T: 144.07s |
+[INFO][(2024-03-13) 00:00:13.926] [attack.py:246]: | It: 941 | Atk. loss: 118.95086 | Task loss: 8.24647 | T: 144.93s |
+[INFO][(2024-03-13) 00:00:14.783] [attack.py:246]: | It: 951 | Atk. loss: 118.29789 | Task loss: 8.16906 | T: 145.78s |
+[INFO][(2024-03-13) 00:00:15.650] [attack.py:246]: | It: 961 | Atk. loss: 117.82394 | Task loss: 8.21284 | T: 146.65s |
+[INFO][(2024-03-13) 00:00:16.514] [attack.py:246]: | It: 971 | Atk. loss: 117.30811 | Task loss: 8.15319 | T: 147.52s |
+[INFO][(2024-03-13) 00:00:17.370] [attack.py:246]: | It: 981 | Atk. loss: 116.90682 | Task loss: 8.18805 | T: 148.37s |
+[INFO][(2024-03-13) 00:00:18.234] [attack.py:246]: | It: 991 | Atk. loss: 116.49409 | Task loss: 8.14246 | T: 149.24s |
+[INFO][(2024-03-13) 00:00:19.011] [attack.py:246]: | It: 1000 | Atk. loss: 116.16059 | Task loss: 8.13950 | T: 150.01s |
+[INFO][(2024-03-13) 00:00:19.011] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:00:19.013] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the Building Tower Rock flames alum downstream calculatedJason Tanzania Vasfet']
+[INFO][(2024-03-13) 00:00:25.528] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:00:25.632] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.15384615384615385, 0.08333333333333333, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.3703703703703704, "rougeLsum": 0.3703703703703704}}
+[INFO][(2024-03-13) 00:00:25.632] [main.py:57]: Done in 166.69s.

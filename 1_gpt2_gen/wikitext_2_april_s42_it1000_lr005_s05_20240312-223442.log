@@ -1,0 +1,224 @@
+[INFO][(2024-03-12) 22:34:42.276] [main.py:25]: Git branch: main, Git commit: 61af44c
+[INFO][(2024-03-12) 22:34:42.276] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 0.5,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s05_20240312-223442.log"
+}
+[INFO][(2024-03-12) 22:34:47.516] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-12) 22:34:47.516] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-12) 22:34:52.278] [attack.py:246]: | It: 1 | Atk. loss: 13741.57031 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-12) 22:34:52.278] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-12) 22:34:52.280] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-12) 22:34:58.310] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:34:58.411] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-12) 22:34:59.284] [attack.py:246]: | It: 11 | Atk. loss: 2758.15649 | Task loss: 19.06401 | T: 7.10s |
+[INFO][(2024-03-12) 22:35:00.159] [attack.py:246]: | It: 21 | Atk. loss: 1451.48999 | Task loss: 16.74912 | T: 7.98s |
+[INFO][(2024-03-12) 22:35:01.031] [attack.py:246]: | It: 31 | Atk. loss: 1230.60083 | Task loss: 15.25574 | T: 8.85s |
+[INFO][(2024-03-12) 22:35:01.910] [attack.py:246]: | It: 41 | Atk. loss: 1128.18201 | Task loss: 13.95104 | T: 9.73s |
+[INFO][(2024-03-12) 22:35:02.785] [attack.py:246]: | It: 51 | Atk. loss: 1240.91553 | Task loss: 13.72589 | T: 10.60s |
+[INFO][(2024-03-12) 22:35:03.660] [attack.py:246]: | It: 61 | Atk. loss: 998.87152 | Task loss: 12.78564 | T: 11.48s |
+[INFO][(2024-03-12) 22:35:04.538] [attack.py:246]: | It: 71 | Atk. loss: 902.55707 | Task loss: 12.69386 | T: 12.35s |
+[INFO][(2024-03-12) 22:35:05.414] [attack.py:246]: | It: 81 | Atk. loss: 885.12158 | Task loss: 12.98865 | T: 13.23s |
+[INFO][(2024-03-12) 22:35:06.279] [attack.py:246]: | It: 91 | Atk. loss: 824.25323 | Task loss: 12.37900 | T: 14.10s |
+[INFO][(2024-03-12) 22:35:07.164] [attack.py:246]: | It: 101 | Atk. loss: 795.19153 | Task loss: 12.38545 | T: 14.98s |
+[INFO][(2024-03-12) 22:35:07.165] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-12) 22:35:07.173] [eval.py:9]: Reconstructed text: [' the Gam~ MM referral pinpoint Criminal 375 … traffic destro Vaugh squarely Nicotine blendedfet']
+[INFO][(2024-03-12) 22:35:12.926] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:35:13.026] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-12) 22:35:13.906] [attack.py:246]: | It: 111 | Atk. loss: 735.23425 | Task loss: 12.30854 | T: 21.72s |
+[INFO][(2024-03-12) 22:35:14.786] [attack.py:246]: | It: 121 | Atk. loss: 661.87830 | Task loss: 11.83870 | T: 22.60s |
+[INFO][(2024-03-12) 22:35:15.662] [attack.py:246]: | It: 131 | Atk. loss: 500.38626 | Task loss: 12.19311 | T: 23.48s |
+[INFO][(2024-03-12) 22:35:16.538] [attack.py:246]: | It: 141 | Atk. loss: 337.14978 | Task loss: 12.20576 | T: 24.36s |
+[INFO][(2024-03-12) 22:35:17.410] [attack.py:246]: | It: 151 | Atk. loss: 291.48840 | Task loss: 11.86771 | T: 25.23s |
+[INFO][(2024-03-12) 22:35:18.287] [attack.py:246]: | It: 161 | Atk. loss: 271.09863 | Task loss: 11.44167 | T: 26.10s |
+[INFO][(2024-03-12) 22:35:19.159] [attack.py:246]: | It: 171 | Atk. loss: 253.47629 | Task loss: 10.89169 | T: 26.98s |
+[INFO][(2024-03-12) 22:35:20.035] [attack.py:246]: | It: 181 | Atk. loss: 235.36401 | Task loss: 11.24772 | T: 27.85s |
+[INFO][(2024-03-12) 22:35:20.905] [attack.py:246]: | It: 191 | Atk. loss: 246.34457 | Task loss: 11.44332 | T: 28.72s |
+[INFO][(2024-03-12) 22:35:21.779] [attack.py:246]: | It: 201 | Atk. loss: 223.29240 | Task loss: 10.99978 | T: 29.60s |
+[INFO][(2024-03-12) 22:35:21.779] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-12) 22:35:21.781] [eval.py:9]: Reconstructed text: [' The Buildingthe Tower Tower588 Criminal§….. building destro linear exploding Nicotine Vasfet']
+[INFO][(2024-03-12) 22:35:27.672] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:35:27.771] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.3076923076923077, 0.0, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.24999999999999994, "rouge2": 0.0, "rougeL": 0.24999999999999994, "rougeLsum": 0.24999999999999994}}
+[INFO][(2024-03-12) 22:35:28.650] [attack.py:246]: | It: 211 | Atk. loss: 205.90488 | Task loss: 10.59305 | T: 36.47s |
+[INFO][(2024-03-12) 22:35:29.522] [attack.py:246]: | It: 221 | Atk. loss: 225.69975 | Task loss: 10.37341 | T: 37.34s |
+[INFO][(2024-03-12) 22:35:30.395] [attack.py:246]: | It: 231 | Atk. loss: 197.60162 | Task loss: 10.33275 | T: 38.21s |
+[INFO][(2024-03-12) 22:35:31.263] [attack.py:246]: | It: 241 | Atk. loss: 207.25397 | Task loss: 10.77996 | T: 39.08s |
+[INFO][(2024-03-12) 22:35:32.142] [attack.py:246]: | It: 251 | Atk. loss: 190.02536 | Task loss: 9.96876 | T: 39.96s |
+[INFO][(2024-03-12) 22:35:33.026] [attack.py:246]: | It: 261 | Atk. loss: 178.66367 | Task loss: 10.14546 | T: 40.84s |
+[INFO][(2024-03-12) 22:35:33.909] [attack.py:246]: | It: 271 | Atk. loss: 185.38182 | Task loss: 10.40933 | T: 41.73s |
+[INFO][(2024-03-12) 22:35:34.783] [attack.py:246]: | It: 281 | Atk. loss: 170.14792 | Task loss: 9.99775 | T: 42.60s |
+[INFO][(2024-03-12) 22:35:35.680] [attack.py:246]: | It: 291 | Atk. loss: 164.06810 | Task loss: 9.83723 | T: 43.50s |
+[INFO][(2024-03-12) 22:35:36.559] [attack.py:246]: | It: 301 | Atk. loss: 164.74837 | Task loss: 10.33669 | T: 44.38s |
+[INFO][(2024-03-12) 22:35:36.560] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-12) 22:35:36.562] [eval.py:9]: Reconstructed text: [' The Tower of Tower Tower588 CriminalANGE….. building Briggs weekendsyellow Nicotine Vasfet']
+[INFO][(2024-03-12) 22:35:42.726] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:35:42.828] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.38461538461538464, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.33333333333333337, "rouge2": 0.0909090909090909, "rougeL": 0.24999999999999994, "rougeLsum": 0.24999999999999994}}
+[INFO][(2024-03-12) 22:35:43.700] [attack.py:246]: | It: 311 | Atk. loss: 160.37065 | Task loss: 9.76972 | T: 51.52s |
+[INFO][(2024-03-12) 22:35:44.577] [attack.py:246]: | It: 321 | Atk. loss: 154.57071 | Task loss: 9.87839 | T: 52.39s |
+[INFO][(2024-03-12) 22:35:45.435] [attack.py:246]: | It: 331 | Atk. loss: 150.22769 | Task loss: 9.66246 | T: 53.25s |
+[INFO][(2024-03-12) 22:35:46.303] [attack.py:246]: | It: 341 | Atk. loss: 144.19096 | Task loss: 9.58040 | T: 54.12s |
+[INFO][(2024-03-12) 22:35:47.163] [attack.py:246]: | It: 351 | Atk. loss: 149.80385 | Task loss: 9.57990 | T: 54.98s |
+[INFO][(2024-03-12) 22:35:48.031] [attack.py:246]: | It: 361 | Atk. loss: 157.65924 | Task loss: 9.40018 | T: 55.85s |
+[INFO][(2024-03-12) 22:35:48.898] [attack.py:246]: | It: 371 | Atk. loss: 144.59073 | Task loss: 9.73402 | T: 56.71s |
+[INFO][(2024-03-12) 22:35:49.777] [attack.py:246]: | It: 381 | Atk. loss: 135.77701 | Task loss: 9.52140 | T: 57.59s |
+[INFO][(2024-03-12) 22:35:50.647] [attack.py:246]: | It: 391 | Atk. loss: 152.29486 | Task loss: 9.79913 | T: 58.46s |
+[INFO][(2024-03-12) 22:35:51.515] [attack.py:246]: | It: 401 | Atk. loss: 139.78572 | Task loss: 9.37322 | T: 59.33s |
+[INFO][(2024-03-12) 22:35:51.515] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-12) 22:35:51.517] [eval.py:9]: Reconstructed text: [' The Tower of Tower Tower773 Criminal lil extra building Adin weekendsyellow Nicotine Vasfet']
+[INFO][(2024-03-12) 22:35:57.982] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:35:58.082] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.23076923076923078, 0.08333333333333333, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.3076923076923077, "rouge2": 0.08333333333333333, "rougeL": 0.23076923076923078, "rougeLsum": 0.23076923076923078}}
+[INFO][(2024-03-12) 22:35:58.962] [attack.py:246]: | It: 411 | Atk. loss: 136.78053 | Task loss: 9.31293 | T: 66.78s |
+[INFO][(2024-03-12) 22:35:59.827] [attack.py:246]: | It: 421 | Atk. loss: 136.63113 | Task loss: 9.14627 | T: 67.64s |
+[INFO][(2024-03-12) 22:36:00.700] [attack.py:246]: | It: 431 | Atk. loss: 136.35866 | Task loss: 9.27201 | T: 68.52s |
+[INFO][(2024-03-12) 22:36:01.559] [attack.py:246]: | It: 441 | Atk. loss: 132.82124 | Task loss: 9.14080 | T: 69.38s |
+[INFO][(2024-03-12) 22:36:02.434] [attack.py:246]: | It: 451 | Atk. loss: 131.85251 | Task loss: 9.32214 | T: 70.25s |
+[INFO][(2024-03-12) 22:36:03.302] [attack.py:246]: | It: 461 | Atk. loss: 127.36727 | Task loss: 9.29155 | T: 71.12s |
+[INFO][(2024-03-12) 22:36:04.174] [attack.py:246]: | It: 471 | Atk. loss: 125.80393 | Task loss: 9.12617 | T: 71.99s |
+[INFO][(2024-03-12) 22:36:05.050] [attack.py:246]: | It: 481 | Atk. loss: 126.86062 | Task loss: 9.32407 | T: 72.87s |
+[INFO][(2024-03-12) 22:36:05.926] [attack.py:246]: | It: 491 | Atk. loss: 123.10155 | Task loss: 9.19650 | T: 73.74s |
+[INFO][(2024-03-12) 22:36:06.790] [attack.py:246]: | It: 501 | Atk. loss: 120.02524 | Task loss: 9.26362 | T: 74.61s |
+[INFO][(2024-03-12) 22:36:06.790] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-12) 22:36:06.792] [eval.py:9]: Reconstructed text: [' The Tower of Tower Tower shaking Hotel lil extra building Adin ColonialLost Liang Vasfet']
+[INFO][(2024-03-12) 22:36:13.322] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:36:13.426] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.21428571428571427, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.29629629629629634, "rouge2": 0.08, "rougeL": 0.22222222222222224, "rougeLsum": 0.22222222222222224}}
+[INFO][(2024-03-12) 22:36:14.295] [attack.py:246]: | It: 511 | Atk. loss: 122.23520 | Task loss: 9.13904 | T: 82.11s |
+[INFO][(2024-03-12) 22:36:15.167] [attack.py:246]: | It: 521 | Atk. loss: 116.09183 | Task loss: 9.09582 | T: 82.98s |
+[INFO][(2024-03-12) 22:36:16.043] [attack.py:246]: | It: 531 | Atk. loss: 115.19078 | Task loss: 9.14340 | T: 83.86s |
+[INFO][(2024-03-12) 22:36:16.919] [attack.py:246]: | It: 541 | Atk. loss: 112.30036 | Task loss: 9.01020 | T: 84.74s |
+[INFO][(2024-03-12) 22:36:17.787] [attack.py:246]: | It: 551 | Atk. loss: 110.00117 | Task loss: 8.91142 | T: 85.60s |
+[INFO][(2024-03-12) 22:36:18.657] [attack.py:246]: | It: 561 | Atk. loss: 108.83053 | Task loss: 8.94003 | T: 86.47s |
+[INFO][(2024-03-12) 22:36:19.515] [attack.py:246]: | It: 571 | Atk. loss: 109.96375 | Task loss: 8.97509 | T: 87.33s |
+[INFO][(2024-03-12) 22:36:20.380] [attack.py:246]: | It: 581 | Atk. loss: 103.13978 | Task loss: 8.96832 | T: 88.20s |
+[INFO][(2024-03-12) 22:36:21.240] [attack.py:246]: | It: 591 | Atk. loss: 102.06427 | Task loss: 8.93182 | T: 89.06s |
+[INFO][(2024-03-12) 22:36:22.100] [attack.py:246]: | It: 601 | Atk. loss: 108.66287 | Task loss: 8.76145 | T: 89.92s |
+[INFO][(2024-03-12) 22:36:22.101] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-12) 22:36:22.103] [eval.py:9]: Reconstructed text: [' The Tower of Little Tower Building constellation Little extra building Adin ColonialLost Liang Vasfet']
+[INFO][(2024-03-12) 22:36:27.780] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:36:27.880] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.15384615384615385, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 22:36:28.776] [attack.py:246]: | It: 611 | Atk. loss: 99.37727 | Task loss: 8.87584 | T: 96.59s |
+[INFO][(2024-03-12) 22:36:29.655] [attack.py:246]: | It: 621 | Atk. loss: 97.43480 | Task loss: 8.85357 | T: 97.47s |
+[INFO][(2024-03-12) 22:36:30.528] [attack.py:246]: | It: 631 | Atk. loss: 96.26092 | Task loss: 8.73602 | T: 98.35s |
+[INFO][(2024-03-12) 22:36:31.394] [attack.py:246]: | It: 641 | Atk. loss: 98.14685 | Task loss: 8.59022 | T: 99.21s |
+[INFO][(2024-03-12) 22:36:32.262] [attack.py:246]: | It: 651 | Atk. loss: 95.36726 | Task loss: 8.74723 | T: 100.08s |
+[INFO][(2024-03-12) 22:36:33.120] [attack.py:246]: | It: 661 | Atk. loss: 93.46257 | Task loss: 8.61349 | T: 100.94s |
+[INFO][(2024-03-12) 22:36:33.998] [attack.py:246]: | It: 671 | Atk. loss: 94.28150 | Task loss: 8.63192 | T: 101.82s |
+[INFO][(2024-03-12) 22:36:34.872] [attack.py:246]: | It: 681 | Atk. loss: 95.16422 | Task loss: 8.52759 | T: 102.69s |
+[INFO][(2024-03-12) 22:36:35.735] [attack.py:246]: | It: 691 | Atk. loss: 90.02629 | Task loss: 8.66469 | T: 103.55s |
+[INFO][(2024-03-12) 22:36:36.616] [attack.py:246]: | It: 701 | Atk. loss: 91.35773 | Task loss: 8.46766 | T: 104.43s |
+[INFO][(2024-03-12) 22:36:36.617] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-12) 22:36:36.619] [eval.py:9]: Reconstructed text: [' The Tower of Little Enhancement Building Understanding Little extra building Adin ColonialLost Philippe Vasfet']
+[INFO][(2024-03-12) 22:36:42.366] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:36:42.466] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 22:36:43.330] [attack.py:246]: | It: 711 | Atk. loss: 89.51168 | Task loss: 8.57220 | T: 111.15s |
+[INFO][(2024-03-12) 22:36:44.210] [attack.py:246]: | It: 721 | Atk. loss: 89.60275 | Task loss: 8.55677 | T: 112.03s |
+[INFO][(2024-03-12) 22:36:45.109] [attack.py:246]: | It: 731 | Atk. loss: 88.14207 | Task loss: 8.57086 | T: 112.93s |
+[INFO][(2024-03-12) 22:36:46.011] [attack.py:246]: | It: 741 | Atk. loss: 87.14703 | Task loss: 8.44566 | T: 113.83s |
+[INFO][(2024-03-12) 22:36:46.901] [attack.py:246]: | It: 751 | Atk. loss: 85.87282 | Task loss: 8.57766 | T: 114.72s |
+[INFO][(2024-03-12) 22:36:47.773] [attack.py:246]: | It: 761 | Atk. loss: 84.14584 | Task loss: 8.54925 | T: 115.59s |
+[INFO][(2024-03-12) 22:36:48.639] [attack.py:246]: | It: 771 | Atk. loss: 83.98734 | Task loss: 8.39311 | T: 116.46s |
+[INFO][(2024-03-12) 22:36:49.519] [attack.py:246]: | It: 781 | Atk. loss: 82.73629 | Task loss: 8.51516 | T: 117.34s |
+[INFO][(2024-03-12) 22:36:50.400] [attack.py:246]: | It: 791 | Atk. loss: 82.03763 | Task loss: 8.43883 | T: 118.22s |
+[INFO][(2024-03-12) 22:36:51.271] [attack.py:246]: | It: 801 | Atk. loss: 89.12077 | Task loss: 8.68600 | T: 119.09s |
+[INFO][(2024-03-12) 22:36:51.272] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-12) 22:36:51.274] [eval.py:9]: Reconstructed text: [' The Tower of Little Enhancement Building Understanding Little shooting building Adin ColonialLost Philippe Vasfet']
+[INFO][(2024-03-12) 22:36:57.274] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:36:57.373] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 22:36:58.245] [attack.py:246]: | It: 811 | Atk. loss: 82.99796 | Task loss: 8.34661 | T: 126.06s |
+[INFO][(2024-03-12) 22:36:59.122] [attack.py:246]: | It: 821 | Atk. loss: 82.14158 | Task loss: 8.41610 | T: 126.94s |
+[INFO][(2024-03-12) 22:36:59.996] [attack.py:246]: | It: 831 | Atk. loss: 80.59724 | Task loss: 8.43302 | T: 127.81s |
+[INFO][(2024-03-12) 22:37:00.875] [attack.py:246]: | It: 841 | Atk. loss: 81.19261 | Task loss: 8.36602 | T: 128.69s |
+[INFO][(2024-03-12) 22:37:01.747] [attack.py:246]: | It: 851 | Atk. loss: 78.34756 | Task loss: 8.41297 | T: 129.56s |
+[INFO][(2024-03-12) 22:37:02.607] [attack.py:246]: | It: 861 | Atk. loss: 79.24357 | Task loss: 8.45276 | T: 130.42s |
+[INFO][(2024-03-12) 22:37:03.418] [attack.py:246]: | It: 871 | Atk. loss: 80.02756 | Task loss: 8.34056 | T: 131.23s |
+[INFO][(2024-03-12) 22:37:04.234] [attack.py:246]: | It: 881 | Atk. loss: 80.55692 | Task loss: 8.34575 | T: 132.05s |
+[INFO][(2024-03-12) 22:37:05.097] [attack.py:246]: | It: 891 | Atk. loss: 77.13890 | Task loss: 8.41277 | T: 132.91s |
+[INFO][(2024-03-12) 22:37:05.970] [attack.py:246]: | It: 901 | Atk. loss: 77.30085 | Task loss: 8.37677 | T: 133.79s |
+[INFO][(2024-03-12) 22:37:05.971] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-12) 22:37:05.973] [eval.py:9]: Reconstructed text: [' The Tower of Little Enhancement Building Understanding Little shooting ruins Adin ColonialLost je Vasfet']
+[INFO][(2024-03-12) 22:37:12.045] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:37:12.144] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 22:37:13.022] [attack.py:246]: | It: 911 | Atk. loss: 75.68155 | Task loss: 8.28507 | T: 140.84s |
+[INFO][(2024-03-12) 22:37:13.895] [attack.py:246]: | It: 921 | Atk. loss: 74.93642 | Task loss: 8.37104 | T: 141.71s |
+[INFO][(2024-03-12) 22:37:14.760] [attack.py:246]: | It: 931 | Atk. loss: 74.22795 | Task loss: 8.29386 | T: 142.58s |
+[INFO][(2024-03-12) 22:37:15.627] [attack.py:246]: | It: 941 | Atk. loss: 74.35352 | Task loss: 8.34514 | T: 143.44s |
+[INFO][(2024-03-12) 22:37:16.507] [attack.py:246]: | It: 951 | Atk. loss: 73.47495 | Task loss: 8.28299 | T: 144.32s |
+[INFO][(2024-03-12) 22:37:17.382] [attack.py:246]: | It: 961 | Atk. loss: 74.31042 | Task loss: 8.26301 | T: 145.20s |
+[INFO][(2024-03-12) 22:37:18.256] [attack.py:246]: | It: 971 | Atk. loss: 73.68473 | Task loss: 8.31641 | T: 146.07s |
+[INFO][(2024-03-12) 22:37:19.130] [attack.py:246]: | It: 981 | Atk. loss: 73.17419 | Task loss: 8.25283 | T: 146.95s |
+[INFO][(2024-03-12) 22:37:20.005] [attack.py:246]: | It: 991 | Atk. loss: 73.03356 | Task loss: 8.24185 | T: 147.82s |
+[INFO][(2024-03-12) 22:37:20.799] [attack.py:246]: | It: 1000 | Atk. loss: 72.79456 | Task loss: 8.26507 | T: 148.62s |
+[INFO][(2024-03-12) 22:37:20.799] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-12) 22:37:20.801] [eval.py:9]: Reconstructed text: [' The Tower of Little Enhancement Building Understanding Little shooting ruins Libertarian ColonialLost JS Vasfet']
+[INFO][(2024-03-12) 22:37:27.433] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-12) 22:37:27.538] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.35714285714285715, 0.07692307692307693, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.08, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-12) 22:37:27.538] [main.py:57]: Done in 165.31s.

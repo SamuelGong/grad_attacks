@@ -100,7 +100,6 @@ def get_closure(config, attack_objective, optimizer,
             if config.attack.specific_args.grad_clip is not None:
                 grad_clip = config.attack.specific_args.grad_clip
                 for element in [dummy_data, dummy_label]:
-                # for element in [dummy_data]:
                     grad_norm = element.grad.norm()
                     if grad_norm > grad_clip:
                         element.grad.mul_(grad_clip / (grad_norm + 1e-6))
@@ -133,7 +132,24 @@ def get_attack_objective(config):
                 objective_value += ((dum - tar).pow(2).sum()
                                     + scale * weight * (dum - tar).abs().sum())
             objective_value *= 0.5
+            return objective_value
+    elif config.attack.name == "april":
+        def objective(target_gradient, dummy_gradient):
+            # part one
+            objective_value = 0
+            for dum, tar in zip(dummy_gradient, target_gradient):
+                objective_value += (dum - tar).pow(2).sum()
 
+            # part two
+            scale = config.attack.specific_args.scale
+            if config.model.name == "gpt2":
+                # layer 1 is the positional embedding
+                objective_value += scale * (dummy_gradient[1]
+                                            - target_gradient[1]).pow(2).sum()
+            else:
+                raise NotImplementedError
+
+            objective_value *= 0.5
             return objective_value
     else:
         raise NotImplementedError
@@ -150,7 +166,7 @@ def gradient_attack(config, model, gradient, auxiliary, ground_truth_data):
     device = determine_device(config=config)
     copy_model = copy.deepcopy(model)
 
-    if (config.attack.name == "tag"
+    if (config.attack.name in ["tag", "april"]
             and config.task in ["text-generation", "text-classification"]):
         data_size = (1, ground_truth_length, config.attack.specific_args.d_model)
         dummy_data = initialize_dummy_data(config, data_size, device)

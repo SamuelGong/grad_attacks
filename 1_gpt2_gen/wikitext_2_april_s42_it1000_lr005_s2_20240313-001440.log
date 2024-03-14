@@ -1,0 +1,224 @@
+[INFO][(2024-03-13) 00:14:40.950] [main.py:25]: Git branch: main, Git commit: 29e3433
+[INFO][(2024-03-13) 00:14:40.951] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "april",
+        "specific_args": {
+            "scale": 2.0,
+            "init_type": "randn-trunc",
+            "init_seed": 42,
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_april_s42_it1000_lr005_s2_20240313-001440.log"
+}
+[INFO][(2024-03-13) 00:14:46.705] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-13) 00:14:46.705] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-13) 00:14:51.763] [attack.py:246]: | It: 1 | Atk. loss: 13860.91309 | Task loss: 20.70686 | T: 0.09s |
+[INFO][(2024-03-13) 00:14:51.763] [attack.py:257]: Snapshots captured for It 1.
+[INFO][(2024-03-13) 00:14:51.765] [eval.py:9]: Reconstructed text: [' 25 Quessel decisive Chill proposedagogue Ultraush Casda phone Mun Tier regretfet']
+[INFO][(2024-03-13) 00:14:58.734] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:14:58.838] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:14:59.682] [attack.py:246]: | It: 11 | Atk. loss: 3167.31689 | Task loss: 19.07699 | T: 8.00s |
+[INFO][(2024-03-13) 00:15:00.538] [attack.py:246]: | It: 21 | Atk. loss: 1488.63184 | Task loss: 16.69408 | T: 8.86s |
+[INFO][(2024-03-13) 00:15:01.385] [attack.py:246]: | It: 31 | Atk. loss: 1271.15454 | Task loss: 14.99008 | T: 9.71s |
+[INFO][(2024-03-13) 00:15:02.246] [attack.py:246]: | It: 41 | Atk. loss: 1138.26233 | Task loss: 13.77543 | T: 10.57s |
+[INFO][(2024-03-13) 00:15:03.106] [attack.py:246]: | It: 51 | Atk. loss: 1079.43506 | Task loss: 13.26216 | T: 11.43s |
+[INFO][(2024-03-13) 00:15:03.949] [attack.py:246]: | It: 61 | Atk. loss: 1054.14807 | Task loss: 13.08933 | T: 12.27s |
+[INFO][(2024-03-13) 00:15:04.794] [attack.py:246]: | It: 71 | Atk. loss: 1022.06836 | Task loss: 12.31850 | T: 13.12s |
+[INFO][(2024-03-13) 00:15:05.647] [attack.py:246]: | It: 81 | Atk. loss: 985.49792 | Task loss: 12.98967 | T: 13.97s |
+[INFO][(2024-03-13) 00:15:06.501] [attack.py:246]: | It: 91 | Atk. loss: 910.21008 | Task loss: 12.33251 | T: 14.82s |
+[INFO][(2024-03-13) 00:15:07.358] [attack.py:246]: | It: 101 | Atk. loss: 887.52551 | Task loss: 12.30311 | T: 15.68s |
+[INFO][(2024-03-13) 00:15:07.359] [attack.py:257]: Snapshots captured for It 101.
+[INFO][(2024-03-13) 00:15:07.361] [eval.py:9]: Reconstructed text: [' Theaelthat evictionacteria categor Cash Mass recruit Gina limitations upbeat become hue semanticfet']
+[INFO][(2024-03-13) 00:15:13.250] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:15:13.352] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-13) 00:15:14.143] [attack.py:246]: | It: 111 | Atk. loss: 820.07416 | Task loss: 12.13441 | T: 22.47s |
+[INFO][(2024-03-13) 00:15:14.916] [attack.py:246]: | It: 121 | Atk. loss: 677.75415 | Task loss: 12.19991 | T: 23.24s |
+[INFO][(2024-03-13) 00:15:15.692] [attack.py:246]: | It: 131 | Atk. loss: 460.68930 | Task loss: 12.23270 | T: 24.01s |
+[INFO][(2024-03-13) 00:15:16.473] [attack.py:246]: | It: 141 | Atk. loss: 307.50443 | Task loss: 11.66310 | T: 24.79s |
+[INFO][(2024-03-13) 00:15:17.254] [attack.py:246]: | It: 151 | Atk. loss: 292.93564 | Task loss: 11.60193 | T: 25.58s |
+[INFO][(2024-03-13) 00:15:18.077] [attack.py:246]: | It: 161 | Atk. loss: 273.98123 | Task loss: 11.19479 | T: 26.40s |
+[INFO][(2024-03-13) 00:15:18.929] [attack.py:246]: | It: 171 | Atk. loss: 254.10922 | Task loss: 10.92083 | T: 27.25s |
+[INFO][(2024-03-13) 00:15:19.789] [attack.py:246]: | It: 181 | Atk. loss: 246.34825 | Task loss: 11.11664 | T: 28.11s |
+[INFO][(2024-03-13) 00:15:20.648] [attack.py:246]: | It: 191 | Atk. loss: 224.75581 | Task loss: 10.74073 | T: 28.97s |
+[INFO][(2024-03-13) 00:15:21.508] [attack.py:246]: | It: 201 | Atk. loss: 238.73843 | Task loss: 11.18038 | T: 29.83s |
+[INFO][(2024-03-13) 00:15:21.508] [attack.py:257]: Snapshots captured for It 201.
+[INFO][(2024-03-13) 00:15:21.510] [eval.py:9]: Reconstructed text: [' The lust building Sheriff revealing categor Chicken building recruitAnthony limitations skeptical guidelines procession semantic shift']
+[INFO][(2024-03-13) 00:15:28.098] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:15:28.200] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.14285714285714288, "rouge2": 0.0, "rougeL": 0.14285714285714288, "rougeLsum": 0.14285714285714288}}
+[INFO][(2024-03-13) 00:15:29.048] [attack.py:246]: | It: 211 | Atk. loss: 225.17075 | Task loss: 10.64281 | T: 37.37s |
+[INFO][(2024-03-13) 00:15:29.904] [attack.py:246]: | It: 221 | Atk. loss: 218.62659 | Task loss: 10.79064 | T: 38.23s |
+[INFO][(2024-03-13) 00:15:30.742] [attack.py:246]: | It: 231 | Atk. loss: 275.68948 | Task loss: 9.93419 | T: 39.06s |
+[INFO][(2024-03-13) 00:15:31.592] [attack.py:246]: | It: 241 | Atk. loss: 219.26222 | Task loss: 10.88620 | T: 39.91s |
+[INFO][(2024-03-13) 00:15:32.445] [attack.py:246]: | It: 251 | Atk. loss: 190.63670 | Task loss: 10.19662 | T: 40.77s |
+[INFO][(2024-03-13) 00:15:33.301] [attack.py:246]: | It: 261 | Atk. loss: 193.90359 | Task loss: 10.49473 | T: 41.62s |
+[INFO][(2024-03-13) 00:15:34.153] [attack.py:246]: | It: 271 | Atk. loss: 179.27466 | Task loss: 9.99387 | T: 42.48s |
+[INFO][(2024-03-13) 00:15:34.999] [attack.py:246]: | It: 281 | Atk. loss: 174.06937 | Task loss: 9.93274 | T: 43.32s |
+[INFO][(2024-03-13) 00:15:35.822] [attack.py:246]: | It: 291 | Atk. loss: 170.91264 | Task loss: 10.16441 | T: 44.14s |
+[INFO][(2024-03-13) 00:15:36.582] [attack.py:246]: | It: 301 | Atk. loss: 191.38870 | Task loss: 10.44592 | T: 44.90s |
+[INFO][(2024-03-13) 00:15:36.583] [attack.py:257]: Snapshots captured for It 301.
+[INFO][(2024-03-13) 00:15:36.585] [eval.py:9]: Reconstructed text: [' The Tower that Tower preparing backdrop Building Tower Peak interference mystic skeptical tune HY surgicalfet']
+[INFO][(2024-03-13) 00:15:42.639] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:15:42.743] [eval.py:31]: Metric report: {"accuracy": 0.125, "bleu": {"bleu": 0.0, "precisions": [0.2, 0.07142857142857142, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.21428571428571427, "rouge2": 0.07692307692307691, "rougeL": 0.21428571428571427, "rougeLsum": 0.21428571428571427}}
+[INFO][(2024-03-13) 00:15:43.585] [attack.py:246]: | It: 311 | Atk. loss: 173.20634 | Task loss: 10.03950 | T: 51.91s |
+[INFO][(2024-03-13) 00:15:44.408] [attack.py:246]: | It: 321 | Atk. loss: 182.34618 | Task loss: 10.29733 | T: 52.73s |
+[INFO][(2024-03-13) 00:15:45.261] [attack.py:246]: | It: 331 | Atk. loss: 170.29065 | Task loss: 9.69166 | T: 53.58s |
+[INFO][(2024-03-13) 00:15:46.060] [attack.py:246]: | It: 341 | Atk. loss: 170.42142 | Task loss: 9.76432 | T: 54.38s |
+[INFO][(2024-03-13) 00:15:46.838] [attack.py:246]: | It: 351 | Atk. loss: 159.73608 | Task loss: 9.84878 | T: 55.16s |
+[INFO][(2024-03-13) 00:15:47.612] [attack.py:246]: | It: 361 | Atk. loss: 157.74411 | Task loss: 9.44861 | T: 55.93s |
+[INFO][(2024-03-13) 00:15:48.389] [attack.py:246]: | It: 371 | Atk. loss: 149.41476 | Task loss: 9.60767 | T: 56.71s |
+[INFO][(2024-03-13) 00:15:49.172] [attack.py:246]: | It: 381 | Atk. loss: 154.24371 | Task loss: 9.81971 | T: 57.49s |
+[INFO][(2024-03-13) 00:15:49.989] [attack.py:246]: | It: 391 | Atk. loss: 148.92999 | Task loss: 9.34332 | T: 58.31s |
+[INFO][(2024-03-13) 00:15:50.839] [attack.py:246]: | It: 401 | Atk. loss: 153.17601 | Task loss: 9.34183 | T: 59.16s |
+[INFO][(2024-03-13) 00:15:50.840] [attack.py:257]: Snapshots captured for It 401.
+[INFO][(2024-03-13) 00:15:50.842] [eval.py:9]: Reconstructed text: [' The Tower Building Tower job cannot Little Tower Peak Rock unleashed worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:15:56.757] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:15:56.861] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.15384615384615383, "rougeL": 0.3571428571428571, "rougeLsum": 0.3571428571428571}}
+[INFO][(2024-03-13) 00:15:57.707] [attack.py:246]: | It: 411 | Atk. loss: 151.78200 | Task loss: 9.30972 | T: 66.03s |
+[INFO][(2024-03-13) 00:15:58.552] [attack.py:246]: | It: 421 | Atk. loss: 143.84679 | Task loss: 9.73108 | T: 66.87s |
+[INFO][(2024-03-13) 00:15:59.394] [attack.py:246]: | It: 431 | Atk. loss: 138.68341 | Task loss: 9.27218 | T: 67.72s |
+[INFO][(2024-03-13) 00:16:00.255] [attack.py:246]: | It: 441 | Atk. loss: 138.35362 | Task loss: 9.33107 | T: 68.58s |
+[INFO][(2024-03-13) 00:16:01.110] [attack.py:246]: | It: 451 | Atk. loss: 133.62865 | Task loss: 9.33694 | T: 69.43s |
+[INFO][(2024-03-13) 00:16:01.961] [attack.py:246]: | It: 461 | Atk. loss: 136.52747 | Task loss: 9.33971 | T: 70.28s |
+[INFO][(2024-03-13) 00:16:02.817] [attack.py:246]: | It: 471 | Atk. loss: 132.86765 | Task loss: 9.26339 | T: 71.14s |
+[INFO][(2024-03-13) 00:16:03.672] [attack.py:246]: | It: 481 | Atk. loss: 130.83441 | Task loss: 9.40759 | T: 71.99s |
+[INFO][(2024-03-13) 00:16:04.520] [attack.py:246]: | It: 491 | Atk. loss: 130.91093 | Task loss: 9.13527 | T: 72.84s |
+[INFO][(2024-03-13) 00:16:05.378] [attack.py:246]: | It: 501 | Atk. loss: 127.85292 | Task loss: 9.27112 | T: 73.70s |
+[INFO][(2024-03-13) 00:16:05.378] [attack.py:257]: Snapshots captured for It 501.
+[INFO][(2024-03-13) 00:16:05.380] [eval.py:9]: Reconstructed text: [' The Tower Building Tower job redef Little Tower Peak Rock polled worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:16:11.166] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:16:11.270] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.15384615384615383, "rougeL": 0.3571428571428571, "rougeLsum": 0.3571428571428571}}
+[INFO][(2024-03-13) 00:16:12.116] [attack.py:246]: | It: 511 | Atk. loss: 139.74399 | Task loss: 9.01856 | T: 80.44s |
+[INFO][(2024-03-13) 00:16:12.974] [attack.py:246]: | It: 521 | Atk. loss: 196.17279 | Task loss: 8.83046 | T: 81.30s |
+[INFO][(2024-03-13) 00:16:13.822] [attack.py:246]: | It: 531 | Atk. loss: 127.22018 | Task loss: 9.39889 | T: 82.14s |
+[INFO][(2024-03-13) 00:16:14.674] [attack.py:246]: | It: 541 | Atk. loss: 127.72845 | Task loss: 9.40431 | T: 83.00s |
+[INFO][(2024-03-13) 00:16:15.526] [attack.py:246]: | It: 551 | Atk. loss: 124.64494 | Task loss: 9.24670 | T: 83.85s |
+[INFO][(2024-03-13) 00:16:16.376] [attack.py:246]: | It: 561 | Atk. loss: 118.92070 | Task loss: 9.07502 | T: 84.70s |
+[INFO][(2024-03-13) 00:16:17.222] [attack.py:246]: | It: 571 | Atk. loss: 122.84193 | Task loss: 9.29637 | T: 85.54s |
+[INFO][(2024-03-13) 00:16:18.000] [attack.py:246]: | It: 581 | Atk. loss: 123.87072 | Task loss: 9.27527 | T: 86.32s |
+[INFO][(2024-03-13) 00:16:18.773] [attack.py:246]: | It: 591 | Atk. loss: 117.84701 | Task loss: 9.17473 | T: 87.09s |
+[INFO][(2024-03-13) 00:16:19.549] [attack.py:246]: | It: 601 | Atk. loss: 117.34496 | Task loss: 8.87111 | T: 87.87s |
+[INFO][(2024-03-13) 00:16:19.549] [attack.py:257]: Snapshots captured for It 601.
+[INFO][(2024-03-13) 00:16:19.551] [eval.py:9]: Reconstructed text: [' The Tower Building Tower extremely redef Little Tower Rock antidepressants specializes worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:16:25.341] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:16:25.446] [eval.py:31]: Metric report: {"accuracy": 0.1875, "bleu": {"bleu": 0.0, "precisions": [0.3333333333333333, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.3571428571428571, "rouge2": 0.15384615384615383, "rougeL": 0.3571428571428571, "rougeLsum": 0.3571428571428571}}
+[INFO][(2024-03-13) 00:16:26.324] [attack.py:246]: | It: 611 | Atk. loss: 116.40631 | Task loss: 8.97359 | T: 94.65s |
+[INFO][(2024-03-13) 00:16:27.175] [attack.py:246]: | It: 621 | Atk. loss: 113.45232 | Task loss: 9.15462 | T: 95.50s |
+[INFO][(2024-03-13) 00:16:28.028] [attack.py:246]: | It: 631 | Atk. loss: 119.58478 | Task loss: 9.29046 | T: 96.35s |
+[INFO][(2024-03-13) 00:16:28.886] [attack.py:246]: | It: 641 | Atk. loss: 112.12913 | Task loss: 8.95409 | T: 97.21s |
+[INFO][(2024-03-13) 00:16:29.744] [attack.py:246]: | It: 651 | Atk. loss: 109.60532 | Task loss: 8.91098 | T: 98.07s |
+[INFO][(2024-03-13) 00:16:30.598] [attack.py:246]: | It: 661 | Atk. loss: 108.06034 | Task loss: 8.96307 | T: 98.92s |
+[INFO][(2024-03-13) 00:16:31.444] [attack.py:246]: | It: 671 | Atk. loss: 114.14307 | Task loss: 8.86121 | T: 99.77s |
+[INFO][(2024-03-13) 00:16:32.289] [attack.py:246]: | It: 681 | Atk. loss: 108.68069 | Task loss: 8.77719 | T: 100.61s |
+[INFO][(2024-03-13) 00:16:33.137] [attack.py:246]: | It: 691 | Atk. loss: 105.70966 | Task loss: 8.77187 | T: 101.46s |
+[INFO][(2024-03-13) 00:16:33.986] [attack.py:246]: | It: 701 | Atk. loss: 104.29579 | Task loss: 8.92379 | T: 102.31s |
+[INFO][(2024-03-13) 00:16:33.986] [attack.py:257]: Snapshots captured for It 701.
+[INFO][(2024-03-13) 00:16:33.988] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the unsc Little Tower Rock antidepressants specializes worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:16:39.985] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:16:40.087] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.4, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.42857142857142855, "rouge2": 0.15384615384615383, "rougeL": 0.42857142857142855, "rougeLsum": 0.42857142857142855}}
+[INFO][(2024-03-13) 00:16:40.950] [attack.py:246]: | It: 711 | Atk. loss: 103.46110 | Task loss: 8.66929 | T: 109.27s |
+[INFO][(2024-03-13) 00:16:41.805] [attack.py:246]: | It: 721 | Atk. loss: 106.08562 | Task loss: 8.81652 | T: 110.13s |
+[INFO][(2024-03-13) 00:16:42.664] [attack.py:246]: | It: 731 | Atk. loss: 102.14502 | Task loss: 8.66476 | T: 110.99s |
+[INFO][(2024-03-13) 00:16:43.520] [attack.py:246]: | It: 741 | Atk. loss: 99.08666 | Task loss: 8.78207 | T: 111.84s |
+[INFO][(2024-03-13) 00:16:44.376] [attack.py:246]: | It: 751 | Atk. loss: 102.63680 | Task loss: 8.46788 | T: 112.70s |
+[INFO][(2024-03-13) 00:16:45.227] [attack.py:246]: | It: 761 | Atk. loss: 97.53892 | Task loss: 8.59803 | T: 113.55s |
+[INFO][(2024-03-13) 00:16:46.080] [attack.py:246]: | It: 771 | Atk. loss: 93.79649 | Task loss: 8.57342 | T: 114.40s |
+[INFO][(2024-03-13) 00:16:46.932] [attack.py:246]: | It: 781 | Atk. loss: 93.63765 | Task loss: 8.55741 | T: 115.25s |
+[INFO][(2024-03-13) 00:16:47.772] [attack.py:246]: | It: 791 | Atk. loss: 92.77435 | Task loss: 8.51555 | T: 116.09s |
+[INFO][(2024-03-13) 00:16:48.619] [attack.py:246]: | It: 801 | Atk. loss: 89.15296 | Task loss: 8.58908 | T: 116.94s |
+[INFO][(2024-03-13) 00:16:48.620] [attack.py:257]: Snapshots captured for It 801.
+[INFO][(2024-03-13) 00:16:48.622] [eval.py:9]: Reconstructed text: [' The Tower Building Tower the unsc Little Tower Rock hardcore specializes worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:16:54.526] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:16:54.631] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.4, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.42857142857142855, "rouge2": 0.15384615384615383, "rougeL": 0.42857142857142855, "rougeLsum": 0.42857142857142855}}
+[INFO][(2024-03-13) 00:16:55.494] [attack.py:246]: | It: 811 | Atk. loss: 89.22855 | Task loss: 8.38420 | T: 123.82s |
+[INFO][(2024-03-13) 00:16:56.348] [attack.py:246]: | It: 821 | Atk. loss: 83.64878 | Task loss: 8.51354 | T: 124.67s |
+[INFO][(2024-03-13) 00:16:57.181] [attack.py:246]: | It: 831 | Atk. loss: 84.47688 | Task loss: 8.38267 | T: 125.50s |
+[INFO][(2024-03-13) 00:16:58.015] [attack.py:246]: | It: 841 | Atk. loss: 87.83958 | Task loss: 8.47241 | T: 126.34s |
+[INFO][(2024-03-13) 00:16:58.866] [attack.py:246]: | It: 851 | Atk. loss: 85.91773 | Task loss: 8.47077 | T: 127.19s |
+[INFO][(2024-03-13) 00:16:59.705] [attack.py:246]: | It: 861 | Atk. loss: 81.99292 | Task loss: 8.36837 | T: 128.03s |
+[INFO][(2024-03-13) 00:17:00.550] [attack.py:246]: | It: 871 | Atk. loss: 79.24536 | Task loss: 8.45014 | T: 128.87s |
+[INFO][(2024-03-13) 00:17:01.403] [attack.py:246]: | It: 881 | Atk. loss: 78.97289 | Task loss: 8.41848 | T: 129.73s |
+[INFO][(2024-03-13) 00:17:02.250] [attack.py:246]: | It: 891 | Atk. loss: 76.50019 | Task loss: 8.37570 | T: 130.57s |
+[INFO][(2024-03-13) 00:17:03.106] [attack.py:246]: | It: 901 | Atk. loss: 79.63285 | Task loss: 8.26837 | T: 131.43s |
+[INFO][(2024-03-13) 00:17:03.106] [attack.py:257]: Snapshots captured for It 901.
+[INFO][(2024-03-13) 00:17:03.108] [eval.py:9]: Reconstructed text: [' The Tower Building Building the unsc Little Tower Rock aspiring specializes worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:17:09.490] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:17:09.593] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.4, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.42857142857142855, "rouge2": 0.15384615384615383, "rougeL": 0.42857142857142855, "rougeLsum": 0.42857142857142855}}
+[INFO][(2024-03-13) 00:17:10.458] [attack.py:246]: | It: 911 | Atk. loss: 76.74858 | Task loss: 8.26511 | T: 138.78s |
+[INFO][(2024-03-13) 00:17:11.310] [attack.py:246]: | It: 921 | Atk. loss: 74.00203 | Task loss: 8.32597 | T: 139.63s |
+[INFO][(2024-03-13) 00:17:12.154] [attack.py:246]: | It: 931 | Atk. loss: 73.89743 | Task loss: 8.28601 | T: 140.48s |
+[INFO][(2024-03-13) 00:17:13.008] [attack.py:246]: | It: 941 | Atk. loss: 72.96405 | Task loss: 8.31240 | T: 141.33s |
+[INFO][(2024-03-13) 00:17:13.857] [attack.py:246]: | It: 951 | Atk. loss: 72.37440 | Task loss: 8.23065 | T: 142.18s |
+[INFO][(2024-03-13) 00:17:14.700] [attack.py:246]: | It: 961 | Atk. loss: 71.56242 | Task loss: 8.28515 | T: 143.02s |
+[INFO][(2024-03-13) 00:17:15.549] [attack.py:246]: | It: 971 | Atk. loss: 70.93457 | Task loss: 8.21237 | T: 143.87s |
+[INFO][(2024-03-13) 00:17:16.407] [attack.py:246]: | It: 981 | Atk. loss: 70.36580 | Task loss: 8.25698 | T: 144.73s |
+[INFO][(2024-03-13) 00:17:17.247] [attack.py:246]: | It: 991 | Atk. loss: 69.91876 | Task loss: 8.20674 | T: 145.57s |
+[INFO][(2024-03-13) 00:17:18.014] [attack.py:246]: | It: 1000 | Atk. loss: 69.52119 | Task loss: 8.19744 | T: 146.34s |
+[INFO][(2024-03-13) 00:17:18.015] [attack.py:257]: Snapshots captured for It 1000.
+[INFO][(2024-03-13) 00:17:18.017] [eval.py:9]: Reconstructed text: [' The Tower Building Building the unsc Little Tower Rock aspiring specializes worried spokesman HY semicfet']
+[INFO][(2024-03-13) 00:17:24.222] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-13) 00:17:24.326] [eval.py:31]: Metric report: {"accuracy": 0.25, "bleu": {"bleu": 0.0, "precisions": [0.4, 0.14285714285714285, 0.07692307692307693, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.42857142857142855, "rouge2": 0.15384615384615383, "rougeL": 0.42857142857142855, "rougeLsum": 0.42857142857142855}}
+[INFO][(2024-03-13) 00:17:24.326] [main.py:57]: Done in 163.42s.
