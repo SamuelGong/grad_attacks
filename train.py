@@ -69,6 +69,8 @@ def get_gradient(config, dataset, auxiliary):
             allow_unused=True,
             materialize_grads=True  # can be used in new torch
         )
+        # print(gradient[1])
+        # exit(0)
         # allows_unused: some layers are indeed unused (e.g., wte of gpt2 during classification)
         # materialize_grads: if this is unavailable, currently some layers can be None
 

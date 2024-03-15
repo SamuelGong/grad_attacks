@@ -12,7 +12,7 @@ from external import GradualWarmupScheduler
 from datasets import load_dataset, DownloadConfig
 from transformers import (
     AutoModelForCausalLM, AutoTokenizer,
-    AutoModelForSequenceClassification, AutoConfig
+    AutoModelForSequenceClassification, AutoConfig, get_scheduler
 )
 
 
@@ -262,8 +262,13 @@ def get_preprocessed_data(raw_dataset, config, tokenizer):
 
 def get_optimizer_and_scheduler(config, variables_to_optimize):
     # Step 1: get optimizer
-    if config.optimizer.name == "bert-adam":
+    if config.optimizer.name in ["bert-adam", "adamw"]:
         optimizer = torch.optim.AdamW(
+            variables_to_optimize,
+            **config.optimizer.args
+        )
+    elif config.optimizer.name == "adam":
+        optimizer = torch.optim.Adam(
             variables_to_optimize,
             **config.optimizer.args
         )
@@ -272,21 +277,25 @@ def get_optimizer_and_scheduler(config, variables_to_optimize):
 
     # Step 2: get scheduler
     if config.scheduler is not None:
-        if config.scheduler.name == "linear":
+        if config.scheduler.name == "linear":  # specific to "breaching"'s implementation
             def lr_lambda(current_step: int):
                 return max(0.0, float(config.max_iterations - current_step)
                            / float(max(1, config.max_iterations)))
             scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
-        else:
-            raise NotImplementedError
-        if (config.scheduler.args is not None
-                and config.scheduler.args.warmup is not None):
+
             scheduler = GradualWarmupScheduler(
                 optimizer,
                 multiplier=1.0,
                 total_epoch=config.scheduler.args.warmup,
                 after_scheduler=scheduler
             )
+        elif config.scheduler.name == "steplr":
+            scheduler = torch.optim.lr_scheduler.StepLR(
+                optimizer,
+                **config.scheduler.args
+            )
+        else:
+            raise NotImplementedError
     else:
         scheduler = None
 
@@ -348,7 +357,7 @@ def normalize_each_row_in_a_torch_matrix(matrix):
     return normalized_matrix
 
 
-def reverse_text_embeddings(config, text_embeddings, model):
+def reverse_text_embeddings(config, text_embeddings, model, to_numpy=True):
     if config.model.name == "gpt2":
         if (config.debug is not None
                 and config.debug.reverse_text_embeddings == "euclidean"):
@@ -363,6 +372,9 @@ def reverse_text_embeddings(config, text_embeddings, model):
                     seq_token.append(torch.argmin(dist).item())  # find the nearest one
                 corresponding_tokens.append(seq_token)
             corresponding_tokens = np.array(corresponding_tokens)
+
+            if not to_numpy:
+                raise NotImplementedError
         else:  # Cosine similarity
             true_embedding = model.transformer.wte.weight.data
             true_embedding = (true_embedding
@@ -380,7 +392,9 @@ def reverse_text_embeddings(config, text_embeddings, model):
 
             similarity = torch.matmul(true_embedding,
                                       torch.transpose(reconstructed_embedding, 1, 2))
-            corresponding_tokens = torch.argmax(similarity, dim=1).detach().cpu().numpy()
+            corresponding_tokens = torch.argmax(similarity, dim=1)
+            if to_numpy:
+                corresponding_tokens = corresponding_tokens.detach().cpu().numpy()
     else:
         raise NotImplementedError
 
@@ -391,3 +405,12 @@ def label_data_to_label(label_data):
     softmaxed_label = F.softmax(label_data, dim=-1)
     long_label = torch.argmax(softmaxed_label, dim=-1)
     return long_label
+
+
+def get_mean_len_embd_in_vocab(config, model):
+    if config.model.name == "gpt2":
+        vocab_embd = model.transformer.wte.weight.data  # [50257, 768]
+        mean_len_embd_in_vocab = vocab_embd.norm(p=2,dim=1).mean()  # 3.9585
+    else:
+        raise NotImplementedError
+    return mean_len_embd_in_vocab

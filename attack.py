@@ -5,113 +5,20 @@ import torch
 import logging
 import numpy as np
 from eval import eval_attack
+from attack_utils import (post_process,
+                          get_closure, initialize_dummy_data)
 from utils import (
     determine_device, get_optimizer_and_scheduler,
-    get_model_forward, reverse_text_embeddings, ValueRecorder,
-    label_data_to_label
+    get_model_forward, ValueRecorder,
+    get_mean_len_embd_in_vocab
 )
-
-
-def initialize_dummy_data(config, size, device):
-    init_type = config.attack.specific_args.init_type
-    if init_type == 'randn-trunc':
-
-        rng_state = torch.get_rng_state()
-        seed = config.attack.specific_args.init_seed
-        if seed is None:
-            seed = int.from_bytes(os.urandom(8), 'big')
-            logging.info(f"Randomly generated seed: {seed}")
-
-        torch.manual_seed(seed)
-
-        result = (torch.randn(size=size, dtype=torch.float32,
-                              device=device)
-                  * 0.1).clamp(-0.1, 0.1)
-
-        torch.set_rng_state(rng_state)
-        result.requires_grad = True
-    else:
-        raise NotImplementedError
-
-    # reset the irrelevant gradient
-    result.grad = torch.zeros_like(result)  # TODO: to see if it is removable
-    return result
-
-
-def post_process(config, recovered_data, model, tokenizer):
-    result = {}
-    if config.model.name == "gpt2":
-        iter = recovered_data[0]
-        embeddings_list = recovered_data[1]
-        token_list = reverse_text_embeddings(
-            config=config,
-            text_embeddings=embeddings_list,
-            model=model
-        )
-        text_list = [tokenizer.decode(e) for e in token_list]
-        result.update({
-            'iter': iter,
-            'token': token_list,
-            'text': text_list,
-        })
-
-        if config.task == "text-classification":
-            label_data = recovered_data[2]
-            label = label_data_to_label(label_data).item()
-            result['label'] = label
-    else:
-        raise NotImplementedError
-
-    return result
-
-
-def get_closure(config, attack_objective, optimizer,
-                model, model_forward, dummy_data, dummy_label,
-                target_gradient, task_loss_recorder):
-    def closure():
-        optimizer.zero_grad()
-
-        if config.model.name == "gpt2":
-            dummy_loss, dummy_pred = model_forward(
-                model, dummy_data, dummy_label
-            )
-        else:
-            raise NotImplementedError
-        task_loss_recorder.set(dummy_loss.item())
-
-        dummy_gradient = torch.autograd.grad(
-            outputs=dummy_loss,
-            inputs=model.parameters(),
-            create_graph=True,
-            allow_unused=True,
-            materialize_grads=True
-        )
-        # create_graph: necessary
-        # allows_unused: some layers are indeed unused (e.g., wte of gpt2 during classification)
-        # materialize_grads: when this is unavailable, currently some layers can be None
-
-        attack_loss = attack_objective(target_gradient, dummy_gradient)
-        attack_loss.backward(
-            inputs=[dummy_data, dummy_label],
-            create_graph=False
-        )
-
-        with torch.no_grad():
-            if config.attack.specific_args.grad_clip is not None:
-                grad_clip = config.attack.specific_args.grad_clip
-                for element in [dummy_data, dummy_label]:
-                    grad_norm = element.grad.norm()
-                    if grad_norm > grad_clip:
-                        element.grad.mul_(grad_clip / (grad_norm + 1e-6))
-
-        return attack_loss
-
-    return closure
+from specific import (discrete_optimization_for_lamp,
+                      lamp_initialize_dummy)
 
 
 def get_attack_objective(config):
     if config.attack.name == "tag":
-        def objective(target_gradient, dummy_gradient):
+        def objective(target_gradient, dummy_gradient, auxiliary=None):
             # target_gradient/dummy_gradient:
             # gradient of each layer (for gpt2, there are 148 layers)
             weights = torch.arange(len(dummy_gradient), 0, -1) / len(dummy_gradient)
@@ -134,7 +41,7 @@ def get_attack_objective(config):
             objective_value *= 0.5
             return objective_value
     elif config.attack.name == "april":
-        def objective(target_gradient, dummy_gradient):
+        def objective(target_gradient, dummy_gradient, auxiliary=None):
             # part one
             objective_value = 0
             for dum, tar in zip(dummy_gradient, target_gradient):
@@ -151,13 +58,39 @@ def get_attack_objective(config):
 
             objective_value *= 0.5
             return objective_value
+    elif config.attack.name == "lamp":
+        # variant one
+
+        def objective(target_gradient, dummy_gradient, auxiliary):
+
+            # part one: reconstruction loss
+            if config.attack.specific_args.variant == "cos":
+                reconstruction_loss = 0
+                num_layers = 0
+                for dum, tar in zip(dummy_gradient, target_gradient):
+                    reconstruction_loss += (1.0 - (dum * tar).sum()
+                                        / (dum.view(-1).norm(p=2) * tar.view(-1).norm(p=2)))
+                    num_layers += 1
+                reconstruction_loss /= num_layers
+            else:  # TODO: "tag"
+                raise NotImplementedError
+
+            # part two: embedding regularization loss
+            dummy_data, mean_len_embd_in_vocab = auxiliary[:2]
+            mean_len_embd_in_vocab = mean_len_embd_in_vocab.to(dummy_data.device)
+            regularization_loss = ( dummy_data.norm(p=2, dim=2).mean()
+                                    - mean_len_embd_in_vocab).square()
+
+            objective_value = (reconstruction_loss + config.attack.specific_args.reg_scale
+                               * regularization_loss)
+            return objective_value
     else:
         raise NotImplementedError
 
     return objective
 
 
-def gradient_attack(config, model, gradient, auxiliary, ground_truth_data):
+def gradient_attack(config, model, target_gradient, auxiliary, ground_truth_data):
     if config.task in ["text-generation", "text-classification"]:
         tokenizer, ground_truth_length = auxiliary
     else:
@@ -166,41 +99,64 @@ def gradient_attack(config, model, gradient, auxiliary, ground_truth_data):
     device = determine_device(config=config)
     copy_model = copy.deepcopy(model)
 
-    if (config.attack.name in ["tag", "april"]
+    if (config.attack.name in ["tag", "april", "lamp"]
             and config.task in ["text-generation", "text-classification"]):
+        if config.attack.name == 'lamp':
+            mean_len_embd_in_vocab = get_mean_len_embd_in_vocab(config, copy_model)
+            aux = (mean_len_embd_in_vocab,)
+        else:
+            aux = None
+
+        model_forward = get_model_forward(config)
+        attack_objective = get_attack_objective(config)
+
         data_size = (1, ground_truth_length, config.attack.specific_args.d_model)
-        dummy_data = initialize_dummy_data(config, data_size, device)
-        variables_to_optimize = [dummy_data]
-
-        # # only for debug use
-        # truth = "The Tower Building of the Little Rock Arsenal, also known as U.S."
-        # tokens = tokenizer.encode(truth)
-        # tokens = torch.tensor(tokens).to(device)
-        # dummy_data = copy_model.transformer.wte(tokens).detach()
-        # dummy_data.requires_grad = True
-
         if config.task == "text-classification":
-            dummy_data = dummy_data.unsqueeze(0)
             label_size = (config.datasource.num_classes,)
-            dummy_label = initialize_dummy_data(config, label_size, device)
+        else:  # text-generation
+            label_size = (1, ground_truth_length, tokenizer.vocab_size)
+
+        if (config.attack.name == "lamp"
+                and config.attack.specific_args.num_init_guess > 1):
+            dummy_data, dummy_label = lamp_initialize_dummy(
+                config=config,
+                data_size=data_size,
+                label_size=label_size,
+                copy_model=copy_model,
+                target_gradient=target_gradient,
+                attack_objective=attack_objective,
+                model_forward=model_forward,
+                mean_len_embd_in_vocab=mean_len_embd_in_vocab,
+                device=device
+            )
+            variables_to_optimize = [dummy_data, dummy_label]
+        else:
+            dummy_data = initialize_dummy_data(config, data_size, device)
+            variables_to_optimize = [dummy_data]
 
             # # only for debug use
-            # dummy_label = torch.tensor([1.0, 0.0]).to(device)  # suppose label is 0 over 0 and 1
-            # dummy_label.requires_grad = True
+            # truth = "The Tower Building of the Little Rock Arsenal, also known as U.S."
+            # tokens = tokenizer.encode(truth)
+            # tokens = torch.tensor(tokens).to(device)
+            # dummy_data = copy_model.transformer.wte(tokens).detach()
+            # dummy_data.requires_grad = True
 
-            variables_to_optimize.append(dummy_label)
-        else:  # "text-generation"
-            label_size = (1, ground_truth_length, tokenizer.vocab_size)
-            dummy_label = initialize_dummy_data(config, label_size, device)
-            variables_to_optimize.append(dummy_label)
+            if config.task == "text-classification":
+                dummy_data = dummy_data.unsqueeze(0)
+                dummy_label = initialize_dummy_data(config, label_size, device)
+
+                # # only for debug use
+                # dummy_label = torch.tensor([1.0, 0.0]).to(device)  # suppose label is 0 over 0 and 1
+                # dummy_label.requires_grad = True
+                variables_to_optimize.append(dummy_label)
+            else:  # "text-generation"
+                dummy_label = initialize_dummy_data(config, label_size, device)
+                variables_to_optimize.append(dummy_label)
 
         optimizer, scheduler = get_optimizer_and_scheduler(
             config=config.attack.specific_args,
             variables_to_optimize=variables_to_optimize,
         )
-        model_forward = get_model_forward(config)
-        attack_objective = get_attack_objective(config)
-
         opt_start_time = time.perf_counter()
         task_loss_recorder = ValueRecorder()
         for iter in range(config.attack.specific_args.max_iterations):
@@ -231,12 +187,32 @@ def gradient_attack(config, model, gradient, auxiliary, ground_truth_data):
                 model_forward=model_forward,
                 dummy_data=dummy_data,
                 dummy_label=dummy_label,
-                target_gradient=gradient,
-                task_loss_recorder=task_loss_recorder
+                target_gradient=target_gradient,
+                task_loss_recorder=task_loss_recorder,
+                aux=aux
             )
             attack_loss = optimizer.step(closure=closure)
             if scheduler is not None:
                 scheduler.step()
+
+            if (config.attack.name == "lamp"
+                    and (iter + 1) % config.attack.specific_args.continuous_period == 0):
+                if config.attack.specific_args.auxiliary_model == "gpt2":
+                    auxiliary_model = copy_model  # shortcut. leaving other possibilities TODO
+                else:
+                    raise NotImplementedError
+                dummy_data = discrete_optimization_for_lamp(
+                    config=config,
+                    dummy_data=dummy_data,
+                    copy_model=copy_model,
+                    tokenizer=tokenizer,
+                    auxiliary_model=auxiliary_model,
+                    dummy_label=dummy_label,
+                    attack_objective=attack_objective,
+                    target_gradient=target_gradient,
+                    model_forward=model_forward,
+                    mean_len_embd_in_vocab=mean_len_embd_in_vocab
+                )
 
             # Text logging
             if (iter + 1 == config.attack.specific_args.max_iterations
@@ -265,7 +241,7 @@ def gradient_attack(config, model, gradient, auxiliary, ground_truth_data):
 
                     post_processed_reconstructed_data = post_process(
                         config=config,
-                        recovered_data=recovered_data,
+                        raw_data=recovered_data,
                         model=copy_model,
                         tokenizer=tokenizer
                     )

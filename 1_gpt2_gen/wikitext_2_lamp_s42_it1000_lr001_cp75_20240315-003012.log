@@ -1,0 +1,304 @@
+[INFO][(2024-03-15) 00:30:12.433] [main.py:25]: Git branch: main, Git commit: a2efc0c
+[INFO][(2024-03-15) 00:30:12.434] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "lamp",
+        "specific_args": {
+            "variant": "cos",
+            "reg_scale": 1.0,
+            "perplexity_scale": 0.2,
+            "auxiliary_model": "gpt2",
+            "num_init_guess": 500,
+            "init_print_interval": 100,
+            "continuous_period": 75,
+            "discrete_trial": 200,
+            "discrete_trial_print_interval": 100,
+            "init_type": "randn-trunc",
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_lamp_s42_it1000_lr001_cp75_20240315-003012.log"
+}
+[INFO][(2024-03-15) 00:30:18.386] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-15) 00:30:18.386] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-15) 00:30:23.145] [specific.py:147]: [Lamp] Start initial guess.
+[INFO][(2024-03-15) 00:30:23.262] [specific.py:184]: 	| Iter: 1 | Best Attack Loss: 4.91125 |
+[INFO][(2024-03-15) 00:30:34.324] [specific.py:184]: 	| Iter: 101 | Best Attack Loss: 4.80664 |
+[INFO][(2024-03-15) 00:30:45.132] [specific.py:184]: 	| Iter: 201 | Best Attack Loss: 4.78177 |
+[INFO][(2024-03-15) 00:30:55.852] [specific.py:184]: 	| Iter: 301 | Best Attack Loss: 4.78177 |
+[INFO][(2024-03-15) 00:31:06.561] [specific.py:184]: 	| Iter: 401 | Best Attack Loss: 4.78177 |
+[INFO][(2024-03-15) 00:31:17.476] [specific.py:184]: 	| Iter: 500 | Best Attack Loss: 4.78177 |
+[INFO][(2024-03-15) 00:31:17.476] [specific.py:189]: [Lamp] Initial guess ended.
+[INFO][(2024-03-15) 00:31:17.585] [attack.py:222]: | It: 1 | Atk. loss: 4.78177 | Task loss: 19.85832 | T: 0.11s |
+[INFO][(2024-03-15) 00:31:17.585] [attack.py:233]: Snapshots captured for It 1.
+[INFO][(2024-03-15) 00:31:17.587] [eval.py:9]: Reconstructed text: [' tribute gone Lif current alien lifetime ty encryption Rec Meadow fiber nu Stanford Armed Quarterlyish']
+[INFO][(2024-03-15) 00:31:24.256] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:31:24.360] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:31:25.449] [attack.py:222]: | It: 11 | Atk. loss: 1.68154 | Task loss: 20.81492 | T: 7.97s |
+[INFO][(2024-03-15) 00:31:26.521] [attack.py:222]: | It: 21 | Atk. loss: 1.84950 | Task loss: 19.58717 | T: 9.04s |
+[INFO][(2024-03-15) 00:31:27.603] [attack.py:222]: | It: 31 | Atk. loss: 0.94807 | Task loss: 20.16819 | T: 10.12s |
+[INFO][(2024-03-15) 00:31:28.662] [attack.py:222]: | It: 41 | Atk. loss: 0.85205 | Task loss: 20.87206 | T: 11.18s |
+[INFO][(2024-03-15) 00:31:29.720] [attack.py:222]: | It: 51 | Atk. loss: 0.82552 | Task loss: 19.42990 | T: 12.24s |
+[INFO][(2024-03-15) 00:31:30.787] [attack.py:222]: | It: 61 | Atk. loss: 0.72718 | Task loss: 21.55161 | T: 13.31s |
+[INFO][(2024-03-15) 00:31:31.861] [attack.py:222]: | It: 71 | Atk. loss: 0.64926 | Task loss: 21.84859 | T: 14.38s |
+[INFO][(2024-03-15) 00:31:32.299] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:31:32.414] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.13924 |
+[INFO][(2024-03-15) 00:31:44.045] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.11393 |
+[INFO][(2024-03-15) 00:31:55.757] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.10478 |
+[INFO][(2024-03-15) 00:31:55.758] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:31:56.428] [attack.py:222]: | It: 81 | Atk. loss: 0.64859 | Task loss: 20.30400 | T: 38.95s |
+[INFO][(2024-03-15) 00:31:57.530] [attack.py:222]: | It: 91 | Atk. loss: 0.64816 | Task loss: 20.30659 | T: 40.05s |
+[INFO][(2024-03-15) 00:31:58.597] [attack.py:222]: | It: 101 | Atk. loss: 0.64769 | Task loss: 20.30975 | T: 41.12s |
+[INFO][(2024-03-15) 00:31:58.598] [attack.py:233]: Snapshots captured for It 101.
+[INFO][(2024-03-15) 00:31:58.600] [eval.py:9]: Reconstructed text: [' thou Gaw Pellstar base summer =]}pred rank foreign preparation enterprise Bake arguably frig']
+[INFO][(2024-03-15) 00:32:04.674] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:32:04.776] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:32:05.853] [attack.py:222]: | It: 111 | Atk. loss: 0.64722 | Task loss: 20.31291 | T: 48.37s |
+[INFO][(2024-03-15) 00:32:06.933] [attack.py:222]: | It: 121 | Atk. loss: 0.64675 | Task loss: 20.31589 | T: 49.45s |
+[INFO][(2024-03-15) 00:32:08.008] [attack.py:222]: | It: 131 | Atk. loss: 0.64630 | Task loss: 20.31865 | T: 50.53s |
+[INFO][(2024-03-15) 00:32:09.082] [attack.py:222]: | It: 141 | Atk. loss: 0.64586 | Task loss: 20.32119 | T: 51.60s |
+[INFO][(2024-03-15) 00:32:10.045] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:32:10.159] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.10147 |
+[INFO][(2024-03-15) 00:32:22.040] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.08704 |
+[INFO][(2024-03-15) 00:32:33.636] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.08704 |
+[INFO][(2024-03-15) 00:32:33.637] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:32:33.755] [attack.py:222]: | It: 151 | Atk. loss: 0.67638 | Task loss: 19.07032 | T: 76.28s |
+[INFO][(2024-03-15) 00:32:34.833] [attack.py:222]: | It: 161 | Atk. loss: 0.67600 | Task loss: 19.07241 | T: 77.35s |
+[INFO][(2024-03-15) 00:32:35.903] [attack.py:222]: | It: 171 | Atk. loss: 0.67556 | Task loss: 19.07343 | T: 78.42s |
+[INFO][(2024-03-15) 00:32:36.973] [attack.py:222]: | It: 181 | Atk. loss: 0.67510 | Task loss: 19.07422 | T: 79.49s |
+[INFO][(2024-03-15) 00:32:38.059] [attack.py:222]: | It: 191 | Atk. loss: 0.67462 | Task loss: 19.07513 | T: 80.58s |
+[INFO][(2024-03-15) 00:32:39.130] [attack.py:222]: | It: 201 | Atk. loss: 0.67412 | Task loss: 19.07636 | T: 81.65s |
+[INFO][(2024-03-15) 00:32:39.131] [attack.py:233]: Snapshots captured for It 201.
+[INFO][(2024-03-15) 00:32:39.133] [eval.py:9]: Reconstructed text: [' thou Gaw Pellstar base rank =]}pred summer foreign preparation enterprise Bake arguably frig']
+[INFO][(2024-03-15) 00:32:45.035] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:32:45.135] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:32:46.224] [attack.py:222]: | It: 211 | Atk. loss: 0.67359 | Task loss: 19.07807 | T: 88.75s |
+[INFO][(2024-03-15) 00:32:47.293] [attack.py:222]: | It: 221 | Atk. loss: 0.67298 | Task loss: 19.08034 | T: 89.81s |
+[INFO][(2024-03-15) 00:32:47.722] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:32:47.835] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.08326 |
+[INFO][(2024-03-15) 00:32:59.186] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.08326 |
+[INFO][(2024-03-15) 00:33:10.397] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.08326 |
+[INFO][(2024-03-15) 00:33:10.398] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:33:11.041] [attack.py:222]: | It: 231 | Atk. loss: 0.67215 | Task loss: 19.08263 | T: 113.56s |
+[INFO][(2024-03-15) 00:33:12.108] [attack.py:222]: | It: 241 | Atk. loss: 0.67068 | Task loss: 19.08211 | T: 114.63s |
+[INFO][(2024-03-15) 00:33:13.174] [attack.py:222]: | It: 251 | Atk. loss: 0.66749 | Task loss: 19.06947 | T: 115.70s |
+[INFO][(2024-03-15) 00:33:14.245] [attack.py:222]: | It: 261 | Atk. loss: 0.66151 | Task loss: 19.03222 | T: 116.77s |
+[INFO][(2024-03-15) 00:33:15.316] [attack.py:222]: | It: 271 | Atk. loss: 0.65457 | Task loss: 18.97844 | T: 117.84s |
+[INFO][(2024-03-15) 00:33:16.386] [attack.py:222]: | It: 281 | Atk. loss: 0.64799 | Task loss: 18.90107 | T: 118.91s |
+[INFO][(2024-03-15) 00:33:17.455] [attack.py:222]: | It: 291 | Atk. loss: 0.64111 | Task loss: 18.77425 | T: 119.98s |
+[INFO][(2024-03-15) 00:33:18.418] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:33:18.531] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.04567 |
+[INFO][(2024-03-15) 00:33:29.966] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.04395 |
+[INFO][(2024-03-15) 00:33:41.254] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.04395 |
+[INFO][(2024-03-15) 00:33:41.254] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved sequence'
+[INFO][(2024-03-15) 00:33:41.360] [attack.py:222]: | It: 301 | Atk. loss: 0.66773 | Task loss: 17.43325 | T: 143.88s |
+[INFO][(2024-03-15) 00:33:41.361] [attack.py:233]: Snapshots captured for It 301.
+[INFO][(2024-03-15) 00:33:41.363] [eval.py:9]: Reconstructed text: [' thou Gaw Pellstar basepred summer foreign preparation enterprise rank =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:33:47.910] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:33:48.011] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:33:49.093] [attack.py:222]: | It: 311 | Atk. loss: 0.66212 | Task loss: 17.34078 | T: 151.61s |
+[INFO][(2024-03-15) 00:33:50.157] [attack.py:222]: | It: 321 | Atk. loss: 0.65659 | Task loss: 17.47744 | T: 152.68s |
+[INFO][(2024-03-15) 00:33:51.232] [attack.py:222]: | It: 331 | Atk. loss: 0.65185 | Task loss: 17.53584 | T: 153.75s |
+[INFO][(2024-03-15) 00:33:52.292] [attack.py:222]: | It: 341 | Atk. loss: 0.64754 | Task loss: 17.23843 | T: 154.81s |
+[INFO][(2024-03-15) 00:33:53.353] [attack.py:222]: | It: 351 | Atk. loss: 0.64432 | Task loss: 16.94555 | T: 155.87s |
+[INFO][(2024-03-15) 00:33:54.434] [attack.py:222]: | It: 361 | Atk. loss: 0.64129 | Task loss: 16.87057 | T: 156.96s |
+[INFO][(2024-03-15) 00:33:55.496] [attack.py:222]: | It: 371 | Atk. loss: 0.63870 | Task loss: 16.81779 | T: 158.02s |
+[INFO][(2024-03-15) 00:33:55.921] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:33:56.035] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.01398 |
+[INFO][(2024-03-15) 00:34:07.425] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.98538 |
+[INFO][(2024-03-15) 00:34:18.822] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.98538 |
+[INFO][(2024-03-15) 00:34:18.823] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved sequence'
+[INFO][(2024-03-15) 00:34:19.465] [attack.py:222]: | It: 381 | Atk. loss: 0.63560 | Task loss: 16.69091 | T: 181.99s |
+[INFO][(2024-03-15) 00:34:20.541] [attack.py:222]: | It: 391 | Atk. loss: 0.63387 | Task loss: 16.44119 | T: 183.06s |
+[INFO][(2024-03-15) 00:34:21.614] [attack.py:222]: | It: 401 | Atk. loss: 0.63285 | Task loss: 16.48385 | T: 184.14s |
+[INFO][(2024-03-15) 00:34:21.614] [attack.py:233]: Snapshots captured for It 401.
+[INFO][(2024-03-15) 00:34:21.616] [eval.py:9]: Reconstructed text: [' thou Gaw Pellstar basepred summer foreign rank preparation enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:34:27.626] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:34:27.726] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:34:28.800] [attack.py:222]: | It: 411 | Atk. loss: 0.63218 | Task loss: 16.62201 | T: 191.32s |
+[INFO][(2024-03-15) 00:34:29.864] [attack.py:222]: | It: 421 | Atk. loss: 0.63104 | Task loss: 16.52209 | T: 192.39s |
+[INFO][(2024-03-15) 00:34:30.929] [attack.py:222]: | It: 431 | Atk. loss: 0.62922 | Task loss: 16.49511 | T: 193.45s |
+[INFO][(2024-03-15) 00:34:32.001] [attack.py:222]: | It: 441 | Atk. loss: 0.62769 | Task loss: 16.46539 | T: 194.52s |
+[INFO][(2024-03-15) 00:34:32.948] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:34:33.061] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.97517 |
+[INFO][(2024-03-15) 00:34:44.572] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.96747 |
+[INFO][(2024-03-15) 00:34:55.908] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.96747 |
+[INFO][(2024-03-15) 00:34:55.908] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved token'
+[INFO][(2024-03-15) 00:34:56.015] [attack.py:222]: | It: 451 | Atk. loss: 0.63564 | Task loss: 16.46995 | T: 218.54s |
+[INFO][(2024-03-15) 00:34:57.068] [attack.py:222]: | It: 461 | Atk. loss: 0.63337 | Task loss: 16.30641 | T: 219.59s |
+[INFO][(2024-03-15) 00:34:58.141] [attack.py:222]: | It: 471 | Atk. loss: 0.63241 | Task loss: 16.44998 | T: 220.66s |
+[INFO][(2024-03-15) 00:34:59.206] [attack.py:222]: | It: 481 | Atk. loss: 0.63175 | Task loss: 16.52005 | T: 221.73s |
+[INFO][(2024-03-15) 00:35:00.263] [attack.py:222]: | It: 491 | Atk. loss: 0.63134 | Task loss: 16.39239 | T: 222.78s |
+[INFO][(2024-03-15) 00:35:01.327] [attack.py:222]: | It: 501 | Atk. loss: 0.63110 | Task loss: 16.32031 | T: 223.85s |
+[INFO][(2024-03-15) 00:35:01.328] [attack.py:233]: Snapshots captured for It 501.
+[INFO][(2024-03-15) 00:35:01.330] [eval.py:9]: Reconstructed text: [' thou Gaw Pell summerstar basepred foreign rank preparation enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:35:08.090] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:35:08.190] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:35:09.295] [attack.py:222]: | It: 511 | Atk. loss: 0.63065 | Task loss: 16.24461 | T: 231.82s |
+[INFO][(2024-03-15) 00:35:10.361] [attack.py:222]: | It: 521 | Atk. loss: 0.62943 | Task loss: 16.00140 | T: 232.88s |
+[INFO][(2024-03-15) 00:35:10.784] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:35:10.899] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.96021 |
+[INFO][(2024-03-15) 00:35:22.201] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.96021 |
+[INFO][(2024-03-15) 00:35:33.457] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.95963 |
+[INFO][(2024-03-15) 00:35:33.458] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:35:34.106] [attack.py:222]: | It: 531 | Atk. loss: 0.63030 | Task loss: 15.39395 | T: 256.63s |
+[INFO][(2024-03-15) 00:35:35.176] [attack.py:222]: | It: 541 | Atk. loss: 0.62912 | Task loss: 15.12105 | T: 257.70s |
+[INFO][(2024-03-15) 00:35:36.235] [attack.py:222]: | It: 551 | Atk. loss: 0.62825 | Task loss: 14.93677 | T: 258.76s |
+[INFO][(2024-03-15) 00:35:37.306] [attack.py:222]: | It: 561 | Atk. loss: 0.62751 | Task loss: 14.84572 | T: 259.83s |
+[INFO][(2024-03-15) 00:35:38.372] [attack.py:222]: | It: 571 | Atk. loss: 0.62681 | Task loss: 14.80311 | T: 260.89s |
+[INFO][(2024-03-15) 00:35:39.433] [attack.py:222]: | It: 581 | Atk. loss: 0.62614 | Task loss: 14.71833 | T: 261.95s |
+[INFO][(2024-03-15) 00:35:40.505] [attack.py:222]: | It: 591 | Atk. loss: 0.62580 | Task loss: 14.60626 | T: 263.03s |
+[INFO][(2024-03-15) 00:35:41.454] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:35:41.568] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.95401 |
+[INFO][(2024-03-15) 00:35:52.875] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.95401 |
+[INFO][(2024-03-15) 00:36:04.140] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.94370 |
+[INFO][(2024-03-15) 00:36:04.141] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved sequence'
+[INFO][(2024-03-15) 00:36:04.248] [attack.py:222]: | It: 601 | Atk. loss: 0.62390 | Task loss: 14.61019 | T: 286.77s |
+[INFO][(2024-03-15) 00:36:04.249] [attack.py:233]: Snapshots captured for It 601.
+[INFO][(2024-03-15) 00:36:04.251] [eval.py:9]: Reconstructed text: [' thou Gaw Pell summerstar basepred preparation foreign rank enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:36:10.452] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:36:10.556] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:36:11.649] [attack.py:222]: | It: 611 | Atk. loss: 0.62211 | Task loss: 14.28069 | T: 294.17s |
+[INFO][(2024-03-15) 00:36:12.745] [attack.py:222]: | It: 621 | Atk. loss: 0.62139 | Task loss: 14.12355 | T: 295.27s |
+[INFO][(2024-03-15) 00:36:13.811] [attack.py:222]: | It: 631 | Atk. loss: 0.62099 | Task loss: 14.17807 | T: 296.33s |
+[INFO][(2024-03-15) 00:36:14.867] [attack.py:222]: | It: 641 | Atk. loss: 0.62078 | Task loss: 14.25174 | T: 297.39s |
+[INFO][(2024-03-15) 00:36:15.937] [attack.py:222]: | It: 651 | Atk. loss: 0.62060 | Task loss: 14.24346 | T: 298.46s |
+[INFO][(2024-03-15) 00:36:17.012] [attack.py:222]: | It: 661 | Atk. loss: 0.62033 | Task loss: 14.23111 | T: 299.53s |
+[INFO][(2024-03-15) 00:36:18.080] [attack.py:222]: | It: 671 | Atk. loss: 0.61999 | Task loss: 14.25255 | T: 300.60s |
+[INFO][(2024-03-15) 00:36:18.513] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:36:18.625] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93966 |
+[INFO][(2024-03-15) 00:36:30.098] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93966 |
+[INFO][(2024-03-15) 00:36:41.358] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93966 |
+[INFO][(2024-03-15) 00:36:41.358] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:36:41.997] [attack.py:222]: | It: 681 | Atk. loss: 0.61980 | Task loss: 14.26493 | T: 324.52s |
+[INFO][(2024-03-15) 00:36:43.077] [attack.py:222]: | It: 691 | Atk. loss: 0.61974 | Task loss: 14.24877 | T: 325.60s |
+[INFO][(2024-03-15) 00:36:44.157] [attack.py:222]: | It: 701 | Atk. loss: 0.61968 | Task loss: 14.23851 | T: 326.68s |
+[INFO][(2024-03-15) 00:36:44.158] [attack.py:233]: Snapshots captured for It 701.
+[INFO][(2024-03-15) 00:36:44.160] [eval.py:9]: Reconstructed text: [' thou Gaw Pell summerstar basepred preparation foreign rank enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:36:50.489] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:36:50.590] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:36:51.689] [attack.py:222]: | It: 711 | Atk. loss: 0.61963 | Task loss: 14.23638 | T: 334.21s |
+[INFO][(2024-03-15) 00:36:52.761] [attack.py:222]: | It: 721 | Atk. loss: 0.61959 | Task loss: 14.22900 | T: 335.28s |
+[INFO][(2024-03-15) 00:36:53.840] [attack.py:222]: | It: 731 | Atk. loss: 0.61954 | Task loss: 14.21165 | T: 336.36s |
+[INFO][(2024-03-15) 00:36:54.904] [attack.py:222]: | It: 741 | Atk. loss: 0.61949 | Task loss: 14.18548 | T: 337.43s |
+[INFO][(2024-03-15) 00:36:55.868] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:36:55.979] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93926 |
+[INFO][(2024-03-15) 00:37:07.479] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93926 |
+[INFO][(2024-03-15) 00:37:18.773] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93926 |
+[INFO][(2024-03-15) 00:37:18.773] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:37:18.882] [attack.py:222]: | It: 751 | Atk. loss: 0.61946 | Task loss: 14.16147 | T: 361.40s |
+[INFO][(2024-03-15) 00:37:19.949] [attack.py:222]: | It: 761 | Atk. loss: 0.61944 | Task loss: 14.16127 | T: 362.47s |
+[INFO][(2024-03-15) 00:37:21.021] [attack.py:222]: | It: 771 | Atk. loss: 0.61943 | Task loss: 14.16507 | T: 363.54s |
+[INFO][(2024-03-15) 00:37:22.094] [attack.py:222]: | It: 781 | Atk. loss: 0.61942 | Task loss: 14.16247 | T: 364.62s |
+[INFO][(2024-03-15) 00:37:23.167] [attack.py:222]: | It: 791 | Atk. loss: 0.61940 | Task loss: 14.16017 | T: 365.69s |
+[INFO][(2024-03-15) 00:37:24.258] [attack.py:222]: | It: 801 | Atk. loss: 0.61939 | Task loss: 14.15976 | T: 366.78s |
+[INFO][(2024-03-15) 00:37:24.259] [attack.py:233]: Snapshots captured for It 801.
+[INFO][(2024-03-15) 00:37:24.261] [eval.py:9]: Reconstructed text: [' thou Gaw Pell summerstar basepred preparation foreign rank enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:37:30.835] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:37:30.936] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:37:32.040] [attack.py:222]: | It: 811 | Atk. loss: 0.61939 | Task loss: 14.15939 | T: 374.56s |
+[INFO][(2024-03-15) 00:37:33.089] [attack.py:222]: | It: 821 | Atk. loss: 0.61938 | Task loss: 14.15877 | T: 375.61s |
+[INFO][(2024-03-15) 00:37:33.531] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:37:33.653] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93917 |
+[INFO][(2024-03-15) 00:37:45.208] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93869 |
+[INFO][(2024-03-15) 00:37:56.605] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93869 |
+[INFO][(2024-03-15) 00:37:56.606] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved sequence'
+[INFO][(2024-03-15) 00:37:57.244] [attack.py:222]: | It: 831 | Atk. loss: 0.62049 | Task loss: 14.60526 | T: 399.77s |
+[INFO][(2024-03-15) 00:37:58.307] [attack.py:222]: | It: 841 | Atk. loss: 0.61999 | Task loss: 14.55998 | T: 400.83s |
+[INFO][(2024-03-15) 00:37:59.377] [attack.py:222]: | It: 851 | Atk. loss: 0.61981 | Task loss: 14.48767 | T: 401.90s |
+[INFO][(2024-03-15) 00:38:00.446] [attack.py:222]: | It: 861 | Atk. loss: 0.61968 | Task loss: 14.41945 | T: 402.97s |
+[INFO][(2024-03-15) 00:38:01.512] [attack.py:222]: | It: 871 | Atk. loss: 0.61958 | Task loss: 14.38886 | T: 404.03s |
+[INFO][(2024-03-15) 00:38:02.591] [attack.py:222]: | It: 881 | Atk. loss: 0.61947 | Task loss: 14.39253 | T: 405.11s |
+[INFO][(2024-03-15) 00:38:03.659] [attack.py:222]: | It: 891 | Atk. loss: 0.61937 | Task loss: 14.40748 | T: 406.18s |
+[INFO][(2024-03-15) 00:38:04.635] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:38:04.753] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93725 |
+[INFO][(2024-03-15) 00:38:16.196] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93725 |
+[INFO][(2024-03-15) 00:38:27.511] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93725 |
+[INFO][(2024-03-15) 00:38:27.511] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:38:27.621] [attack.py:222]: | It: 901 | Atk. loss: 0.61930 | Task loss: 14.41825 | T: 430.14s |
+[INFO][(2024-03-15) 00:38:27.621] [attack.py:233]: Snapshots captured for It 901.
+[INFO][(2024-03-15) 00:38:27.623] [eval.py:9]: Reconstructed text: [' thou Gaw Pell basepred preparation summerstar foreign rank enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:38:34.509] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:38:34.613] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:38:35.679] [attack.py:222]: | It: 911 | Atk. loss: 0.61925 | Task loss: 14.42159 | T: 438.20s |
+[INFO][(2024-03-15) 00:38:36.745] [attack.py:222]: | It: 921 | Atk. loss: 0.61922 | Task loss: 14.42052 | T: 439.27s |
+[INFO][(2024-03-15) 00:38:37.823] [attack.py:222]: | It: 931 | Atk. loss: 0.61919 | Task loss: 14.41900 | T: 440.34s |
+[INFO][(2024-03-15) 00:38:38.877] [attack.py:222]: | It: 941 | Atk. loss: 0.61916 | Task loss: 14.41926 | T: 441.40s |
+[INFO][(2024-03-15) 00:38:39.953] [attack.py:222]: | It: 951 | Atk. loss: 0.61914 | Task loss: 14.42155 | T: 442.47s |
+[INFO][(2024-03-15) 00:38:41.028] [attack.py:222]: | It: 961 | Atk. loss: 0.61912 | Task loss: 14.42515 | T: 443.55s |
+[INFO][(2024-03-15) 00:38:42.109] [attack.py:222]: | It: 971 | Atk. loss: 0.61910 | Task loss: 14.42926 | T: 444.63s |
+[INFO][(2024-03-15) 00:38:42.533] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:38:42.647] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93704 |
+[INFO][(2024-03-15) 00:38:54.023] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93704 |
+[INFO][(2024-03-15) 00:39:05.340] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93704 |
+[INFO][(2024-03-15) 00:39:05.340] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:39:05.985] [attack.py:222]: | It: 981 | Atk. loss: 0.61908 | Task loss: 14.43330 | T: 468.51s |
+[INFO][(2024-03-15) 00:39:07.042] [attack.py:222]: | It: 991 | Atk. loss: 0.61906 | Task loss: 14.43697 | T: 469.56s |
+[INFO][(2024-03-15) 00:39:08.001] [attack.py:222]: | It: 1000 | Atk. loss: 0.61904 | Task loss: 14.43984 | T: 470.52s |
+[INFO][(2024-03-15) 00:39:08.002] [attack.py:233]: Snapshots captured for It 1000.
+[INFO][(2024-03-15) 00:39:08.004] [eval.py:9]: Reconstructed text: [' thou Gaw Pell basepred preparation summerstar foreign rank enterprise =]} Bake arguably frig']
+[INFO][(2024-03-15) 00:39:14.157] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:39:14.261] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:39:14.261] [main.py:57]: Done in 541.88s.

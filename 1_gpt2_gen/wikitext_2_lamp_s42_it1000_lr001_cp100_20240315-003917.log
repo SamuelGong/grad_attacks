@@ -1,0 +1,289 @@
+[INFO][(2024-03-15) 00:39:17.797] [main.py:25]: Git branch: main, Git commit: a2efc0c
+[INFO][(2024-03-15) 00:39:17.797] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "lamp",
+        "specific_args": {
+            "variant": "cos",
+            "reg_scale": 1.0,
+            "perplexity_scale": 0.2,
+            "auxiliary_model": "gpt2",
+            "num_init_guess": 500,
+            "init_print_interval": 100,
+            "continuous_period": 100,
+            "discrete_trial": 200,
+            "discrete_trial_print_interval": 100,
+            "init_type": "randn-trunc",
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_lamp_s42_it1000_lr001_cp100_20240315-003917.log"
+}
+[INFO][(2024-03-15) 00:39:23.599] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-15) 00:39:23.600] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-15) 00:39:28.318] [specific.py:147]: [Lamp] Start initial guess.
+[INFO][(2024-03-15) 00:39:28.433] [specific.py:184]: 	| Iter: 1 | Best Attack Loss: 4.80594 |
+[INFO][(2024-03-15) 00:39:39.324] [specific.py:184]: 	| Iter: 101 | Best Attack Loss: 4.79316 |
+[INFO][(2024-03-15) 00:39:50.009] [specific.py:184]: 	| Iter: 201 | Best Attack Loss: 4.79058 |
+[INFO][(2024-03-15) 00:40:00.682] [specific.py:184]: 	| Iter: 301 | Best Attack Loss: 4.76170 |
+[INFO][(2024-03-15) 00:40:10.944] [specific.py:184]: 	| Iter: 401 | Best Attack Loss: 4.76170 |
+[INFO][(2024-03-15) 00:40:21.115] [specific.py:184]: 	| Iter: 500 | Best Attack Loss: 4.76170 |
+[INFO][(2024-03-15) 00:40:21.115] [specific.py:189]: [Lamp] Initial guess ended.
+[INFO][(2024-03-15) 00:40:21.217] [attack.py:222]: | It: 1 | Atk. loss: 4.76170 | Task loss: 20.62743 | T: 0.10s |
+[INFO][(2024-03-15) 00:40:21.217] [attack.py:233]: Snapshots captured for It 1.
+[INFO][(2024-03-15) 00:40:21.219] [eval.py:9]: Reconstructed text: ['poll leftー Trem fishes stupidTal blockersLive 08byn Squad suburban gerydia Grimm']
+[INFO][(2024-03-15) 00:40:27.589] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:40:27.692] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:40:28.783] [attack.py:222]: | It: 11 | Atk. loss: 1.77983 | Task loss: 20.13487 | T: 7.67s |
+[INFO][(2024-03-15) 00:40:29.843] [attack.py:222]: | It: 21 | Atk. loss: 1.75647 | Task loss: 21.05375 | T: 8.73s |
+[INFO][(2024-03-15) 00:40:30.904] [attack.py:222]: | It: 31 | Atk. loss: 0.86118 | Task loss: 22.91901 | T: 9.79s |
+[INFO][(2024-03-15) 00:40:31.966] [attack.py:222]: | It: 41 | Atk. loss: 0.74138 | Task loss: 21.94016 | T: 10.85s |
+[INFO][(2024-03-15) 00:40:33.025] [attack.py:222]: | It: 51 | Atk. loss: 0.70321 | Task loss: 20.22480 | T: 11.91s |
+[INFO][(2024-03-15) 00:40:34.096] [attack.py:222]: | It: 61 | Atk. loss: 0.63909 | Task loss: 22.67150 | T: 12.98s |
+[INFO][(2024-03-15) 00:40:35.161] [attack.py:222]: | It: 71 | Atk. loss: 0.59253 | Task loss: 23.47424 | T: 14.04s |
+[INFO][(2024-03-15) 00:40:36.240] [attack.py:222]: | It: 81 | Atk. loss: 0.73985 | Task loss: 19.48938 | T: 15.12s |
+[INFO][(2024-03-15) 00:40:37.309] [attack.py:222]: | It: 91 | Atk. loss: 0.63853 | Task loss: 24.19916 | T: 16.19s |
+[INFO][(2024-03-15) 00:40:38.275] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:40:38.389] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.16383 |
+[INFO][(2024-03-15) 00:40:49.858] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.12795 |
+[INFO][(2024-03-15) 00:41:01.252] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.12795 |
+[INFO][(2024-03-15) 00:41:01.253] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Put prefix at the end'
+[INFO][(2024-03-15) 00:41:01.373] [attack.py:222]: | It: 101 | Atk. loss: 0.62115 | Task loss: 24.14021 | T: 40.26s |
+[INFO][(2024-03-15) 00:41:01.373] [attack.py:233]: Snapshots captured for It 101.
+[INFO][(2024-03-15) 00:41:01.375] [eval.py:9]: Reconstructed text: [' And Spider MySQLeln clay ( NYC-[ James deck robbery beganIM Building origins Grimm']
+[INFO][(2024-03-15) 00:41:10.970] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:41:11.070] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.07142857142857142, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.08, "rouge2": 0.0, "rougeL": 0.08, "rougeLsum": 0.08}}
+[INFO][(2024-03-15) 00:41:12.149] [attack.py:222]: | It: 111 | Atk. loss: 0.62080 | Task loss: 24.13548 | T: 51.03s |
+[INFO][(2024-03-15) 00:41:13.211] [attack.py:222]: | It: 121 | Atk. loss: 0.62026 | Task loss: 24.13250 | T: 52.09s |
+[INFO][(2024-03-15) 00:41:14.266] [attack.py:222]: | It: 131 | Atk. loss: 0.61967 | Task loss: 24.13006 | T: 53.15s |
+[INFO][(2024-03-15) 00:41:15.332] [attack.py:222]: | It: 141 | Atk. loss: 0.61906 | Task loss: 24.12771 | T: 54.22s |
+[INFO][(2024-03-15) 00:41:16.392] [attack.py:222]: | It: 151 | Atk. loss: 0.61845 | Task loss: 24.12529 | T: 55.28s |
+[INFO][(2024-03-15) 00:41:17.463] [attack.py:222]: | It: 161 | Atk. loss: 0.61785 | Task loss: 24.12272 | T: 56.35s |
+[INFO][(2024-03-15) 00:41:18.527] [attack.py:222]: | It: 171 | Atk. loss: 0.61725 | Task loss: 24.11994 | T: 57.41s |
+[INFO][(2024-03-15) 00:41:19.710] [attack.py:222]: | It: 181 | Atk. loss: 0.61665 | Task loss: 24.11689 | T: 58.59s |
+[INFO][(2024-03-15) 00:41:20.784] [attack.py:222]: | It: 191 | Atk. loss: 0.61604 | Task loss: 24.11338 | T: 59.67s |
+[INFO][(2024-03-15) 00:41:21.754] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:41:21.867] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.12221 |
+[INFO][(2024-03-15) 00:41:33.245] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.09556 |
+[INFO][(2024-03-15) 00:41:44.506] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.09556 |
+[INFO][(2024-03-15) 00:41:44.507] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:41:44.615] [attack.py:222]: | It: 201 | Atk. loss: 0.65360 | Task loss: 23.73672 | T: 83.50s |
+[INFO][(2024-03-15) 00:41:44.616] [attack.py:233]: Snapshots captured for It 201.
+[INFO][(2024-03-15) 00:41:44.618] [eval.py:9]: Reconstructed text: [' And Spider MySQLeln clay ( NYC-[ origins deck robbery beganIM Building James Grimm']
+[INFO][(2024-03-15) 00:41:51.545] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:41:51.646] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.07142857142857142, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.08, "rouge2": 0.0, "rougeL": 0.08, "rougeLsum": 0.08}}
+[INFO][(2024-03-15) 00:41:52.740] [attack.py:222]: | It: 211 | Atk. loss: 0.65286 | Task loss: 23.73777 | T: 91.62s |
+[INFO][(2024-03-15) 00:41:53.787] [attack.py:222]: | It: 221 | Atk. loss: 0.65187 | Task loss: 23.73728 | T: 92.67s |
+[INFO][(2024-03-15) 00:41:54.876] [attack.py:222]: | It: 231 | Atk. loss: 0.65043 | Task loss: 23.70963 | T: 93.76s |
+[INFO][(2024-03-15) 00:41:55.946] [attack.py:222]: | It: 241 | Atk. loss: 0.64774 | Task loss: 23.58805 | T: 94.83s |
+[INFO][(2024-03-15) 00:41:57.004] [attack.py:222]: | It: 251 | Atk. loss: 0.64261 | Task loss: 23.24586 | T: 95.89s |
+[INFO][(2024-03-15) 00:41:58.075] [attack.py:222]: | It: 261 | Atk. loss: 0.63587 | Task loss: 22.69033 | T: 96.96s |
+[INFO][(2024-03-15) 00:41:59.143] [attack.py:222]: | It: 271 | Atk. loss: 0.62878 | Task loss: 22.12556 | T: 98.03s |
+[INFO][(2024-03-15) 00:42:00.206] [attack.py:222]: | It: 281 | Atk. loss: 0.62068 | Task loss: 21.58222 | T: 99.09s |
+[INFO][(2024-03-15) 00:42:01.275] [attack.py:222]: | It: 291 | Atk. loss: 0.61335 | Task loss: 21.41152 | T: 100.16s |
+[INFO][(2024-03-15) 00:42:02.230] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:42:02.344] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.04855 |
+[INFO][(2024-03-15) 00:42:13.759] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.00330 |
+[INFO][(2024-03-15) 00:42:25.295] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 3.00330 |
+[INFO][(2024-03-15) 00:42:25.296] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved token'
+[INFO][(2024-03-15) 00:42:25.410] [attack.py:222]: | It: 301 | Atk. loss: 0.62548 | Task loss: 21.07899 | T: 124.29s |
+[INFO][(2024-03-15) 00:42:25.411] [attack.py:233]: Snapshots captured for It 301.
+[INFO][(2024-03-15) 00:42:25.413] [eval.py:9]: Reconstructed text: [' And Spider MySQLeln clay ( NYC-[IM origins deck robbery began Building James Grimm']
+[INFO][(2024-03-15) 00:42:31.376] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:42:31.475] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-15) 00:42:32.569] [attack.py:222]: | It: 311 | Atk. loss: 0.61369 | Task loss: 20.83886 | T: 131.45s |
+[INFO][(2024-03-15) 00:42:33.664] [attack.py:222]: | It: 321 | Atk. loss: 0.60469 | Task loss: 20.79285 | T: 132.55s |
+[INFO][(2024-03-15) 00:42:34.732] [attack.py:222]: | It: 331 | Atk. loss: 0.59854 | Task loss: 20.66420 | T: 133.62s |
+[INFO][(2024-03-15) 00:42:35.811] [attack.py:222]: | It: 341 | Atk. loss: 0.59487 | Task loss: 20.57743 | T: 134.69s |
+[INFO][(2024-03-15) 00:42:36.796] [attack.py:222]: | It: 351 | Atk. loss: 0.59241 | Task loss: 20.50040 | T: 135.68s |
+[INFO][(2024-03-15) 00:42:37.777] [attack.py:222]: | It: 361 | Atk. loss: 0.58958 | Task loss: 20.38863 | T: 136.66s |
+[INFO][(2024-03-15) 00:42:38.757] [attack.py:222]: | It: 371 | Atk. loss: 0.58640 | Task loss: 20.17076 | T: 137.64s |
+[INFO][(2024-03-15) 00:42:39.739] [attack.py:222]: | It: 381 | Atk. loss: 0.58345 | Task loss: 19.83200 | T: 138.62s |
+[INFO][(2024-03-15) 00:42:40.754] [attack.py:222]: | It: 391 | Atk. loss: 0.58135 | Task loss: 19.67822 | T: 139.64s |
+[INFO][(2024-03-15) 00:42:41.733] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:42:41.847] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.95797 |
+[INFO][(2024-03-15) 00:42:53.197] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93495 |
+[INFO][(2024-03-15) 00:43:04.473] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93495 |
+[INFO][(2024-03-15) 00:43:04.474] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:43:04.581] [attack.py:222]: | It: 401 | Atk. loss: 0.58417 | Task loss: 21.11007 | T: 163.46s |
+[INFO][(2024-03-15) 00:43:04.581] [attack.py:233]: Snapshots captured for It 401.
+[INFO][(2024-03-15) 00:43:04.583] [eval.py:9]: Reconstructed text: [' And Spider MySQLeln clay ( NYC-[IM origins began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:43:10.485] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:43:10.587] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-15) 00:43:11.655] [attack.py:222]: | It: 411 | Atk. loss: 0.58169 | Task loss: 20.99227 | T: 170.54s |
+[INFO][(2024-03-15) 00:43:12.719] [attack.py:222]: | It: 421 | Atk. loss: 0.58065 | Task loss: 20.92902 | T: 171.60s |
+[INFO][(2024-03-15) 00:43:13.772] [attack.py:222]: | It: 431 | Atk. loss: 0.58031 | Task loss: 20.89694 | T: 172.66s |
+[INFO][(2024-03-15) 00:43:14.827] [attack.py:222]: | It: 441 | Atk. loss: 0.58013 | Task loss: 20.86716 | T: 173.71s |
+[INFO][(2024-03-15) 00:43:15.896] [attack.py:222]: | It: 451 | Atk. loss: 0.57999 | Task loss: 20.84912 | T: 174.78s |
+[INFO][(2024-03-15) 00:43:16.952] [attack.py:222]: | It: 461 | Atk. loss: 0.57985 | Task loss: 20.82798 | T: 175.84s |
+[INFO][(2024-03-15) 00:43:18.037] [attack.py:222]: | It: 471 | Atk. loss: 0.57969 | Task loss: 20.79189 | T: 176.92s |
+[INFO][(2024-03-15) 00:43:19.097] [attack.py:222]: | It: 481 | Atk. loss: 0.57960 | Task loss: 20.78974 | T: 177.98s |
+[INFO][(2024-03-15) 00:43:20.173] [attack.py:222]: | It: 491 | Atk. loss: 0.57954 | Task loss: 20.81898 | T: 179.06s |
+[INFO][(2024-03-15) 00:43:21.129] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:43:21.242] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93026 |
+[INFO][(2024-03-15) 00:43:32.594] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.91387 |
+[INFO][(2024-03-15) 00:43:43.901] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.91387 |
+[INFO][(2024-03-15) 00:43:43.901] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:43:44.007] [attack.py:222]: | It: 501 | Atk. loss: 0.59603 | Task loss: 18.90865 | T: 202.89s |
+[INFO][(2024-03-15) 00:43:44.007] [attack.py:233]: Snapshots captured for It 501.
+[INFO][(2024-03-15) 00:43:44.009] [eval.py:9]: Reconstructed text: [' And origins MySQLeln clay ( NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:43:49.818] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:43:49.923] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-15) 00:43:51.004] [attack.py:222]: | It: 511 | Atk. loss: 0.59403 | Task loss: 18.73554 | T: 209.89s |
+[INFO][(2024-03-15) 00:43:52.095] [attack.py:222]: | It: 521 | Atk. loss: 0.59316 | Task loss: 18.58502 | T: 210.98s |
+[INFO][(2024-03-15) 00:43:53.288] [attack.py:222]: | It: 531 | Atk. loss: 0.59283 | Task loss: 18.45034 | T: 212.17s |
+[INFO][(2024-03-15) 00:43:54.349] [attack.py:222]: | It: 541 | Atk. loss: 0.59266 | Task loss: 18.39689 | T: 213.23s |
+[INFO][(2024-03-15) 00:43:55.416] [attack.py:222]: | It: 551 | Atk. loss: 0.59248 | Task loss: 18.38058 | T: 214.30s |
+[INFO][(2024-03-15) 00:43:56.488] [attack.py:222]: | It: 561 | Atk. loss: 0.59224 | Task loss: 18.33327 | T: 215.37s |
+[INFO][(2024-03-15) 00:43:57.565] [attack.py:222]: | It: 571 | Atk. loss: 0.59174 | Task loss: 18.23388 | T: 216.45s |
+[INFO][(2024-03-15) 00:43:58.625] [attack.py:222]: | It: 581 | Atk. loss: 0.59098 | Task loss: 18.07970 | T: 217.51s |
+[INFO][(2024-03-15) 00:43:59.657] [attack.py:222]: | It: 591 | Atk. loss: 0.59030 | Task loss: 17.93665 | T: 218.54s |
+[INFO][(2024-03-15) 00:44:00.625] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:44:00.740] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.90775 |
+[INFO][(2024-03-15) 00:44:12.312] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.90775 |
+[INFO][(2024-03-15) 00:44:23.620] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.90775 |
+[INFO][(2024-03-15) 00:44:23.621] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:44:23.735] [attack.py:222]: | It: 601 | Atk. loss: 0.58991 | Task loss: 17.85804 | T: 242.62s |
+[INFO][(2024-03-15) 00:44:23.735] [attack.py:233]: Snapshots captured for It 601.
+[INFO][(2024-03-15) 00:44:23.737] [eval.py:9]: Reconstructed text: [' And origins MySQLeln clay ( NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:44:29.958] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:44:30.059] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.06666666666666667, 0.0, 0.0, 0.0], "brevity_penalty": 0.9355069850316178, "length_ratio": 0.9375, "translation_length": 15, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-15) 00:44:31.172] [attack.py:222]: | It: 611 | Atk. loss: 0.58972 | Task loss: 17.83262 | T: 250.06s |
+[INFO][(2024-03-15) 00:44:32.249] [attack.py:222]: | It: 621 | Atk. loss: 0.58961 | Task loss: 17.83731 | T: 251.13s |
+[INFO][(2024-03-15) 00:44:33.331] [attack.py:222]: | It: 631 | Atk. loss: 0.58953 | Task loss: 17.85646 | T: 252.21s |
+[INFO][(2024-03-15) 00:44:34.397] [attack.py:222]: | It: 641 | Atk. loss: 0.58947 | Task loss: 17.88193 | T: 253.28s |
+[INFO][(2024-03-15) 00:44:35.455] [attack.py:222]: | It: 651 | Atk. loss: 0.58942 | Task loss: 17.90914 | T: 254.34s |
+[INFO][(2024-03-15) 00:44:36.501] [attack.py:222]: | It: 661 | Atk. loss: 0.58936 | Task loss: 17.93444 | T: 255.38s |
+[INFO][(2024-03-15) 00:44:37.543] [attack.py:222]: | It: 671 | Atk. loss: 0.58931 | Task loss: 17.95567 | T: 256.43s |
+[INFO][(2024-03-15) 00:44:38.617] [attack.py:222]: | It: 681 | Atk. loss: 0.58927 | Task loss: 17.97240 | T: 257.50s |
+[INFO][(2024-03-15) 00:44:39.688] [attack.py:222]: | It: 691 | Atk. loss: 0.58923 | Task loss: 17.98543 | T: 258.57s |
+[INFO][(2024-03-15) 00:44:40.650] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:44:40.764] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.90704 |
+[INFO][(2024-03-15) 00:44:52.127] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.90704 |
+[INFO][(2024-03-15) 00:45:03.475] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.89189 |
+[INFO][(2024-03-15) 00:45:03.475] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved token'
+[INFO][(2024-03-15) 00:45:03.587] [attack.py:222]: | It: 701 | Atk. loss: 0.61665 | Task loss: 18.16650 | T: 282.47s |
+[INFO][(2024-03-15) 00:45:03.587] [attack.py:233]: Snapshots captured for It 701.
+[INFO][(2024-03-15) 00:45:03.589] [eval.py:9]: Reconstructed text: [' And origins MySQL clay (eln NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:45:09.645] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:45:09.745] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0625, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.07407407407407408, "rouge2": 0.0, "rougeL": 0.07407407407407408, "rougeLsum": 0.07407407407407408}}
+[INFO][(2024-03-15) 00:45:10.846] [attack.py:222]: | It: 711 | Atk. loss: 0.61438 | Task loss: 17.77962 | T: 289.73s |
+[INFO][(2024-03-15) 00:45:11.926] [attack.py:222]: | It: 721 | Atk. loss: 0.61337 | Task loss: 17.47532 | T: 290.81s |
+[INFO][(2024-03-15) 00:45:12.975] [attack.py:222]: | It: 731 | Atk. loss: 0.61297 | Task loss: 17.34918 | T: 291.86s |
+[INFO][(2024-03-15) 00:45:14.037] [attack.py:222]: | It: 741 | Atk. loss: 0.61259 | Task loss: 17.31557 | T: 292.92s |
+[INFO][(2024-03-15) 00:45:15.095] [attack.py:222]: | It: 751 | Atk. loss: 0.61201 | Task loss: 17.24708 | T: 293.98s |
+[INFO][(2024-03-15) 00:45:16.151] [attack.py:222]: | It: 761 | Atk. loss: 0.61128 | Task loss: 17.09753 | T: 295.03s |
+[INFO][(2024-03-15) 00:45:17.208] [attack.py:222]: | It: 771 | Atk. loss: 0.61077 | Task loss: 16.94910 | T: 296.09s |
+[INFO][(2024-03-15) 00:45:18.264] [attack.py:222]: | It: 781 | Atk. loss: 0.61055 | Task loss: 16.86965 | T: 297.15s |
+[INFO][(2024-03-15) 00:45:19.332] [attack.py:222]: | It: 791 | Atk. loss: 0.61046 | Task loss: 16.83462 | T: 298.22s |
+[INFO][(2024-03-15) 00:45:20.309] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:45:20.420] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.88566 |
+[INFO][(2024-03-15) 00:45:31.733] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.88566 |
+[INFO][(2024-03-15) 00:45:42.988] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.88566 |
+[INFO][(2024-03-15) 00:45:42.989] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:45:43.100] [attack.py:222]: | It: 801 | Atk. loss: 0.61043 | Task loss: 16.81743 | T: 321.98s |
+[INFO][(2024-03-15) 00:45:43.100] [attack.py:233]: Snapshots captured for It 801.
+[INFO][(2024-03-15) 00:45:43.102] [eval.py:9]: Reconstructed text: [' And origins MySQL clay (eln NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:45:49.726] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:45:49.830] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0625, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.07407407407407408, "rouge2": 0.0, "rougeL": 0.07407407407407408, "rougeLsum": 0.07407407407407408}}
+[INFO][(2024-03-15) 00:45:50.909] [attack.py:222]: | It: 811 | Atk. loss: 0.61040 | Task loss: 16.80881 | T: 329.79s |
+[INFO][(2024-03-15) 00:45:51.970] [attack.py:222]: | It: 821 | Atk. loss: 0.61039 | Task loss: 16.80380 | T: 330.85s |
+[INFO][(2024-03-15) 00:45:53.028] [attack.py:222]: | It: 831 | Atk. loss: 0.61037 | Task loss: 16.79923 | T: 331.91s |
+[INFO][(2024-03-15) 00:45:54.096] [attack.py:222]: | It: 841 | Atk. loss: 0.61036 | Task loss: 16.79436 | T: 332.98s |
+[INFO][(2024-03-15) 00:45:55.159] [attack.py:222]: | It: 851 | Atk. loss: 0.61035 | Task loss: 16.78975 | T: 334.04s |
+[INFO][(2024-03-15) 00:45:56.211] [attack.py:222]: | It: 861 | Atk. loss: 0.61034 | Task loss: 16.78576 | T: 335.09s |
+[INFO][(2024-03-15) 00:45:57.280] [attack.py:222]: | It: 871 | Atk. loss: 0.61034 | Task loss: 16.78234 | T: 336.16s |
+[INFO][(2024-03-15) 00:45:58.341] [attack.py:222]: | It: 881 | Atk. loss: 0.61033 | Task loss: 16.77933 | T: 337.22s |
+[INFO][(2024-03-15) 00:45:59.410] [attack.py:222]: | It: 891 | Atk. loss: 0.61032 | Task loss: 16.77657 | T: 338.29s |
+[INFO][(2024-03-15) 00:46:00.378] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:46:00.496] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.88556 |
+[INFO][(2024-03-15) 00:46:11.902] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.88556 |
+[INFO][(2024-03-15) 00:46:23.116] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.88556 |
+[INFO][(2024-03-15) 00:46:23.116] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:46:23.224] [attack.py:222]: | It: 901 | Atk. loss: 0.61032 | Task loss: 16.77401 | T: 362.11s |
+[INFO][(2024-03-15) 00:46:23.224] [attack.py:233]: Snapshots captured for It 901.
+[INFO][(2024-03-15) 00:46:23.226] [eval.py:9]: Reconstructed text: [' And origins MySQL clay (eln NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:46:29.342] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:46:29.442] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0625, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.07407407407407408, "rouge2": 0.0, "rougeL": 0.07407407407407408, "rougeLsum": 0.07407407407407408}}
+[INFO][(2024-03-15) 00:46:30.550] [attack.py:222]: | It: 911 | Atk. loss: 0.61031 | Task loss: 16.77163 | T: 369.43s |
+[INFO][(2024-03-15) 00:46:31.739] [attack.py:222]: | It: 921 | Atk. loss: 0.61031 | Task loss: 16.76941 | T: 370.62s |
+[INFO][(2024-03-15) 00:46:32.820] [attack.py:222]: | It: 931 | Atk. loss: 0.61030 | Task loss: 16.76733 | T: 371.70s |
+[INFO][(2024-03-15) 00:46:33.893] [attack.py:222]: | It: 941 | Atk. loss: 0.61030 | Task loss: 16.76541 | T: 372.78s |
+[INFO][(2024-03-15) 00:46:34.995] [attack.py:222]: | It: 951 | Atk. loss: 0.61030 | Task loss: 16.76364 | T: 373.88s |
+[INFO][(2024-03-15) 00:46:36.082] [attack.py:222]: | It: 961 | Atk. loss: 0.61029 | Task loss: 16.76202 | T: 374.97s |
+[INFO][(2024-03-15) 00:46:37.159] [attack.py:222]: | It: 971 | Atk. loss: 0.61029 | Task loss: 16.76056 | T: 376.04s |
+[INFO][(2024-03-15) 00:46:38.212] [attack.py:222]: | It: 981 | Atk. loss: 0.61029 | Task loss: 16.75925 | T: 377.10s |
+[INFO][(2024-03-15) 00:46:39.268] [attack.py:222]: | It: 991 | Atk. loss: 0.61029 | Task loss: 16.75811 | T: 378.15s |
+[INFO][(2024-03-15) 00:46:40.218] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:46:40.331] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.88552 |
+[INFO][(2024-03-15) 00:46:51.725] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.86919 |
+[INFO][(2024-03-15) 00:47:03.020] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.86919 |
+[INFO][(2024-03-15) 00:47:03.020] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:47:03.023] [attack.py:222]: | It: 1000 | Atk. loss: 0.61028 | Task loss: 16.75722 | T: 401.91s |
+[INFO][(2024-03-15) 00:47:03.023] [attack.py:233]: Snapshots captured for It 1000.
+[INFO][(2024-03-15) 00:47:03.026] [eval.py:9]: Reconstructed text: [' And clay MySQL origins (eln NYC-[IM Spider began robbery deck Building James Grimm']
+[INFO][(2024-03-15) 00:47:09.358] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:47:09.457] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0625, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.07407407407407408, "rouge2": 0.0, "rougeL": 0.07407407407407408, "rougeLsum": 0.07407407407407408}}
+[INFO][(2024-03-15) 00:47:09.457] [main.py:57]: Done in 471.71s.

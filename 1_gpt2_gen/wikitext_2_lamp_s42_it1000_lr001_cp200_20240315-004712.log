@@ -1,0 +1,264 @@
+[INFO][(2024-03-15) 00:47:13.013] [main.py:25]: Git branch: main, Git commit: a2efc0c
+[INFO][(2024-03-15) 00:47:13.014] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "lamp",
+        "specific_args": {
+            "variant": "cos",
+            "reg_scale": 1.0,
+            "perplexity_scale": 0.2,
+            "auxiliary_model": "gpt2",
+            "num_init_guess": 500,
+            "init_print_interval": 100,
+            "continuous_period": 200,
+            "discrete_trial": 200,
+            "discrete_trial_print_interval": 100,
+            "init_type": "randn-trunc",
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_lamp_s42_it1000_lr001_cp200_20240315-004712.log"
+}
+[INFO][(2024-03-15) 00:47:18.594] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-15) 00:47:18.595] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-15) 00:47:23.575] [specific.py:147]: [Lamp] Start initial guess.
+[INFO][(2024-03-15) 00:47:23.700] [specific.py:184]: 	| Iter: 1 | Best Attack Loss: 4.83318 |
+[INFO][(2024-03-15) 00:47:35.003] [specific.py:184]: 	| Iter: 101 | Best Attack Loss: 4.77297 |
+[INFO][(2024-03-15) 00:47:46.025] [specific.py:184]: 	| Iter: 201 | Best Attack Loss: 4.77297 |
+[INFO][(2024-03-15) 00:47:57.147] [specific.py:184]: 	| Iter: 301 | Best Attack Loss: 4.77297 |
+[INFO][(2024-03-15) 00:48:08.183] [specific.py:184]: 	| Iter: 401 | Best Attack Loss: 4.77297 |
+[INFO][(2024-03-15) 00:48:19.096] [specific.py:184]: 	| Iter: 500 | Best Attack Loss: 4.77297 |
+[INFO][(2024-03-15) 00:48:19.097] [specific.py:189]: [Lamp] Initial guess ended.
+[INFO][(2024-03-15) 00:48:19.206] [attack.py:222]: | It: 1 | Atk. loss: 4.77297 | Task loss: 20.60292 | T: 0.11s |
+[INFO][(2024-03-15) 00:48:19.207] [attack.py:233]: Snapshots captured for It 1.
+[INFO][(2024-03-15) 00:48:19.209] [eval.py:9]: Reconstructed text: [' Combat touches cementhemat Keynes Leahbis welcome subt HOWilst Evening Jem Inher Qualemy']
+[INFO][(2024-03-15) 00:48:25.897] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:48:26.001] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:48:27.109] [attack.py:222]: | It: 11 | Atk. loss: 1.70242 | Task loss: 19.66057 | T: 8.01s |
+[INFO][(2024-03-15) 00:48:28.198] [attack.py:222]: | It: 21 | Atk. loss: 1.83429 | Task loss: 19.23023 | T: 9.10s |
+[INFO][(2024-03-15) 00:48:29.303] [attack.py:222]: | It: 31 | Atk. loss: 0.83137 | Task loss: 20.54812 | T: 10.20s |
+[INFO][(2024-03-15) 00:48:30.409] [attack.py:222]: | It: 41 | Atk. loss: 0.74982 | Task loss: 22.26264 | T: 11.31s |
+[INFO][(2024-03-15) 00:48:31.494] [attack.py:222]: | It: 51 | Atk. loss: 0.67614 | Task loss: 22.25423 | T: 12.40s |
+[INFO][(2024-03-15) 00:48:32.580] [attack.py:222]: | It: 61 | Atk. loss: 0.66853 | Task loss: 22.52734 | T: 13.48s |
+[INFO][(2024-03-15) 00:48:33.683] [attack.py:222]: | It: 71 | Atk. loss: 0.58868 | Task loss: 21.17446 | T: 14.58s |
+[INFO][(2024-03-15) 00:48:34.778] [attack.py:222]: | It: 81 | Atk. loss: 0.54243 | Task loss: 21.81985 | T: 15.68s |
+[INFO][(2024-03-15) 00:48:35.871] [attack.py:222]: | It: 91 | Atk. loss: 0.65609 | Task loss: 20.24759 | T: 16.77s |
+[INFO][(2024-03-15) 00:48:36.968] [attack.py:222]: | It: 101 | Atk. loss: 0.58582 | Task loss: 21.15321 | T: 17.87s |
+[INFO][(2024-03-15) 00:48:36.969] [attack.py:233]: Snapshots captured for It 101.
+[INFO][(2024-03-15) 00:48:36.972] [eval.py:9]: Reconstructed text: [' The Levy Influence tent amazed doct focal� hole cf re Style GinCompleted Basefm']
+[INFO][(2024-03-15) 00:48:43.089] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:48:43.192] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.07692307692307693, 0.0, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.07692307692307693, "rouge2": 0.0, "rougeL": 0.07692307692307693, "rougeLsum": 0.07692307692307693}}
+[INFO][(2024-03-15) 00:48:44.290] [attack.py:222]: | It: 111 | Atk. loss: 0.54616 | Task loss: 21.09239 | T: 25.19s |
+[INFO][(2024-03-15) 00:48:45.376] [attack.py:222]: | It: 121 | Atk. loss: 0.50935 | Task loss: 22.29743 | T: 26.28s |
+[INFO][(2024-03-15) 00:48:46.474] [attack.py:222]: | It: 131 | Atk. loss: 0.62093 | Task loss: 23.33015 | T: 27.38s |
+[INFO][(2024-03-15) 00:48:47.568] [attack.py:222]: | It: 141 | Atk. loss: 0.56375 | Task loss: 22.43660 | T: 28.47s |
+[INFO][(2024-03-15) 00:48:48.663] [attack.py:222]: | It: 151 | Atk. loss: 0.53458 | Task loss: 21.23030 | T: 29.56s |
+[INFO][(2024-03-15) 00:48:49.735] [attack.py:222]: | It: 161 | Atk. loss: 0.49353 | Task loss: 21.76429 | T: 30.64s |
+[INFO][(2024-03-15) 00:48:50.844] [attack.py:222]: | It: 171 | Atk. loss: 0.45960 | Task loss: 21.84586 | T: 31.75s |
+[INFO][(2024-03-15) 00:48:51.945] [attack.py:222]: | It: 181 | Atk. loss: 0.43993 | Task loss: 21.80356 | T: 32.85s |
+[INFO][(2024-03-15) 00:48:53.048] [attack.py:222]: | It: 191 | Atk. loss: 0.42263 | Task loss: 21.90687 | T: 33.95s |
+[INFO][(2024-03-15) 00:48:54.046] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:48:54.169] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 3.10813 |
+[INFO][(2024-03-15) 00:49:06.170] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 3.08410 |
+[INFO][(2024-03-15) 00:49:18.410] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.99999 |
+[INFO][(2024-03-15) 00:49:18.411] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Moved token'
+[INFO][(2024-03-15) 00:49:18.524] [attack.py:222]: | It: 201 | Atk. loss: 0.46101 | Task loss: 21.15624 | T: 59.43s |
+[INFO][(2024-03-15) 00:49:18.524] [attack.py:233]: Snapshots captured for It 201.
+[INFO][(2024-03-15) 00:49:18.526] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:49:24.763] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:49:24.869] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:49:25.984] [attack.py:222]: | It: 211 | Atk. loss: 0.46068 | Task loss: 21.14920 | T: 66.89s |
+[INFO][(2024-03-15) 00:49:27.097] [attack.py:222]: | It: 221 | Atk. loss: 0.46016 | Task loss: 21.13494 | T: 68.00s |
+[INFO][(2024-03-15) 00:49:28.205] [attack.py:222]: | It: 231 | Atk. loss: 0.45937 | Task loss: 21.08917 | T: 69.11s |
+[INFO][(2024-03-15) 00:49:29.312] [attack.py:222]: | It: 241 | Atk. loss: 0.45802 | Task loss: 20.94221 | T: 70.21s |
+[INFO][(2024-03-15) 00:49:30.420] [attack.py:222]: | It: 251 | Atk. loss: 0.45620 | Task loss: 20.60024 | T: 71.32s |
+[INFO][(2024-03-15) 00:49:31.534] [attack.py:222]: | It: 261 | Atk. loss: 0.45334 | Task loss: 20.31842 | T: 72.44s |
+[INFO][(2024-03-15) 00:49:32.573] [attack.py:222]: | It: 271 | Atk. loss: 0.44642 | Task loss: 19.86820 | T: 73.47s |
+[INFO][(2024-03-15) 00:49:33.600] [attack.py:222]: | It: 281 | Atk. loss: 0.43787 | Task loss: 18.83752 | T: 74.50s |
+[INFO][(2024-03-15) 00:49:34.682] [attack.py:222]: | It: 291 | Atk. loss: 0.43456 | Task loss: 18.04033 | T: 75.58s |
+[INFO][(2024-03-15) 00:49:35.806] [attack.py:222]: | It: 301 | Atk. loss: 0.42980 | Task loss: 17.84650 | T: 76.71s |
+[INFO][(2024-03-15) 00:49:35.807] [attack.py:233]: Snapshots captured for It 301.
+[INFO][(2024-03-15) 00:49:35.809] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:49:41.649] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:49:41.750] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:49:42.888] [attack.py:222]: | It: 311 | Atk. loss: 0.42421 | Task loss: 17.66482 | T: 83.79s |
+[INFO][(2024-03-15) 00:49:44.031] [attack.py:222]: | It: 321 | Atk. loss: 0.42023 | Task loss: 17.64045 | T: 84.93s |
+[INFO][(2024-03-15) 00:49:45.165] [attack.py:222]: | It: 331 | Atk. loss: 0.41839 | Task loss: 17.60536 | T: 86.07s |
+[INFO][(2024-03-15) 00:49:46.275] [attack.py:222]: | It: 341 | Atk. loss: 0.41666 | Task loss: 17.65302 | T: 87.18s |
+[INFO][(2024-03-15) 00:49:47.381] [attack.py:222]: | It: 351 | Atk. loss: 0.41489 | Task loss: 17.95059 | T: 88.28s |
+[INFO][(2024-03-15) 00:49:48.482] [attack.py:222]: | It: 361 | Atk. loss: 0.41365 | Task loss: 17.90735 | T: 89.38s |
+[INFO][(2024-03-15) 00:49:49.580] [attack.py:222]: | It: 371 | Atk. loss: 0.41217 | Task loss: 17.84841 | T: 90.48s |
+[INFO][(2024-03-15) 00:49:50.675] [attack.py:222]: | It: 381 | Atk. loss: 0.41100 | Task loss: 17.83418 | T: 91.58s |
+[INFO][(2024-03-15) 00:49:51.787] [attack.py:222]: | It: 391 | Atk. loss: 0.40985 | Task loss: 17.79166 | T: 92.69s |
+[INFO][(2024-03-15) 00:49:52.790] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:49:52.912] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.94788 |
+[INFO][(2024-03-15) 00:50:05.089] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.94788 |
+[INFO][(2024-03-15) 00:50:17.057] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.94788 |
+[INFO][(2024-03-15) 00:50:17.058] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:50:17.175] [attack.py:222]: | It: 401 | Atk. loss: 0.40890 | Task loss: 17.84960 | T: 118.08s |
+[INFO][(2024-03-15) 00:50:17.175] [attack.py:233]: Snapshots captured for It 401.
+[INFO][(2024-03-15) 00:50:17.177] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:50:23.134] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:50:23.237] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:50:24.341] [attack.py:222]: | It: 411 | Atk. loss: 0.40821 | Task loss: 17.77638 | T: 125.24s |
+[INFO][(2024-03-15) 00:50:25.410] [attack.py:222]: | It: 421 | Atk. loss: 0.40771 | Task loss: 17.73263 | T: 126.31s |
+[INFO][(2024-03-15) 00:50:26.517] [attack.py:222]: | It: 431 | Atk. loss: 0.40711 | Task loss: 17.71644 | T: 127.42s |
+[INFO][(2024-03-15) 00:50:27.611] [attack.py:222]: | It: 441 | Atk. loss: 0.40616 | Task loss: 17.67972 | T: 128.51s |
+[INFO][(2024-03-15) 00:50:28.716] [attack.py:222]: | It: 451 | Atk. loss: 0.40500 | Task loss: 17.64584 | T: 129.62s |
+[INFO][(2024-03-15) 00:50:29.806] [attack.py:222]: | It: 461 | Atk. loss: 0.40421 | Task loss: 17.67945 | T: 130.71s |
+[INFO][(2024-03-15) 00:50:30.911] [attack.py:222]: | It: 471 | Atk. loss: 0.40340 | Task loss: 17.73738 | T: 131.81s |
+[INFO][(2024-03-15) 00:50:32.014] [attack.py:222]: | It: 481 | Atk. loss: 0.40254 | Task loss: 17.79543 | T: 132.92s |
+[INFO][(2024-03-15) 00:50:33.057] [attack.py:222]: | It: 491 | Atk. loss: 0.40182 | Task loss: 17.56544 | T: 133.96s |
+[INFO][(2024-03-15) 00:50:34.107] [attack.py:222]: | It: 501 | Atk. loss: 0.40134 | Task loss: 17.54803 | T: 135.01s |
+[INFO][(2024-03-15) 00:50:34.107] [attack.py:233]: Snapshots captured for It 501.
+[INFO][(2024-03-15) 00:50:34.109] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:50:40.430] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:50:40.532] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:50:41.641] [attack.py:222]: | It: 511 | Atk. loss: 0.40113 | Task loss: 17.49499 | T: 142.54s |
+[INFO][(2024-03-15) 00:50:42.748] [attack.py:222]: | It: 521 | Atk. loss: 0.40098 | Task loss: 17.47608 | T: 143.65s |
+[INFO][(2024-03-15) 00:50:43.852] [attack.py:222]: | It: 531 | Atk. loss: 0.40087 | Task loss: 17.50030 | T: 144.75s |
+[INFO][(2024-03-15) 00:50:44.954] [attack.py:222]: | It: 541 | Atk. loss: 0.40078 | Task loss: 17.50919 | T: 145.86s |
+[INFO][(2024-03-15) 00:50:46.059] [attack.py:222]: | It: 551 | Atk. loss: 0.40068 | Task loss: 17.50269 | T: 146.96s |
+[INFO][(2024-03-15) 00:50:47.173] [attack.py:222]: | It: 561 | Atk. loss: 0.40050 | Task loss: 17.51696 | T: 148.07s |
+[INFO][(2024-03-15) 00:50:48.298] [attack.py:222]: | It: 571 | Atk. loss: 0.40023 | Task loss: 17.55912 | T: 149.20s |
+[INFO][(2024-03-15) 00:50:49.406] [attack.py:222]: | It: 581 | Atk. loss: 0.40001 | Task loss: 17.60543 | T: 150.31s |
+[INFO][(2024-03-15) 00:50:50.517] [attack.py:222]: | It: 591 | Atk. loss: 0.39985 | Task loss: 17.59251 | T: 151.42s |
+[INFO][(2024-03-15) 00:50:51.517] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:50:51.636] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93862 |
+[INFO][(2024-03-15) 00:51:03.491] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93862 |
+[INFO][(2024-03-15) 00:51:15.221] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93862 |
+[INFO][(2024-03-15) 00:51:15.221] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:51:15.332] [attack.py:222]: | It: 601 | Atk. loss: 0.39964 | Task loss: 17.63173 | T: 176.23s |
+[INFO][(2024-03-15) 00:51:15.332] [attack.py:233]: Snapshots captured for It 601.
+[INFO][(2024-03-15) 00:51:15.334] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:51:21.490] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:51:21.593] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:51:22.703] [attack.py:222]: | It: 611 | Atk. loss: 0.39940 | Task loss: 17.65520 | T: 183.60s |
+[INFO][(2024-03-15) 00:51:23.807] [attack.py:222]: | It: 621 | Atk. loss: 0.39904 | Task loss: 17.59558 | T: 184.71s |
+[INFO][(2024-03-15) 00:51:24.907] [attack.py:222]: | It: 631 | Atk. loss: 0.39857 | Task loss: 17.52807 | T: 185.81s |
+[INFO][(2024-03-15) 00:51:26.018] [attack.py:222]: | It: 641 | Atk. loss: 0.39829 | Task loss: 17.45923 | T: 186.92s |
+[INFO][(2024-03-15) 00:51:27.114] [attack.py:222]: | It: 651 | Atk. loss: 0.39809 | Task loss: 17.44326 | T: 188.02s |
+[INFO][(2024-03-15) 00:51:28.222] [attack.py:222]: | It: 661 | Atk. loss: 0.39788 | Task loss: 17.46160 | T: 189.12s |
+[INFO][(2024-03-15) 00:51:29.330] [attack.py:222]: | It: 671 | Atk. loss: 0.39764 | Task loss: 17.46083 | T: 190.23s |
+[INFO][(2024-03-15) 00:51:30.426] [attack.py:222]: | It: 681 | Atk. loss: 0.39746 | Task loss: 17.44881 | T: 191.33s |
+[INFO][(2024-03-15) 00:51:31.520] [attack.py:222]: | It: 691 | Atk. loss: 0.39731 | Task loss: 17.43614 | T: 192.42s |
+[INFO][(2024-03-15) 00:51:32.615] [attack.py:222]: | It: 701 | Atk. loss: 0.39719 | Task loss: 17.42297 | T: 193.52s |
+[INFO][(2024-03-15) 00:51:32.615] [attack.py:233]: Snapshots captured for It 701.
+[INFO][(2024-03-15) 00:51:32.617] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:51:38.703] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:51:38.806] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:51:39.933] [attack.py:222]: | It: 711 | Atk. loss: 0.39709 | Task loss: 17.42921 | T: 200.83s |
+[INFO][(2024-03-15) 00:51:41.031] [attack.py:222]: | It: 721 | Atk. loss: 0.39701 | Task loss: 17.40809 | T: 201.93s |
+[INFO][(2024-03-15) 00:51:42.167] [attack.py:222]: | It: 731 | Atk. loss: 0.39697 | Task loss: 17.38711 | T: 203.07s |
+[INFO][(2024-03-15) 00:51:43.288] [attack.py:222]: | It: 741 | Atk. loss: 0.39694 | Task loss: 17.38426 | T: 204.19s |
+[INFO][(2024-03-15) 00:51:44.410] [attack.py:222]: | It: 751 | Atk. loss: 0.39690 | Task loss: 17.38776 | T: 205.31s |
+[INFO][(2024-03-15) 00:51:45.543] [attack.py:222]: | It: 761 | Atk. loss: 0.39685 | Task loss: 17.38977 | T: 206.44s |
+[INFO][(2024-03-15) 00:51:46.654] [attack.py:222]: | It: 771 | Atk. loss: 0.39677 | Task loss: 17.39279 | T: 207.56s |
+[INFO][(2024-03-15) 00:51:47.773] [attack.py:222]: | It: 781 | Atk. loss: 0.39668 | Task loss: 17.40276 | T: 208.67s |
+[INFO][(2024-03-15) 00:51:48.905] [attack.py:222]: | It: 791 | Atk. loss: 0.39658 | Task loss: 17.41697 | T: 209.81s |
+[INFO][(2024-03-15) 00:51:49.901] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:51:50.019] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93549 |
+[INFO][(2024-03-15) 00:52:02.116] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93549 |
+[INFO][(2024-03-15) 00:52:14.037] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93549 |
+[INFO][(2024-03-15) 00:52:14.038] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:52:14.151] [attack.py:222]: | It: 801 | Atk. loss: 0.39651 | Task loss: 17.42957 | T: 235.05s |
+[INFO][(2024-03-15) 00:52:14.151] [attack.py:233]: Snapshots captured for It 801.
+[INFO][(2024-03-15) 00:52:14.153] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:52:20.470] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:52:20.574] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:52:21.721] [attack.py:222]: | It: 811 | Atk. loss: 0.39646 | Task loss: 17.43484 | T: 242.62s |
+[INFO][(2024-03-15) 00:52:22.819] [attack.py:222]: | It: 821 | Atk. loss: 0.39642 | Task loss: 17.43526 | T: 243.72s |
+[INFO][(2024-03-15) 00:52:23.902] [attack.py:222]: | It: 831 | Atk. loss: 0.39639 | Task loss: 17.43528 | T: 244.80s |
+[INFO][(2024-03-15) 00:52:25.002] [attack.py:222]: | It: 841 | Atk. loss: 0.39637 | Task loss: 17.43366 | T: 245.90s |
+[INFO][(2024-03-15) 00:52:26.112] [attack.py:222]: | It: 851 | Atk. loss: 0.39635 | Task loss: 17.42921 | T: 247.01s |
+[INFO][(2024-03-15) 00:52:27.208] [attack.py:222]: | It: 861 | Atk. loss: 0.39632 | Task loss: 17.42225 | T: 248.11s |
+[INFO][(2024-03-15) 00:52:28.330] [attack.py:222]: | It: 871 | Atk. loss: 0.39629 | Task loss: 17.41304 | T: 249.23s |
+[INFO][(2024-03-15) 00:52:29.455] [attack.py:222]: | It: 881 | Atk. loss: 0.39625 | Task loss: 17.40158 | T: 250.36s |
+[INFO][(2024-03-15) 00:52:30.572] [attack.py:222]: | It: 891 | Atk. loss: 0.39620 | Task loss: 17.38737 | T: 251.47s |
+[INFO][(2024-03-15) 00:52:31.681] [attack.py:222]: | It: 901 | Atk. loss: 0.39614 | Task loss: 17.36981 | T: 252.58s |
+[INFO][(2024-03-15) 00:52:31.682] [attack.py:233]: Snapshots captured for It 901.
+[INFO][(2024-03-15) 00:52:31.684] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:52:37.994] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:52:38.096] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:52:39.222] [attack.py:222]: | It: 911 | Atk. loss: 0.39608 | Task loss: 17.34896 | T: 260.12s |
+[INFO][(2024-03-15) 00:52:40.338] [attack.py:222]: | It: 921 | Atk. loss: 0.39603 | Task loss: 17.32569 | T: 261.24s |
+[INFO][(2024-03-15) 00:52:41.476] [attack.py:222]: | It: 931 | Atk. loss: 0.39598 | Task loss: 17.30163 | T: 262.38s |
+[INFO][(2024-03-15) 00:52:42.589] [attack.py:222]: | It: 941 | Atk. loss: 0.39594 | Task loss: 17.27868 | T: 263.49s |
+[INFO][(2024-03-15) 00:52:43.715] [attack.py:222]: | It: 951 | Atk. loss: 0.39591 | Task loss: 17.25844 | T: 264.62s |
+[INFO][(2024-03-15) 00:52:44.846] [attack.py:222]: | It: 961 | Atk. loss: 0.39589 | Task loss: 17.24179 | T: 265.75s |
+[INFO][(2024-03-15) 00:52:45.963] [attack.py:222]: | It: 971 | Atk. loss: 0.39587 | Task loss: 17.22886 | T: 266.86s |
+[INFO][(2024-03-15) 00:52:47.085] [attack.py:222]: | It: 981 | Atk. loss: 0.39586 | Task loss: 17.21925 | T: 267.99s |
+[INFO][(2024-03-15) 00:52:48.185] [attack.py:222]: | It: 991 | Atk. loss: 0.39584 | Task loss: 17.21229 | T: 269.09s |
+[INFO][(2024-03-15) 00:52:49.186] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:52:49.308] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.93482 |
+[INFO][(2024-03-15) 00:53:01.293] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.93482 |
+[INFO][(2024-03-15) 00:53:13.191] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.93482 |
+[INFO][(2024-03-15) 00:53:13.192] [specific.py:102]: [Lamp] Sampling for Sequence 1 done. The best one is the original one
+[INFO][(2024-03-15) 00:53:13.197] [attack.py:222]: | It: 1000 | Atk. loss: 0.39584 | Task loss: 17.20775 | T: 294.10s |
+[INFO][(2024-03-15) 00:53:13.198] [attack.py:233]: Snapshots captured for It 1000.
+[INFO][(2024-03-15) 00:53:13.200] [eval.py:9]: Reconstructed text: [' The skysczel amazed counteringideff\xa0OUND invalid onstocks salon Solid Ya Safety']
+[INFO][(2024-03-15) 00:53:19.979] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:53:20.081] [eval.py:31]: Metric report: {"accuracy": 0.0625, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:53:20.081] [main.py:57]: Done in 367.12s.

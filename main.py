@@ -48,7 +48,7 @@ def main(args):
         config=config,
         model=model,
         auxiliary=auxiliary,
-        gradient=gradient,
+        target_gradient=gradient,
         ground_truth_data=ground_truth_data  # only for evaluation use
     )
 

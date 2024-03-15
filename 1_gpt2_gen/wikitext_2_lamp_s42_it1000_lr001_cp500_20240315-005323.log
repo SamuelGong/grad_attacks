@@ -1,0 +1,249 @@
+[INFO][(2024-03-15) 00:53:23.630] [main.py:25]: Git branch: main, Git commit: a2efc0c
+[INFO][(2024-03-15) 00:53:23.630] [main.py:26]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "lamp",
+        "specific_args": {
+            "variant": "cos",
+            "reg_scale": 1.0,
+            "perplexity_scale": 0.2,
+            "auxiliary_model": "gpt2",
+            "num_init_guess": 500,
+            "init_print_interval": 100,
+            "continuous_period": 500,
+            "discrete_trial": 200,
+            "discrete_trial_print_interval": 100,
+            "init_type": "randn-trunc",
+            "max_iterations": 1000,
+            "snapshot_interval": 100,
+            "print_interval": 10,
+            "d_model": 768,
+            "grad_clip": 1.0,
+            "optimizer": {
+                "name": "bert-adam",
+                "args": {
+                    "lr": 0.05,
+                    "betas": [
+                        0.9,
+                        0.999
+                    ],
+                    "eps": 1e-06,
+                    "weight_decay": 0.01
+                }
+            },
+            "scheduler": {
+                "name": "linear",
+                "args": {
+                    "warmup": 50
+                }
+            }
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_lamp_s42_it1000_lr001_cp500_20240315-005323.log"
+}
+[INFO][(2024-03-15) 00:53:28.804] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-15) 00:53:28.804] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-15) 00:53:33.482] [specific.py:147]: [Lamp] Start initial guess.
+[INFO][(2024-03-15) 00:53:33.597] [specific.py:184]: 	| Iter: 1 | Best Attack Loss: 4.82604 |
+[INFO][(2024-03-15) 00:53:44.722] [specific.py:184]: 	| Iter: 101 | Best Attack Loss: 4.76044 |
+[INFO][(2024-03-15) 00:53:55.671] [specific.py:184]: 	| Iter: 201 | Best Attack Loss: 4.76044 |
+[INFO][(2024-03-15) 00:54:06.803] [specific.py:184]: 	| Iter: 301 | Best Attack Loss: 4.76044 |
+[INFO][(2024-03-15) 00:54:17.633] [specific.py:184]: 	| Iter: 401 | Best Attack Loss: 4.76044 |
+[INFO][(2024-03-15) 00:54:28.447] [specific.py:184]: 	| Iter: 500 | Best Attack Loss: 4.76044 |
+[INFO][(2024-03-15) 00:54:28.447] [specific.py:189]: [Lamp] Initial guess ended.
+[INFO][(2024-03-15) 00:54:28.560] [attack.py:222]: | It: 1 | Atk. loss: 4.76044 | Task loss: 20.71576 | T: 0.11s |
+[INFO][(2024-03-15) 00:54:28.560] [attack.py:233]: Snapshots captured for It 1.
+[INFO][(2024-03-15) 00:54:28.562] [eval.py:9]: Reconstructed text: [' Res delaying Investments Rugazy RoyalLINE scripting institutions Girl reintrodu Mich Hisrieonse Occ']
+[INFO][(2024-03-15) 00:54:34.639] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:54:34.740] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.7165313105737893, "length_ratio": 0.75, "translation_length": 12, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:54:35.848] [attack.py:222]: | It: 11 | Atk. loss: 1.96414 | Task loss: 21.60829 | T: 7.40s |
+[INFO][(2024-03-15) 00:54:36.941] [attack.py:222]: | It: 21 | Atk. loss: 1.56452 | Task loss: 18.85779 | T: 8.49s |
+[INFO][(2024-03-15) 00:54:38.060] [attack.py:222]: | It: 31 | Atk. loss: 0.98978 | Task loss: 22.04863 | T: 9.61s |
+[INFO][(2024-03-15) 00:54:39.163] [attack.py:222]: | It: 41 | Atk. loss: 0.90070 | Task loss: 21.50884 | T: 10.71s |
+[INFO][(2024-03-15) 00:54:40.190] [attack.py:222]: | It: 51 | Atk. loss: 0.86354 | Task loss: 21.66866 | T: 11.74s |
+[INFO][(2024-03-15) 00:54:41.213] [attack.py:222]: | It: 61 | Atk. loss: 0.83202 | Task loss: 18.29257 | T: 12.76s |
+[INFO][(2024-03-15) 00:54:42.230] [attack.py:222]: | It: 71 | Atk. loss: 0.73667 | Task loss: 18.88536 | T: 13.78s |
+[INFO][(2024-03-15) 00:54:43.252] [attack.py:222]: | It: 81 | Atk. loss: 0.68120 | Task loss: 18.53711 | T: 14.80s |
+[INFO][(2024-03-15) 00:54:44.271] [attack.py:222]: | It: 91 | Atk. loss: 0.66433 | Task loss: 19.93608 | T: 15.82s |
+[INFO][(2024-03-15) 00:54:45.290] [attack.py:222]: | It: 101 | Atk. loss: 0.72479 | Task loss: 18.10399 | T: 16.84s |
+[INFO][(2024-03-15) 00:54:45.291] [attack.py:233]: Snapshots captured for It 101.
+[INFO][(2024-03-15) 00:54:45.293] [eval.py:9]: Reconstructed text: [' starving Spread� warningwit TRA\n inserting: Wheat left backed Jamal plea de Winchester']
+[INFO][(2024-03-15) 00:54:51.422] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:54:51.523] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.0, 0.0, 0.0, 0.0], "brevity_penalty": 0.7939226578179512, "length_ratio": 0.8125, "translation_length": 13, "reference_length": 16}, "rouge": {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0, "rougeLsum": 0.0}}
+[INFO][(2024-03-15) 00:54:52.624] [attack.py:222]: | It: 111 | Atk. loss: 0.64493 | Task loss: 18.21919 | T: 24.17s |
+[INFO][(2024-03-15) 00:54:53.735] [attack.py:222]: | It: 121 | Atk. loss: 0.61369 | Task loss: 17.41284 | T: 25.29s |
+[INFO][(2024-03-15) 00:54:54.839] [attack.py:222]: | It: 131 | Atk. loss: 0.57415 | Task loss: 17.47593 | T: 26.39s |
+[INFO][(2024-03-15) 00:54:55.968] [attack.py:222]: | It: 141 | Atk. loss: 0.54444 | Task loss: 17.79103 | T: 27.52s |
+[INFO][(2024-03-15) 00:54:57.076] [attack.py:222]: | It: 151 | Atk. loss: 0.75202 | Task loss: 17.43923 | T: 28.63s |
+[INFO][(2024-03-15) 00:54:58.128] [attack.py:222]: | It: 161 | Atk. loss: 0.69726 | Task loss: 16.93666 | T: 29.68s |
+[INFO][(2024-03-15) 00:54:59.163] [attack.py:222]: | It: 171 | Atk. loss: 0.63032 | Task loss: 16.23719 | T: 30.71s |
+[INFO][(2024-03-15) 00:55:00.188] [attack.py:222]: | It: 181 | Atk. loss: 0.58372 | Task loss: 16.17924 | T: 31.74s |
+[INFO][(2024-03-15) 00:55:01.230] [attack.py:222]: | It: 191 | Atk. loss: 0.64941 | Task loss: 16.95726 | T: 32.78s |
+[INFO][(2024-03-15) 00:55:02.292] [attack.py:222]: | It: 201 | Atk. loss: 0.59407 | Task loss: 16.34978 | T: 33.84s |
+[INFO][(2024-03-15) 00:55:02.293] [attack.py:233]: Snapshots captured for It 201.
+[INFO][(2024-03-15) 00:55:02.295] [eval.py:9]: Reconstructed text: [' Wrestle scribㅋㅋ\n Flavoring tail operationalBYIf The desktop longtime pos cuff droughtear']
+[INFO][(2024-03-15) 00:55:08.727] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:55:08.830] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.09090909090909091, 0.0, 0.0, 0.0], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.08333333333333334, "rouge2": 0.0, "rougeL": 0.08333333333333334, "rougeLsum": 0.08333333333333334}}
+[INFO][(2024-03-15) 00:55:09.934] [attack.py:222]: | It: 211 | Atk. loss: 0.54518 | Task loss: 16.63137 | T: 41.49s |
+[INFO][(2024-03-15) 00:55:11.019] [attack.py:222]: | It: 221 | Atk. loss: 0.51454 | Task loss: 16.94751 | T: 42.57s |
+[INFO][(2024-03-15) 00:55:12.102] [attack.py:222]: | It: 231 | Atk. loss: 0.53316 | Task loss: 16.45128 | T: 43.65s |
+[INFO][(2024-03-15) 00:55:13.195] [attack.py:222]: | It: 241 | Atk. loss: 0.58677 | Task loss: 17.20271 | T: 44.75s |
+[INFO][(2024-03-15) 00:55:14.329] [attack.py:222]: | It: 251 | Atk. loss: 0.57345 | Task loss: 16.87697 | T: 45.88s |
+[INFO][(2024-03-15) 00:55:15.473] [attack.py:222]: | It: 261 | Atk. loss: 0.51884 | Task loss: 16.20939 | T: 47.02s |
+[INFO][(2024-03-15) 00:55:16.619] [attack.py:222]: | It: 271 | Atk. loss: 0.48113 | Task loss: 16.25943 | T: 48.17s |
+[INFO][(2024-03-15) 00:55:17.768] [attack.py:222]: | It: 281 | Atk. loss: 0.44894 | Task loss: 16.13951 | T: 49.32s |
+[INFO][(2024-03-15) 00:55:18.892] [attack.py:222]: | It: 291 | Atk. loss: 0.72478 | Task loss: 15.63858 | T: 50.44s |
+[INFO][(2024-03-15) 00:55:19.986] [attack.py:222]: | It: 301 | Atk. loss: 0.58081 | Task loss: 15.02963 | T: 51.54s |
+[INFO][(2024-03-15) 00:55:19.986] [attack.py:233]: Snapshots captured for It 301.
+[INFO][(2024-03-15) 00:55:19.988] [eval.py:9]: Reconstructed text: [' Fantastic Danielle<|endoftext|> El龍契士 the FenTile),Thecult surn David yawntoolitz']
+[INFO][(2024-03-15) 00:55:26.341] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:55:26.441] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.125, 0.0, 0.0, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.08695652173913043, "rouge2": 0.0, "rougeL": 0.08695652173913043, "rougeLsum": 0.08695652173913043}}
+[INFO][(2024-03-15) 00:55:27.540] [attack.py:222]: | It: 311 | Atk. loss: 0.49886 | Task loss: 13.57790 | T: 59.09s |
+[INFO][(2024-03-15) 00:55:28.624] [attack.py:222]: | It: 321 | Atk. loss: 0.43847 | Task loss: 12.07549 | T: 60.18s |
+[INFO][(2024-03-15) 00:55:29.709] [attack.py:222]: | It: 331 | Atk. loss: 0.40531 | Task loss: 12.12674 | T: 61.26s |
+[INFO][(2024-03-15) 00:55:30.803] [attack.py:222]: | It: 341 | Atk. loss: 0.50553 | Task loss: 12.14019 | T: 62.35s |
+[INFO][(2024-03-15) 00:55:31.897] [attack.py:222]: | It: 351 | Atk. loss: 0.43094 | Task loss: 10.93750 | T: 63.45s |
+[INFO][(2024-03-15) 00:55:32.992] [attack.py:222]: | It: 361 | Atk. loss: 0.37661 | Task loss: 10.27951 | T: 64.54s |
+[INFO][(2024-03-15) 00:55:34.088] [attack.py:222]: | It: 371 | Atk. loss: 0.47261 | Task loss: 12.97453 | T: 65.64s |
+[INFO][(2024-03-15) 00:55:35.172] [attack.py:222]: | It: 381 | Atk. loss: 0.39403 | Task loss: 11.54481 | T: 66.72s |
+[INFO][(2024-03-15) 00:55:36.256] [attack.py:222]: | It: 391 | Atk. loss: 0.35635 | Task loss: 10.90981 | T: 67.81s |
+[INFO][(2024-03-15) 00:55:37.339] [attack.py:222]: | It: 401 | Atk. loss: 0.31737 | Task loss: 10.60100 | T: 68.89s |
+[INFO][(2024-03-15) 00:55:37.340] [attack.py:233]: Snapshots captured for It 401.
+[INFO][(2024-03-15) 00:55:37.342] [eval.py:9]: Reconstructed text: [" Dumbledore Kel\nThe Medicine thecrypt Satoshi・ THE Tower Ost Johnny wholly broad!'"]
+[INFO][(2024-03-15) 00:55:43.439] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:55:43.541] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.14285714285714285, 0.0, 0.0, 0.0], "brevity_penalty": 0.8668778997501817, "length_ratio": 0.875, "translation_length": 14, "reference_length": 16}, "rouge": {"rouge1": 0.24000000000000002, "rouge2": 0.08695652173913043, "rougeL": 0.16, "rougeLsum": 0.16}}
+[INFO][(2024-03-15) 00:55:44.654] [attack.py:222]: | It: 411 | Atk. loss: 0.32701 | Task loss: 9.83242 | T: 76.21s |
+[INFO][(2024-03-15) 00:55:45.761] [attack.py:222]: | It: 421 | Atk. loss: 0.29278 | Task loss: 9.69555 | T: 77.31s |
+[INFO][(2024-03-15) 00:55:46.842] [attack.py:222]: | It: 431 | Atk. loss: 0.27121 | Task loss: 8.68574 | T: 78.39s |
+[INFO][(2024-03-15) 00:55:47.973] [attack.py:222]: | It: 441 | Atk. loss: 0.23614 | Task loss: 9.29245 | T: 79.52s |
+[INFO][(2024-03-15) 00:55:48.991] [attack.py:222]: | It: 451 | Atk. loss: 0.18716 | Task loss: 8.65544 | T: 80.54s |
+[INFO][(2024-03-15) 00:55:50.010] [attack.py:222]: | It: 461 | Atk. loss: 0.20090 | Task loss: 8.71540 | T: 81.56s |
+[INFO][(2024-03-15) 00:55:51.031] [attack.py:222]: | It: 471 | Atk. loss: 0.16288 | Task loss: 8.42885 | T: 82.58s |
+[INFO][(2024-03-15) 00:55:52.054] [attack.py:222]: | It: 481 | Atk. loss: 0.17254 | Task loss: 8.60338 | T: 83.60s |
+[INFO][(2024-03-15) 00:55:53.077] [attack.py:222]: | It: 491 | Atk. loss: 0.14338 | Task loss: 8.11814 | T: 84.63s |
+[INFO][(2024-03-15) 00:55:53.997] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:55:54.111] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.18415 |
+[INFO][(2024-03-15) 00:56:06.013] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.10180 |
+[INFO][(2024-03-15) 00:56:17.865] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.10180 |
+[INFO][(2024-03-15) 00:56:17.865] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:56:17.975] [attack.py:222]: | It: 501 | Atk. loss: 0.16618 | Task loss: 8.27319 | T: 109.53s |
+[INFO][(2024-03-15) 00:56:17.975] [attack.py:233]: Snapshots captured for It 501.
+[INFO][(2024-03-15) 00:56:17.977] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock TowerFurthermore.: Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:56:24.298] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:56:24.400] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-15) 00:56:25.503] [attack.py:222]: | It: 511 | Atk. loss: 0.16070 | Task loss: 8.29278 | T: 117.05s |
+[INFO][(2024-03-15) 00:56:26.598] [attack.py:222]: | It: 521 | Atk. loss: 0.15750 | Task loss: 8.32600 | T: 118.15s |
+[INFO][(2024-03-15) 00:56:27.687] [attack.py:222]: | It: 531 | Atk. loss: 0.15629 | Task loss: 8.32019 | T: 119.24s |
+[INFO][(2024-03-15) 00:56:28.791] [attack.py:222]: | It: 541 | Atk. loss: 0.15513 | Task loss: 8.26702 | T: 120.34s |
+[INFO][(2024-03-15) 00:56:29.880] [attack.py:222]: | It: 551 | Atk. loss: 0.15413 | Task loss: 8.20601 | T: 121.43s |
+[INFO][(2024-03-15) 00:56:30.984] [attack.py:222]: | It: 561 | Atk. loss: 0.15297 | Task loss: 8.20234 | T: 122.54s |
+[INFO][(2024-03-15) 00:56:32.086] [attack.py:222]: | It: 571 | Atk. loss: 0.15111 | Task loss: 8.20062 | T: 123.64s |
+[INFO][(2024-03-15) 00:56:33.186] [attack.py:222]: | It: 581 | Atk. loss: 0.14850 | Task loss: 8.13561 | T: 124.74s |
+[INFO][(2024-03-15) 00:56:34.287] [attack.py:222]: | It: 591 | Atk. loss: 0.14593 | Task loss: 8.03535 | T: 125.84s |
+[INFO][(2024-03-15) 00:56:35.386] [attack.py:222]: | It: 601 | Atk. loss: 0.14410 | Task loss: 8.00409 | T: 126.94s |
+[INFO][(2024-03-15) 00:56:35.387] [attack.py:233]: Snapshots captured for It 601.
+[INFO][(2024-03-15) 00:56:35.389] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock TowerFurthermore.: Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:56:41.706] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:56:41.807] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-15) 00:56:42.913] [attack.py:222]: | It: 611 | Atk. loss: 0.14251 | Task loss: 8.02620 | T: 134.46s |
+[INFO][(2024-03-15) 00:56:44.012] [attack.py:222]: | It: 621 | Atk. loss: 0.14144 | Task loss: 8.02728 | T: 135.56s |
+[INFO][(2024-03-15) 00:56:45.115] [attack.py:222]: | It: 631 | Atk. loss: 0.14096 | Task loss: 8.01587 | T: 136.67s |
+[INFO][(2024-03-15) 00:56:46.210] [attack.py:222]: | It: 641 | Atk. loss: 0.14069 | Task loss: 8.00216 | T: 137.76s |
+[INFO][(2024-03-15) 00:56:47.291] [attack.py:222]: | It: 651 | Atk. loss: 0.14046 | Task loss: 7.99340 | T: 138.84s |
+[INFO][(2024-03-15) 00:56:48.394] [attack.py:222]: | It: 661 | Atk. loss: 0.14022 | Task loss: 7.98151 | T: 139.95s |
+[INFO][(2024-03-15) 00:56:49.463] [attack.py:222]: | It: 671 | Atk. loss: 0.13995 | Task loss: 7.96412 | T: 141.01s |
+[INFO][(2024-03-15) 00:56:50.503] [attack.py:222]: | It: 681 | Atk. loss: 0.13964 | Task loss: 7.94656 | T: 142.05s |
+[INFO][(2024-03-15) 00:56:51.552] [attack.py:222]: | It: 691 | Atk. loss: 0.13932 | Task loss: 7.93356 | T: 143.10s |
+[INFO][(2024-03-15) 00:56:52.675] [attack.py:222]: | It: 701 | Atk. loss: 0.13899 | Task loss: 7.90503 | T: 144.23s |
+[INFO][(2024-03-15) 00:56:52.676] [attack.py:233]: Snapshots captured for It 701.
+[INFO][(2024-03-15) 00:56:52.678] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock TowerFurthermore.: Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:56:58.397] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:56:58.498] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-15) 00:56:59.659] [attack.py:222]: | It: 711 | Atk. loss: 0.13852 | Task loss: 7.84522 | T: 151.21s |
+[INFO][(2024-03-15) 00:57:00.752] [attack.py:222]: | It: 721 | Atk. loss: 0.13800 | Task loss: 7.77639 | T: 152.30s |
+[INFO][(2024-03-15) 00:57:01.882] [attack.py:222]: | It: 731 | Atk. loss: 0.13756 | Task loss: 7.71749 | T: 153.43s |
+[INFO][(2024-03-15) 00:57:03.022] [attack.py:222]: | It: 741 | Atk. loss: 0.13729 | Task loss: 7.67629 | T: 154.57s |
+[INFO][(2024-03-15) 00:57:04.160] [attack.py:222]: | It: 751 | Atk. loss: 0.13722 | Task loss: 7.65419 | T: 155.71s |
+[INFO][(2024-03-15) 00:57:05.300] [attack.py:222]: | It: 761 | Atk. loss: 0.13716 | Task loss: 7.65571 | T: 156.85s |
+[INFO][(2024-03-15) 00:57:06.440] [attack.py:222]: | It: 771 | Atk. loss: 0.13712 | Task loss: 7.65970 | T: 157.99s |
+[INFO][(2024-03-15) 00:57:07.574] [attack.py:222]: | It: 781 | Atk. loss: 0.13708 | Task loss: 7.66009 | T: 159.13s |
+[INFO][(2024-03-15) 00:57:08.703] [attack.py:222]: | It: 791 | Atk. loss: 0.13705 | Task loss: 7.65945 | T: 160.25s |
+[INFO][(2024-03-15) 00:57:09.850] [attack.py:222]: | It: 801 | Atk. loss: 0.13702 | Task loss: 7.65914 | T: 161.40s |
+[INFO][(2024-03-15) 00:57:09.851] [attack.py:233]: Snapshots captured for It 801.
+[INFO][(2024-03-15) 00:57:09.853] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock TowerFurthermore.: Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:57:16.010] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:57:16.112] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-15) 00:57:17.206] [attack.py:222]: | It: 811 | Atk. loss: 0.13699 | Task loss: 7.65949 | T: 168.76s |
+[INFO][(2024-03-15) 00:57:18.286] [attack.py:222]: | It: 821 | Atk. loss: 0.13694 | Task loss: 7.66021 | T: 169.84s |
+[INFO][(2024-03-15) 00:57:19.374] [attack.py:222]: | It: 831 | Atk. loss: 0.13689 | Task loss: 7.66085 | T: 170.93s |
+[INFO][(2024-03-15) 00:57:20.463] [attack.py:222]: | It: 841 | Atk. loss: 0.13682 | Task loss: 7.66108 | T: 172.01s |
+[INFO][(2024-03-15) 00:57:21.559] [attack.py:222]: | It: 851 | Atk. loss: 0.13672 | Task loss: 7.66038 | T: 173.11s |
+[INFO][(2024-03-15) 00:57:22.639] [attack.py:222]: | It: 861 | Atk. loss: 0.13661 | Task loss: 7.65832 | T: 174.19s |
+[INFO][(2024-03-15) 00:57:23.723] [attack.py:222]: | It: 871 | Atk. loss: 0.13650 | Task loss: 7.65515 | T: 175.27s |
+[INFO][(2024-03-15) 00:57:24.810] [attack.py:222]: | It: 881 | Atk. loss: 0.13641 | Task loss: 7.65173 | T: 176.36s |
+[INFO][(2024-03-15) 00:57:25.898] [attack.py:222]: | It: 891 | Atk. loss: 0.13636 | Task loss: 7.64906 | T: 177.45s |
+[INFO][(2024-03-15) 00:57:26.991] [attack.py:222]: | It: 901 | Atk. loss: 0.13634 | Task loss: 7.64778 | T: 178.54s |
+[INFO][(2024-03-15) 00:57:26.992] [attack.py:233]: Snapshots captured for It 901.
+[INFO][(2024-03-15) 00:57:26.994] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock TowerFurthermore.: Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:57:33.317] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:57:33.418] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.375, 0.13333333333333333, 0.07142857142857142, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0, "translation_length": 16, "reference_length": 16}, "rouge": {"rouge1": 0.3703703703703704, "rouge2": 0.16, "rougeL": 0.29629629629629634, "rougeLsum": 0.29629629629629634}}
+[INFO][(2024-03-15) 00:57:34.541] [attack.py:222]: | It: 911 | Atk. loss: 0.13632 | Task loss: 7.64752 | T: 186.09s |
+[INFO][(2024-03-15) 00:57:35.625] [attack.py:222]: | It: 921 | Atk. loss: 0.13631 | Task loss: 7.64758 | T: 187.18s |
+[INFO][(2024-03-15) 00:57:36.708] [attack.py:222]: | It: 931 | Atk. loss: 0.13629 | Task loss: 7.64768 | T: 188.26s |
+[INFO][(2024-03-15) 00:57:37.803] [attack.py:222]: | It: 941 | Atk. loss: 0.13628 | Task loss: 7.64777 | T: 189.35s |
+[INFO][(2024-03-15) 00:57:38.882] [attack.py:222]: | It: 951 | Atk. loss: 0.13627 | Task loss: 7.64793 | T: 190.43s |
+[INFO][(2024-03-15) 00:57:39.971] [attack.py:222]: | It: 961 | Atk. loss: 0.13626 | Task loss: 7.64813 | T: 191.52s |
+[INFO][(2024-03-15) 00:57:41.061] [attack.py:222]: | It: 971 | Atk. loss: 0.13625 | Task loss: 7.64832 | T: 192.61s |
+[INFO][(2024-03-15) 00:57:42.169] [attack.py:222]: | It: 981 | Atk. loss: 0.13624 | Task loss: 7.64849 | T: 193.72s |
+[INFO][(2024-03-15) 00:57:43.295] [attack.py:222]: | It: 991 | Atk. loss: 0.13623 | Task loss: 7.64862 | T: 194.85s |
+[INFO][(2024-03-15) 00:57:44.302] [specific.py:12]: [Lamp] Started sampling.
+[INFO][(2024-03-15) 00:57:44.420] [specific.py:89]: 	| Seq: 1 | Sample: 1 | Best Total Loss: 2.07184 |
+[INFO][(2024-03-15) 00:57:56.445] [specific.py:89]: 	| Seq: 1 | Sample: 101 | Best Total Loss: 2.04313 |
+[INFO][(2024-03-15) 00:58:08.168] [specific.py:89]: 	| Seq: 1 | Sample: 200 | Best Total Loss: 2.04313 |
+[INFO][(2024-03-15) 00:58:08.169] [specific.py:99]: [Lamp] Sampling for Sequence 1 done. The best one is generated by 'Swapped tokens'
+[INFO][(2024-03-15) 00:58:08.174] [attack.py:222]: | It: 1000 | Atk. loss: 0.13622 | Task loss: 7.64872 | T: 219.73s |
+[INFO][(2024-03-15) 00:58:08.175] [attack.py:233]: Snapshots captured for It 1000.
+[INFO][(2024-03-15) 00:58:08.177] [eval.py:9]: Reconstructed text: ['Initial Kel of War Building the Little Rock Tower.:Furthermore Sach Marco of crude illustrated']
+[INFO][(2024-03-15) 00:58:14.378] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-15) 00:58:14.483] [eval.py:31]: Metric report: {"accuracy": 0.0, "bleu": {"bleu": 0.0, "precisions": [0.4117647058823529, 0.125, 0.06666666666666667, 0.0], "brevity_penalty": 1.0, "length_ratio": 1.0625, "translation_length": 17, "reference_length": 16}, "rouge": {"rouge1": 0.42857142857142855, "rouge2": 0.15384615384615383, "rougeL": 0.28571428571428575, "rougeLsum": 0.28571428571428575}}
+[INFO][(2024-03-15) 00:58:14.483] [main.py:57]: Done in 290.9s.
