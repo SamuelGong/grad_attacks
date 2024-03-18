@@ -90,7 +90,7 @@ def get_attack_objective(config):
     return objective
 
 
-def gradient_attack(config, model, target_gradient, auxiliary, ground_truth_data):
+def gradient_matching_attack(config, model, target_gradient, auxiliary, ground_truth_data):
     if config.task in ["text-generation", "text-classification"]:
         tokenizer, ground_truth_length = auxiliary
     else:

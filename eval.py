@@ -20,6 +20,11 @@ def eval_attack(config, ground_truth_data, reconstructed_data):
                 report_dict[metric] = results
             elif metric in ["accuracy"]:
                 for rec_token, true_token in zip(reconstructed_data["token"], ground_truth_data["token"]):
+                    if config.attack.name == "film":
+                        # the token list length may not match
+                        min_len = min(len(true_token), len(rec_token))
+                        rec_token = rec_token[:min_len]
+                        true_token = true_token[:min_len]
                     scorer.add_batch(
                         predictions=rec_token,
                         references=true_token

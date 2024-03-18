@@ -1,0 +1,129 @@
+[INFO][(2024-03-18) 16:08:44.612] [main.py:26]: Git branch: main, Git commit: da4ea4c
+[INFO][(2024-03-18) 16:08:44.613] [main.py:27]: Configuration:
+{
+    "task": "text-generation",
+    "device": "cuda:0",
+    "global_seed": 42,
+    "datasource": {
+        "dataset": "wikitext-2",
+        "partition": "train",
+        "shuffle_seed": 10,
+        "num_points": 1,
+        "max_num_tokens": 20,
+        "full_name": [
+            "wikitext",
+            "wikitext-2-raw-v1"
+        ],
+        "main_column": "text",
+        "unused_columns_to_remove": [
+            "text"
+        ]
+    },
+    "tokenizer": {
+        "name": "gpt2"
+    },
+    "model": {
+        "name": "gpt2",
+        "from_pretrained": true,
+        "has_finetuned": false
+    },
+    "train": {
+        "batch_size": 1,
+        "use_cached": false
+    },
+    "attack": {
+        "name": "film",
+        "specific_args": {
+            "num_beams": 32,
+            "variant": "random",
+            "beam_search_print_interval": 1,
+            "ngram_size_penalty": 2,
+            "ngram_size_penalty_factor": 1.0,
+            "bag_of_words_threshold": 2.0,
+            "num_phrase_reorder_steps": 200,
+            "phrase_reorder_print_interval": 20,
+            "num_token_reorder_steps": 200,
+            "token_reorder_print_interval": 20,
+            "gradient_norm_factor": 1.0
+        }
+    },
+    "eval": {
+        "metrics": [
+            "accuracy",
+            "bleu",
+            "rouge"
+        ]
+    },
+    "debug": {
+        "fix_input": true
+    },
+    "log_file": "1_gpt2_gen/wikitext_2_film_s42_20240318-160844.log"
+}
+[INFO][(2024-03-18) 16:08:50.184] [utils.py:123]: Ground truth text: [' The Tower Building of the Little Rock Arsenal, also known as U.S.']
+[INFO][(2024-03-18) 16:08:50.184] [utils.py:152]: Ground truth text length in tokens: 16
+[INFO][(2024-03-18) 16:08:54.817] [specific.py:200]: [Film] Start generating bag of words.
+[INFO][(2024-03-18) 16:08:54.821] [specific.py:229]: [Film] Gradient analyzed: bag of 38 words=[(11, ,), (13, .), (50, S), (198, 
+), (257,  a), (262,  the), (286,  of), (287,  in), (290,  and), (318,  is), (319,  on), (338, 's), (357,  (), (373,  was), (383,  The), (468,  has), (471,  U), (543,  which), (635,  also), (968,  New), (1900,  known), (2097,  House), (2159,  World), (2297,  Red), (3576,  London), (3862,  Time), (4345,  Ham), (4631,  Rock), (7703,  Little), (8765,  Tower), (11397,  Planet), (11819,  Building), (12696,  Hotel), (13837,  Arsenal), (14665,  Urban), (15391,  Gods), (29031,  Towers), (45523,  Mermaid)], maximum sequence length in the batch: 16
+[INFO][(2024-03-18) 16:08:54.822] [specific.py:287]: [Film] Found 21 starting tokens: [(50, S), (383, The), (471, U), (968, New), (2097, House), (2159, World), (2297, Red), (3576, London), (3862, Time), (4345, Ham), (4631, Rock), (7703, Little), (8765, Tower), (11397, Planet), (11819, Building), (12696, Hotel), (13837, Arsenal), (14665, Urban), (15391, Gods), (29031, Towers), (45523, Mermaid)]
+[INFO][(2024-03-18) 16:09:01.664] [specific.py:310]: 	| Beam size: 2 | T: 6.84s |
+[INFO][(2024-03-18) 16:09:12.192] [specific.py:310]: 	| Beam size: 3 | T: 17.37s |
+[INFO][(2024-03-18) 16:09:22.897] [specific.py:310]: 	| Beam size: 4 | T: 28.07s |
+[INFO][(2024-03-18) 16:09:33.616] [specific.py:310]: 	| Beam size: 5 | T: 38.79s |
+[INFO][(2024-03-18) 16:09:44.424] [specific.py:310]: 	| Beam size: 6 | T: 49.60s |
+[INFO][(2024-03-18) 16:09:55.207] [specific.py:310]: 	| Beam size: 7 | T: 60.39s |
+[INFO][(2024-03-18) 16:10:06.024] [specific.py:310]: 	| Beam size: 8 | T: 71.20s |
+[INFO][(2024-03-18) 16:10:16.930] [specific.py:310]: 	| Beam size: 9 | T: 82.11s |
+[INFO][(2024-03-18) 16:10:27.723] [specific.py:310]: 	| Beam size: 10 | T: 92.90s |
+[INFO][(2024-03-18) 16:10:38.573] [specific.py:310]: 	| Beam size: 11 | T: 103.75s |
+[INFO][(2024-03-18) 16:10:49.427] [specific.py:310]: 	| Beam size: 12 | T: 114.61s |
+[INFO][(2024-03-18) 16:11:00.288] [specific.py:310]: 	| Beam size: 13 | T: 125.47s |
+[INFO][(2024-03-18) 16:11:11.161] [specific.py:310]: 	| Beam size: 14 | T: 136.34s |
+[INFO][(2024-03-18) 16:11:22.046] [specific.py:310]: 	| Beam size: 15 | T: 147.22s |
+[INFO][(2024-03-18) 16:11:32.951] [specific.py:310]: 	| Beam size: 16 | T: 158.13s |
+[INFO][(2024-03-18) 16:11:32.962] [specific.py:326]: [Film] Generated 32 candidate sequences after beam search, and they are: [([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 198, 198, 50],  U.S. House, which is also in the House.
+
+S), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 318],  U.S. House, which is also in the House. The House is), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 468],  U.S. House, which is also in the House. The House has), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 338],  U.S. House, which is also in the House. The House's), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 286],  U.S. House, which is also in the House. The House of), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 198, 198, 13],  U.S. House, which is also in the House.
+
+.), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 635],  U.S. House, which is also in the House. The House also), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 468, 257],  U.S. House, which is also in the House and which has a), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 290],  U.S. House, which is also in the House. The House and), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 468, 262],  U.S. House, which is also in the House and which has the), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 468, 257],  U.S. House, which is in the House. The House has a), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 373],  U.S. House, which is also in the House. The House was), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 318, 262],  U.S. House, which is in the House. The House is the), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 318, 635],  U.S. House, which is in the House. The House is also), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 318, 257],  U.S. House, which is in the House. The House is a), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 468, 262],  U.S. House, which is in the House. The House has the), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 319],  U.S. House, which is also in the House. The House on), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 198, 198, 13, 383],  U.S. House, which is in the House.
+
+. The), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 635, 468],  U.S. House, which is in the House. The House also has), ([471, 13, 50, 13, 2097, 11, 290, 287, 262, 2097, 13, 198, 198, 13, 383, 2097],  U.S. House, and in the House.
+
+. The House), ([471, 13, 50, 13, 2097, 11, 290, 287, 262, 2097, 13, 383, 2097, 318, 635, 262],  U.S. House, and in the House. The House is also the), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 468, 635],  U.S. House, which is in the House. The House has also), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 318, 287, 257],  U.S. House, which is also in the House and is in a), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 383, 2097, 287],  U.S. House, which is also in the House. The House in), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 198, 198, 11],  U.S. House, which is also in the House.
+
+,), ([471, 13, 50, 13, 2097, 11, 290, 287, 262, 2097, 13, 383, 2097, 318, 635, 257],  U.S. House, and in the House. The House is also a), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 373, 262],  U.S. House, which is also in the House and which was the), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 468, 635],  U.S. House, which is also in the House and which has also), ([471, 13, 50, 13, 2097, 11, 543, 318, 287, 262, 2097, 13, 383, 2097, 318, 319],  U.S. House, which is in the House. The House is on), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 373, 287],  U.S. House, which is also in the House and which was in), ([471, 13, 50, 13, 2097, 11, 290, 287, 262, 2097, 13, 383, 2097, 318, 635, 287],  U.S. House, and in the House. The House is also in), ([471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 290, 543, 373, 257],  U.S. House, which is also in the House and which was a)]
+[INFO][(2024-03-18) 16:11:32.997] [specific.py:410]: [Film] Start reordering sequence phrase-wise. The original sequence is [471, 13, 50, 13, 2097, 11, 543, 318, 635, 287, 262, 2097, 13, 198, 198, 50], which in natural language is 'U.S. House, which is also in the House.
+
+S'
+[INFO][(2024-03-18) 16:11:33.028] [specific.py:467]: 	| It: 1 | Best Score: 335.9742040634155 | T: 0.03s |
+[INFO][(2024-03-18) 16:11:33.635] [specific.py:467]: 	| It: 21 | Best Score: 334.1538887023926 | T: 0.64s |
+[INFO][(2024-03-18) 16:11:34.196] [specific.py:467]: 	| It: 41 | Best Score: 334.1538887023926 | T: 1.20s |
+[INFO][(2024-03-18) 16:11:34.764] [specific.py:467]: 	| It: 61 | Best Score: 326.2090587615967 | T: 1.77s |
+[INFO][(2024-03-18) 16:11:35.335] [specific.py:467]: 	| It: 81 | Best Score: 326.2090587615967 | T: 2.34s |
+[INFO][(2024-03-18) 16:11:35.907] [specific.py:467]: 	| It: 101 | Best Score: 326.2090587615967 | T: 2.91s |
+[INFO][(2024-03-18) 16:11:36.477] [specific.py:467]: 	| It: 121 | Best Score: 326.2090587615967 | T: 3.48s |
+[INFO][(2024-03-18) 16:11:37.038] [specific.py:467]: 	| It: 141 | Best Score: 326.2090587615967 | T: 4.04s |
+[INFO][(2024-03-18) 16:11:37.619] [specific.py:467]: 	| It: 161 | Best Score: 326.2090587615967 | T: 4.62s |
+[INFO][(2024-03-18) 16:11:38.204] [specific.py:467]: 	| It: 181 | Best Score: 326.2090587615967 | T: 5.21s |
+[INFO][(2024-03-18) 16:11:38.751] [specific.py:467]: 	| It: 200 | Best Score: 326.2090587615967 | T: 5.75s |
+[INFO][(2024-03-18) 16:11:38.752] [specific.py:473]: [Film] After reordering sequence phrase-wise, the best sequence is [18102, 11, 543, 318, 635, 287, 262, 471, 13, 50, 13, 2097, 13, 198, 198, 50, 220], which in natural language is 'House, which is also in the U.S. House.
+
+S '
+[INFO][(2024-03-18) 16:11:38.779] [specific.py:490]: [Film] Start reordering sequence token-wise. The original sequence is [18102, 11, 543, 318, 635, 287, 262, 471, 13, 50, 13, 2097, 13, 198, 198, 50, 220], which in natural language is 'House, which is also in the U.S. House.
+
+S'
+[INFO][(2024-03-18) 16:11:38.809] [specific.py:525]: 	| It: 1 | Best Score: 326.2090587615967 | T: 0.03s |
+[INFO][(2024-03-18) 16:11:39.388] [specific.py:525]: 	| It: 21 | Best Score: 326.2090587615967 | T: 0.61s |
+[INFO][(2024-03-18) 16:11:39.958] [specific.py:525]: 	| It: 41 | Best Score: 316.5347738265991 | T: 1.18s |
+[INFO][(2024-03-18) 16:11:40.532] [specific.py:525]: 	| It: 61 | Best Score: 316.5347738265991 | T: 1.75s |
+[INFO][(2024-03-18) 16:11:41.108] [specific.py:525]: 	| It: 81 | Best Score: 316.5347738265991 | T: 2.33s |
+[INFO][(2024-03-18) 16:11:41.702] [specific.py:525]: 	| It: 101 | Best Score: 316.5347738265991 | T: 2.92s |
+[INFO][(2024-03-18) 16:11:42.263] [specific.py:525]: 	| It: 121 | Best Score: 316.2571783065796 | T: 3.48s |
+[INFO][(2024-03-18) 16:11:42.832] [specific.py:525]: 	| It: 141 | Best Score: 316.1530227661133 | T: 4.05s |
+[INFO][(2024-03-18) 16:11:43.404] [specific.py:525]: 	| It: 161 | Best Score: 316.1530227661133 | T: 4.63s |
+[INFO][(2024-03-18) 16:11:43.966] [specific.py:525]: 	| It: 181 | Best Score: 315.10093879699707 | T: 5.19s |
+[INFO][(2024-03-18) 16:11:44.521] [specific.py:525]: 	| It: 200 | Best Score: 315.10093879699707 | T: 5.74s |
+[INFO][(2024-03-18) 16:11:44.521] [specific.py:531]: [Film] After reordering sequence token-wise, the best sequence is [543, 318, 635, 287, 262, 471, 13, 50, 13, 2097, 13, 198, 198], which in natural language is 'which is also in the U.S. House.'
+[INFO][(2024-03-18) 16:11:44.521] [eval.py:9]: Reconstructed text: [' which is also in the U.S. House.\n\n']
+[INFO][(2024-03-18) 16:11:56.618] [rouge_scorer.py:83]: Using default tokenizer.
+[INFO][(2024-03-18) 16:11:56.725] [eval.py:36]: Metric report: {"accuracy": 0.07692307692307693, "bleu": {"bleu": 0.16481158920498065, "precisions": [0.5454545454545454, 0.3, 0.2222222222222222, 0.125], "brevity_penalty": 0.6347364189402819, "length_ratio": 0.6875, "translation_length": 11, "reference_length": 16}, "rouge": {"rouge1": 0.380952380952381, "rouge2": 0.10526315789473685, "rougeL": 0.2857142857142857, "rougeLsum": 0.2857142857142857}}
+[INFO][(2024-03-18) 16:11:56.726] [main.py:69]: Done in 192.16s.

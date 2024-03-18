@@ -1,0 +1,39 @@
+task: text-generation
+device: cuda:0
+global_seed: 42
+datasource:
+  dataset: wikitext-2
+  partition: train
+  shuffle_seed: 10
+  num_points: 1
+  max_num_tokens: 20
+tokenizer:
+  name: gpt2
+model:
+  name: gpt2
+  from_pretrained: true
+  has_finetuned: false
+train:
+  batch_size: 1
+  use_cached: false
+attack:
+  name: film
+  specific_args:
+    num_beams: 32
+    variant: random
+    beam_search_print_interval: 1
+    ngram_size_penalty: 2
+    ngram_size_penalty_factor: 1.0
+    bag_of_words_threshold: 2.0
+    num_phrase_reorder_steps: 200
+    phrase_reorder_print_interval: 20
+    num_token_reorder_steps: 200
+    token_reorder_print_interval: 20
+    gradient_norm_factor: 1.0
+eval:
+  metrics:
+    - accuracy
+    - bleu
+    - rouge
+debug:
+  fix_input: true

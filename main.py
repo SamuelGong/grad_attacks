@@ -8,8 +8,9 @@ import time
 import json
 import logging
 from train import get_gradient
-from attack import gradient_attack
+from specific import film_attack
 from config import load_configurations
+from attack import gradient_matching_attack
 from utils import (
     set_log, fix_randomness, prepare_data, git_status
 )
@@ -44,13 +45,24 @@ def main(args):
     )
 
     # Step 3: launching the attack
-    reconstructed_data = gradient_attack(
-        config=config,
-        model=model,
-        auxiliary=auxiliary,
-        target_gradient=gradient,
-        ground_truth_data=ground_truth_data  # only for evaluation use
-    )
+    if config.attack.name in ["tag", "april", "lamp"]:
+        reconstructed_data = gradient_matching_attack(
+            config=config,
+            model=model,
+            auxiliary=auxiliary,
+            target_gradient=gradient,
+            ground_truth_data=ground_truth_data  # only for evaluation use
+        )
+    elif config.attack.name == "film":
+        reconstructed_data = film_attack(
+            config=config,
+            model=model,
+            auxiliary=auxiliary,
+            target_gradient=gradient,
+            ground_truth_data=ground_truth_data  # only for evaluation use
+        )
+    else:
+        raise NotImplementedError
 
     end_time = time.perf_counter()
     duration = round(end_time - begin_time, 2)

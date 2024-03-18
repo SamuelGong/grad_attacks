@@ -5,17 +5,22 @@ import logging
 from utils import reverse_text_embeddings, label_data_to_label
 
 
-def post_process(config, raw_data, model, tokenizer, token_to_numpy=True):
+def post_process(config, raw_data, model, tokenizer,
+                 is_embd=True, token_to_numpy=True):
     result = {}
     if config.model.name == "gpt2":
         iter = raw_data[0]
-        embeddings_list = raw_data[1]
-        token_list = reverse_text_embeddings(
-            config=config,
-            text_embeddings=embeddings_list,
-            model=model,
-            to_numpy=token_to_numpy
-        )
+
+        if is_embd:  # need to be translated into tokens first
+            embeddings_list = raw_data[1]
+            token_list = reverse_text_embeddings(
+                config=config,
+                text_embeddings=embeddings_list,
+                model=model,
+                to_numpy=token_to_numpy
+            )
+        else:
+            token_list = raw_data[1]
         text_list = [tokenizer.decode(e) for e in token_list]
         result.update({
             'iter': iter,
